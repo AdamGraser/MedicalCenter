@@ -30,8 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +46,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="A_Absence.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_Calendar.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_DictionaryJobTitle.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_DictionarySpecialization.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_Schedule.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_User.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="MedicalCenterDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalCenterDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalCenterDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalCenterDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalCenterDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="MedicalCenterDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MedicalCenterDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="MedicalCenterDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MedicalCenterDB.edmx</DependentUpon>
+      <LastGenOutput>MedicalCenterDB.Context.cs</LastGenOutput>
+    </None>
+    <None Include="MedicalCenterDB.edmx.diagram">
+      <DependentUpon>MedicalCenterDB.edmx</DependentUpon>
+    </None>
+    <None Include="MedicalCenterDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MedicalCenterDB.edmx</DependentUpon>
+      <LastGenOutput>MedicalCenterDB.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
