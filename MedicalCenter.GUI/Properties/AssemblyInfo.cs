@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MedicalCenter.GUI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Medical Center 2014")]
+[assembly: AssemblyDescription("System wspomagający pracę prywatnego centrum medycznego (przychodni).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MedicalCenter.GUI")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Adam Gräser")]
+[assembly: AssemblyProduct("Medical Center 2014")]
+[assembly: AssemblyCopyright("Copyright © Adam Gräser 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -53,3 +53,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("pl-PL")]
