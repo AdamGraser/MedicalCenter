@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="MedicalCenterDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="MedicalCenterDBTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedicalCenter.Data.MedicalCenterDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MedicalCenterDBContainer" annotation:LazyLoadingEnabled="true" cg:TypeAccess="Public">
+          <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" cg:GetterAccess="Internal" />
+          <EntitySet Name="A_Absences" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Absence" />
+          <EntitySet Name="A_Users" EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" />
+          <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" />
+          <EntitySet Name="A_DictionaryJobTitles" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" />
+          <EntitySet Name="A_DictionarySpecializations" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" />
+        </EntityContainer>
+        <EntityType Name="A_Calendar" cg:TypeAccess="Public">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Boolean" Name="IsHoliday" Nullable="false" DefaultValue="False" >
+            <Documentation>
+              <LongDescription>1 = święto (holiday)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="Byte" Name="Weekday" Nullable="false" >
+            <Documentation>
+              <LongDescription>1 = poniedziałek (monday)
+...
+7 = niedziela (sunday)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="A_Absence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
+          <Property Type="DateTime" Name="DateFrom" Nullable="false" />
+          <Property Type="DateTime" Name="DateTo" Nullable="true" />
+          <Property Type="String" Name="Type" Nullable="false" FixedLength="true" MaxLength="1" DefaultValue="L" >
+            <Documentation>
+              <LongDescription>L = L4 (sick leave) [default]
+U = urlop (leave, vacations)
+N = powod nieznany (unknown reason)</LongDescription>
+            </Documentation>
+          </Property>
+        </EntityType>
+        <EntityType Name="A_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
+          <Property Type="String" Name="Login" Nullable="false" FixedLength="false" MaxLength="10" />
+          <Property Type="String" Name="Password" Nullable="false" />
+          <Property Type="DateTime" Name="Active" Nullable="false" />
+          <Property Type="DateTime" Name="Expires" Nullable="true" />
+        </EntityType>
+        <EntityType Name="A_Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
+          <Property Type="DateTime" Name="ValidFrom" Nullable="false" />
+          <Property Type="DateTime" Name="ValidTo" Nullable="true" />
+          <Property Type="DateTime" Name="D1From" Nullable="false" />
+          <Property Type="DateTime" Name="D1To" Nullable="false" />
+          <Property Type="DateTime" Name="D2From" Nullable="false" />
+          <Property Type="DateTime" Name="D2To" Nullable="false" />
+          <Property Type="DateTime" Name="D3From" Nullable="false" />
+          <Property Type="DateTime" Name="D3To" Nullable="false" />
+          <Property Type="DateTime" Name="D4From" Nullable="false" />
+          <Property Type="DateTime" Name="D4To" Nullable="false" />
+          <Property Type="DateTime" Name="D5From" Nullable="false" />
+          <Property Type="DateTime" Name="D5To" Nullable="false" />
+          <Property Type="DateTime" Name="D6From" Nullable="false" />
+          <Property Type="DateTime" Name="D6To" Nullable="false" />
+          <Property Type="DateTime" Name="D7From" Nullable="false" />
+          <Property Type="DateTime" Name="D7To" Nullable="false" />
+        </EntityType>
+        <EntityType Name="A_DictionaryJobTitle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="JobTitle" Nullable="false" FixedLength="false" MaxLength="20" />
+          <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="A_DictionarySpecialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="Specialization" Nullable="false" FixedLength="false" MaxLength="20" />
+          <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="7" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="MedicalCenterDB" />
+        <Alias Key="Target" Value="MedicalCenterDB.Store" />
+        <EntityContainerMapping CdmEntityContainer="MedicalCenterDBContainer" StorageEntityContainer="MedicalCenterDBTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
