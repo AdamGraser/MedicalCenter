@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenter.GUI", "MedicalCenter.GUI\MedicalCenter.GUI.csproj", "{B214AA47-894F-43C2-8B66-727434CB7F7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenter.Data", "MedicalCenter.Data\MedicalCenter.Data.csproj", "{EFCE7A9B-DEE6-479B-B707-73A0250D6A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B214AA47-894F-43C2-8B66-727434CB7F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B214AA47-894F-43C2-8B66-727434CB7F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B214AA47-894F-43C2-8B66-727434CB7F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCE7A9B-DEE6-479B-B707-73A0250D6A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCE7A9B-DEE6-479B-B707-73A0250D6A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCE7A9B-DEE6-479B-B707-73A0250D6A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCE7A9B-DEE6-479B-B707-73A0250D6A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
