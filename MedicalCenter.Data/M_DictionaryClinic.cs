@@ -19,6 +19,7 @@ namespace MedicalCenter.Data
             this.IsNfzContracted = true;
             this.IsDeleted = false;
             this.New = 0;
+            this.A_DictionaryRooms = new HashSet<A_DictionaryRoom>();
         }
     
         public int Id { get; private set; }
@@ -26,5 +27,7 @@ namespace MedicalCenter.Data
         public bool IsNfzContracted { get; set; }
         public bool IsDeleted { get; set; }
         public int New { get; set; }
+    
+        public virtual ICollection<A_DictionaryRoom> A_DictionaryRooms { get; set; }
     }
 }

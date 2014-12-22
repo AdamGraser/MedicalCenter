@@ -30,6 +30,82 @@
           <EntitySet Name="A_WorkersRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" />
           <EntitySet Name="A_DictionaryRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" />
           <EntitySet Name="M_DictionaryClinics" EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" />
+          <AssociationSet Name="FK_A_Absence_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Absence_A_Worker">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="A_Absence" EntitySet="A_Absences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_User_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_User_A_Worker">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="A_User" EntitySet="A_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_Worker_A_DictionaryJobTitle" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionaryJobTitle">
+            <End Role="A_DictionaryJobTitle" EntitySet="A_DictionaryJobTitles" />
+            <End Role="A_Worker" EntitySet="A_Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_Worker_A_DictionarySpecialization" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionarySpecialization">
+            <End Role="A_DictionarySpecialization" EntitySet="A_DictionarySpecializations" />
+            <End Role="A_Worker" EntitySet="A_Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_Visit_A_Worker_RegistrarID" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_RegistrarID">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_Visit" EntitySet="M_Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_Visit_A_Worker_DoctorId" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_DoctorId">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_Visit" EntitySet="M_Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_Visit_M_Patient" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_M_Patient">
+            <End Role="M_Patient" EntitySet="M_Patients" />
+            <End Role="M_Visit" EntitySet="M_Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Visit">
+            <End Role="M_Visit" EntitySet="M_Visits" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_DoctorId" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoctorId">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_M_Patient" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient">
+            <End Role="M_Patient" EntitySet="M_Patients" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_DoerId" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment">
+            <End Role="M_DictionaryMedicalTreatment" EntitySet="M_DictionaryMedicalTreatments" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_L4Disease_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_Visit">
+            <End Role="M_Visit" EntitySet="M_Visits" />
+            <End Role="M_L4Disease" EntitySet="M_L4Diseases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_L4Disease_M_DictionaryDisease" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_DictionaryDisease">
+            <End Role="M_DictionaryDisease" EntitySet="M_DictionaryDiseases" />
+            <End Role="M_L4Disease" EntitySet="M_L4Diseases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_Prescription_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Prescription_M_Visit">
+            <End Role="M_Visit" EntitySet="M_Visits" />
+            <End Role="M_Prescription" EntitySet="M_Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_WorkersRoom_A_DictionaryRoom" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_DictionaryRoom">
+            <End Role="A_DictionaryRoom" EntitySet="A_DictionaryRooms" />
+            <End Role="A_WorkersRoom" EntitySet="A_WorkersRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_WorkersRoom_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="A_WorkersRoom" EntitySet="A_WorkersRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_DictionaryRoom_M_DictionaryClinic" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_DictionaryRoom_M_DictionaryClinic">
+            <End Role="M_DictionaryClinic" EntitySet="M_DictionaryClinics" />
+            <End Role="A_DictionaryRoom" EntitySet="A_DictionaryRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_A_Schedule_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="A_Schedule" EntitySet="A_Schedules" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="A_Calendar" cg:TypeAccess="Public">
           <Key>
@@ -65,6 +141,7 @@ U = urlop (leave, vacations)
 N = powod nieznany (unknown reason)</LongDescription>
             </Documentation>
           </Property>
+          <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Absence_A_Worker" FromRole="A_Absence" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_User">
           <Key>
@@ -76,6 +153,7 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="String" Name="Password" Nullable="false" />
           <Property Type="DateTime" Name="Active" Nullable="false" />
           <Property Type="DateTime" Name="Expires" Nullable="true" />
+          <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_User_A_Worker" FromRole="A_User" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_Schedule">
           <Key>
@@ -99,6 +177,7 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="DateTime" Name="D6To" Nullable="false" />
           <Property Type="DateTime" Name="D7From" Nullable="false" />
           <Property Type="DateTime" Name="D7To" Nullable="false" />
+          <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" FromRole="A_Schedule" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionaryJobTitle">
           <Key>
@@ -109,6 +188,7 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="4" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="A_Workers" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionaryJobTitle" FromRole="A_DictionaryJobTitle" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionarySpecialization">
           <Key>
@@ -119,6 +199,7 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="7" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="A_Workers" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionarySpecialization" FromRole="A_DictionarySpecialization" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_Worker">
           <Key>
@@ -144,6 +225,16 @@ true = kobieta (woman)</LongDescription>
           <Property Type="String" Name="PostalCode" Nullable="false" FixedLength="true" MaxLength="6" />
           <Property Type="String" Name="City" Nullable="false" FixedLength="false" MaxLength="50" />
           <Property Type="String" Name="Post" Nullable="true" FixedLength="false" MaxLength="50" />
+          <NavigationProperty Name="A_Absences" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Absence_A_Worker" FromRole="A_Worker" ToRole="A_Absence" />
+          <NavigationProperty Name="A_Users" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_User_A_Worker" FromRole="A_Worker" ToRole="A_User" />
+          <NavigationProperty Name="A_DictionaryJobTitle" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionaryJobTitle" FromRole="A_Worker" ToRole="A_DictionaryJobTitle" />
+          <NavigationProperty Name="A_DictionarySpecialization" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionarySpecialization" FromRole="A_Worker" ToRole="A_DictionarySpecialization" />
+          <NavigationProperty Name="M_Visits_RegistrarId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_RegistrarID" FromRole="A_Worker" ToRole="M_Visit" />
+          <NavigationProperty Name="M_Visits_DoctorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_DoctorId" FromRole="A_Worker" ToRole="M_Visit" />
+          <NavigationProperty Name="M_MedicalTreatments_DoctorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoctorId" FromRole="A_Worker" ToRole="M_MedicalTreatment" />
+          <NavigationProperty Name="M_MedicalTreatments_DoerId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId" FromRole="A_Worker" ToRole="M_MedicalTreatment" />
+          <NavigationProperty Name="A_WorkersRooms" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker" FromRole="A_Worker" ToRole="A_WorkersRoom" />
+          <NavigationProperty Name="A_Schedules" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" FromRole="A_Worker" ToRole="A_Schedule" />
         </EntityType>
         <EntityType Name="M_Visit">
           <Key>
@@ -159,6 +250,12 @@ true = kobieta (woman)</LongDescription>
           <Property Type="Byte" Name="State" Nullable="false" DefaultValue="0" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" />
           <Property Type="String" Name="Diagnosis" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <NavigationProperty Name="A_Worker_RegistrarId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_RegistrarID" FromRole="M_Visit" ToRole="A_Worker" />
+          <NavigationProperty Name="A_Worker_DoctorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_DoctorId" FromRole="M_Visit" ToRole="A_Worker" />
+          <NavigationProperty Name="M_Patient" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_M_Patient" FromRole="M_Visit" ToRole="M_Patient" />
+          <NavigationProperty Name="M_MedicalTreatments" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Visit" FromRole="M_Visit" ToRole="M_MedicalTreatment" />
+          <NavigationProperty Name="M_L4Disease" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_Visit" FromRole="M_Visit" ToRole="M_L4Disease" />
+          <NavigationProperty Name="M_Prescriptions" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Prescription_M_Visit" FromRole="M_Visit" ToRole="M_Prescription" />
         </EntityType>
         <EntityType Name="M_MedicalTreatment">
           <Key>
@@ -183,6 +280,11 @@ true = tak (yes)</LongDescription>
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" />
           <Property Type="String" Name="Result" Nullable="true" FixedLength="false" MaxLength="Max" />
           <Property Type="String" Name="Comments" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <NavigationProperty Name="M_Visit" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Visit" FromRole="M_MedicalTreatment" ToRole="M_Visit" />
+          <NavigationProperty Name="A_Worker_DoctorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoctorId" FromRole="M_MedicalTreatment" ToRole="A_Worker" />
+          <NavigationProperty Name="M_Patient" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient" FromRole="M_MedicalTreatment" ToRole="M_Patient" />
+          <NavigationProperty Name="A_Worker_DoerId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId" FromRole="M_MedicalTreatment" ToRole="A_Worker" />
+          <NavigationProperty Name="M_DictionaryMedicalTreatment" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" FromRole="M_MedicalTreatment" ToRole="M_DictionaryMedicalTreatment" />
         </EntityType>
         <EntityType Name="M_Patient">
           <Key>
@@ -213,6 +315,8 @@ true = ubezpieczony (insured) [default]</LongDescription>
             </Documentation>
           </Property>
           <Property Type="String" Name="NfzBranch" Nullable="false" FixedLength="false" MaxLength="5" />
+          <NavigationProperty Name="M_Visits" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_M_Patient" FromRole="M_Patient" ToRole="M_Visit" />
+          <NavigationProperty Name="M_MedicalTreatments" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient" FromRole="M_Patient" ToRole="M_MedicalTreatment" />
         </EntityType>
         <EntityType Name="M_Prescription">
           <Key>
@@ -221,6 +325,7 @@ true = ubezpieczony (insured) [default]</LongDescription>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
           <Property Type="Int32" Name="VisitId" Nullable="false" DefaultValue="0" />
           <Property Type="String" Name="Number" Nullable="false" FixedLength="false" MaxLength="15" />
+          <NavigationProperty Name="M_Visit" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Prescription_M_Visit" FromRole="M_Prescription" ToRole="M_Visit" />
         </EntityType>
         <EntityType Name="M_L4Disease">
           <Key>
@@ -229,6 +334,8 @@ true = ubezpieczony (insured) [default]</LongDescription>
           <Property Type="Int32" Name="VisitId" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="Disease" Nullable="false" DefaultValue="0" />
           <Property Type="String" Name="L4Number" Nullable="false" FixedLength="false" MaxLength="15" />
+          <NavigationProperty Name="M_Visit" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_Visit" FromRole="M_L4Disease" ToRole="M_Visit" />
+          <NavigationProperty Name="M_DictionaryDisease" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_DictionaryDisease" FromRole="M_L4Disease" ToRole="M_DictionaryDisease" />
         </EntityType>
         <EntityType Name="M_DictionaryDisease">
           <Key>
@@ -244,6 +351,7 @@ true = ubezpieczony (insured) [default]</LongDescription>
           <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="150" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="150" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="M_L4Diseases" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_DictionaryDisease" FromRole="M_DictionaryDisease" ToRole="M_L4Disease" />
         </EntityType>
         <EntityType Name="M_DictionaryMedicalTreatment">
           <Key>
@@ -266,6 +374,7 @@ true = ubezpieczony (insured) [default]</LongDescription>
           </Property>
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="M_MedicalTreatments" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" FromRole="M_DictionaryMedicalTreatment" ToRole="M_MedicalTreatment" />
         </EntityType>
         <EntityType Name="A_WorkersRoom">
           <Key>
@@ -276,6 +385,8 @@ true = ubezpieczony (insured) [default]</LongDescription>
           <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
           <Property Type="DateTime" Name="DateFrom" Nullable="false" />
           <Property Type="DateTime" Name="DateTo" Nullable="true" />
+          <NavigationProperty Name="A_DictionaryRoom" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_DictionaryRoom" FromRole="A_WorkersRoom" ToRole="A_DictionaryRoom" />
+          <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker" FromRole="A_WorkersRoom" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionaryRoom">
           <Key>
@@ -286,6 +397,8 @@ true = ubezpieczony (insured) [default]</LongDescription>
           <Property Type="Int32" Name="ClinicId" Nullable="false" DefaultValue="0" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="A_WorkersRooms" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_DictionaryRoom" FromRole="A_DictionaryRoom" ToRole="A_WorkersRoom" />
+          <NavigationProperty Name="M_DictionaryClinic" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_DictionaryRoom_M_DictionaryClinic" FromRole="A_DictionaryRoom" ToRole="M_DictionaryClinic" />
         </EntityType>
         <EntityType Name="M_DictionaryClinic">
           <Key>
@@ -301,7 +414,236 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           </Property>
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="A_DictionaryRooms" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_DictionaryRoom_M_DictionaryClinic" FromRole="M_DictionaryClinic" ToRole="A_DictionaryRoom" />
         </EntityType>
+        <Association Name="FK_A_Absence_A_Worker">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Absence" Role="A_Absence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_Absence">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_User_A_Worker">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_User" Role="A_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_User">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_Worker_A_DictionaryJobTitle">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" Role="A_DictionaryJobTitle" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_DictionaryJobTitle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_Worker">
+              <PropertyRef Name="JobTitle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_Worker_A_DictionarySpecialization">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" Role="A_DictionarySpecialization" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_DictionarySpecialization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_Worker">
+              <PropertyRef Name="Specialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_Visit_A_Worker_RegistrarID">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_Visit">
+              <PropertyRef Name="RegistrarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_Visit_A_Worker_DoctorId">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_Visit">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_Visit_M_Patient">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Patient" Role="M_Patient" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_Visit">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_M_Visit">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_A_Worker_DoctorId">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_M_Patient">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Patient" Role="M_Patient" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_A_Worker_DoerId">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="DoerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_M_DictionaryMedicalTreatment">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment" Role="M_DictionaryMedicalTreatment" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_DictionaryMedicalTreatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="MedicalTreatment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_L4Disease_M_Visit">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Role="M_L4Disease" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="M_Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_L4Disease">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_L4Disease_M_DictionaryDisease">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Role="M_DictionaryDisease" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Role="M_L4Disease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_DictionaryDisease">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_L4Disease">
+              <PropertyRef Name="Disease" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_Prescription_M_Visit">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Visit" Role="M_Visit" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Role="M_Prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_Prescription">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_WorkersRoom_A_DictionaryRoom">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Role="A_DictionaryRoom" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Role="A_WorkersRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_DictionaryRoom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_WorkersRoom">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_WorkersRoom_A_Worker">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Role="A_WorkersRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_WorkersRoom">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_DictionaryRoom_M_DictionaryClinic">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" Role="M_DictionaryClinic" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Role="A_DictionaryRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="M_DictionaryClinic">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_DictionaryRoom">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_A_Schedule_A_Worker">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Schedule" Role="A_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="A_Schedule">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

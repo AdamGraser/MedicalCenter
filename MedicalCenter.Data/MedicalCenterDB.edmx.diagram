@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1dc92b2d951842c393ee630591076149" Name="Diagram1" ZoomLevel="97" >
+      <Diagram DiagramId="1dc92b2d951842c393ee630591076149" Name="Diagram1" ZoomLevel="93" >
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Absence" Width="1.5" PointX="2.25" PointY="0.5" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" Width="1.5" PointX="4.375" PointY="1.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" Width="1.5" PointX="4.375" PointY="1" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" Width="1.5" PointX="0.5" PointY="2.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" Width="1.5" PointX="2.125" PointY="3.875" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" Width="1.5" PointX="3.75" PointY="5.25" />
@@ -15,13 +15,32 @@
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Visit" Width="1.5" PointX="10.875" PointY="1.875" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Width="1.5" PointX="14" PointY="1.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Patient" Width="1.5" PointX="17.5" PointY="0.75" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Width="1.5" PointX="8.75" PointY="5.75" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Width="1.5" PointX="11" PointY="5.75" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Width="1.5" PointX="13.375" PointY="7.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Width="1.5" PointX="8.75" PointY="7.375" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Width="1.5" PointX="11" PointY="7.375" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Width="1.5" PointX="14.625" PointY="7.375" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment" Width="1.5" PointX="16.5" PointY="7.125" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Width="1.5" PointX="7.25" PointY="7.625" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Width="1.5" PointX="3.75" PointY="7.5" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" Width="1.5" PointX="0.5" PointY="7.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Width="1.5" PointX="7" PointY="8.375" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Width="1.5" PointX="3.75" PointY="8.375" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" Width="1.5" PointX="0.5" PointY="8.375" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Absence_A_Worker" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_User_A_Worker" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionaryJobTitle" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionarySpecialization" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_RegistrarID" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_A_Worker_DoctorId" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_M_Patient" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Visit" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoctorId" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_Visit" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_L4Disease_M_DictionaryDisease" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_Prescription_M_Visit" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_DictionaryRoom" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_DictionaryRoom_M_DictionaryClinic" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -39,5 +39,11 @@ namespace MedicalCenter.Data
         public string Description { get; set; }
         public string Result { get; set; }
         public string Comments { get; set; }
+    
+        public virtual M_Visit M_Visit { get; set; }
+        public virtual A_Worker A_Worker_DoctorId { get; set; }
+        public virtual M_Patient M_Patient { get; set; }
+        public virtual A_Worker A_Worker_DoerId { get; set; }
+        public virtual M_DictionaryMedicalTreatment M_DictionaryMedicalTreatment { get; set; }
     }
 }

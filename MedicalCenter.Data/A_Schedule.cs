@@ -37,5 +37,7 @@ namespace MedicalCenter.Data
         public System.DateTime D6To { get; set; }
         public System.DateTime D7From { get; set; }
         public System.DateTime D7To { get; set; }
+    
+        public virtual A_Worker A_Worker { get; set; }
     }
 }

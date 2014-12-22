@@ -20,6 +20,8 @@ namespace MedicalCenter.Data
             this.DoctorId = 0;
             this.PatientId = 0;
             this.State = 0;
+            this.M_MedicalTreatments = new HashSet<M_MedicalTreatment>();
+            this.M_Prescriptions = new HashSet<M_Prescription>();
         }
     
         public int Id { get; private set; }
@@ -32,5 +34,12 @@ namespace MedicalCenter.Data
         public byte State { get; set; }
         public string Description { get; set; }
         public string Diagnosis { get; set; }
+    
+        public virtual A_Worker A_Worker_RegistrarId { get; set; }
+        public virtual A_Worker A_Worker_DoctorId { get; set; }
+        public virtual M_Patient M_Patient { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments { get; set; }
+        public virtual M_L4Disease M_L4Disease { get; set; }
+        public virtual ICollection<M_Prescription> M_Prescriptions { get; set; }
     }
 }

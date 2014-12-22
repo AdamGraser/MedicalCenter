@@ -25,5 +25,7 @@ namespace MedicalCenter.Data
         public System.DateTime DateFrom { get; set; }
         public Nullable<System.DateTime> DateTo { get; set; }
         public string Type { get; set; }
+    
+        public virtual A_Worker A_Worker { get; set; }
     }
 }

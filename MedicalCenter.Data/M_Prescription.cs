@@ -22,5 +22,7 @@ namespace MedicalCenter.Data
         public int Id { get; private set; }
         public int VisitId { get; set; }
         public string Number { get; set; }
+    
+        public virtual M_Visit M_Visit { get; set; }
     }
 }

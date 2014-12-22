@@ -19,6 +19,7 @@ namespace MedicalCenter.Data
             this.ClinicId = 0;
             this.IsDeleted = false;
             this.New = 0;
+            this.A_WorkersRooms = new HashSet<A_WorkersRoom>();
         }
     
         public int Id { get; private set; }
@@ -26,5 +27,8 @@ namespace MedicalCenter.Data
         public int ClinicId { get; set; }
         public bool IsDeleted { get; set; }
         public int New { get; set; }
+    
+        public virtual ICollection<A_WorkersRoom> A_WorkersRooms { get; set; }
+        public virtual M_DictionaryClinic M_DictionaryClinic { get; set; }
     }
 }

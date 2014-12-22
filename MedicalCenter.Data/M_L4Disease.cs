@@ -22,5 +22,8 @@ namespace MedicalCenter.Data
         public int VisitId { get; set; }
         public int Disease { get; set; }
         public string L4Number { get; set; }
+    
+        public virtual M_Visit M_Visit { get; set; }
+        public virtual M_DictionaryDisease M_DictionaryDisease { get; set; }
     }
 }

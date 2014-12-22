@@ -19,6 +19,7 @@ namespace MedicalCenter.Data
             this.Type = "Z";
             this.IsDeleted = false;
             this.New = 0;
+            this.M_MedicalTreatments = new HashSet<M_MedicalTreatment>();
         }
     
         public int Id { get; private set; }
@@ -28,5 +29,7 @@ namespace MedicalCenter.Data
         public string Type { get; set; }
         public bool IsDeleted { get; set; }
         public int New { get; set; }
+    
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments { get; set; }
     }
 }

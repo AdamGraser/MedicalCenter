@@ -18,6 +18,7 @@ namespace MedicalCenter.Data
         {
             this.IsDeleted = false;
             this.New = 0;
+            this.A_Workers = new HashSet<A_Worker>();
         }
     
         public int Id { get; private set; }
@@ -25,5 +26,7 @@ namespace MedicalCenter.Data
         public string Code { get; set; }
         public bool IsDeleted { get; set; }
         public int New { get; set; }
+    
+        public virtual ICollection<A_Worker> A_Workers { get; set; }
     }
 }

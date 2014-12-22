@@ -19,6 +19,14 @@ namespace MedicalCenter.Data
             this.Gender = false;
             this.JobTitle = 0;
             this.Specialization = 0;
+            this.A_Absences = new HashSet<A_Absence>();
+            this.A_Users = new HashSet<A_User>();
+            this.M_Visits_RegistrarId = new HashSet<M_Visit>();
+            this.M_Visits_DoctorId = new HashSet<M_Visit>();
+            this.M_MedicalTreatments_DoctorId = new HashSet<M_MedicalTreatment>();
+            this.M_MedicalTreatments_DoerId = new HashSet<M_MedicalTreatment>();
+            this.A_WorkersRooms = new HashSet<A_WorkersRoom>();
+            this.A_Schedules = new HashSet<A_Schedule>();
         }
     
         public int Id { get; private set; }
@@ -36,5 +44,16 @@ namespace MedicalCenter.Data
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Post { get; set; }
+    
+        public virtual ICollection<A_Absence> A_Absences { get; set; }
+        public virtual ICollection<A_User> A_Users { get; set; }
+        public virtual A_DictionaryJobTitle A_DictionaryJobTitle { get; set; }
+        public virtual A_DictionarySpecialization A_DictionarySpecialization { get; set; }
+        public virtual ICollection<M_Visit> M_Visits_RegistrarId { get; set; }
+        public virtual ICollection<M_Visit> M_Visits_DoctorId { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments_DoctorId { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments_DoerId { get; set; }
+        public virtual ICollection<A_WorkersRoom> A_WorkersRooms { get; set; }
+        public virtual ICollection<A_Schedule> A_Schedules { get; set; }
     }
 }

@@ -18,6 +18,8 @@ namespace MedicalCenter.Data
         {
             this.Gender = false;
             this.IsInsured = true;
+            this.M_Visits = new HashSet<M_Visit>();
+            this.M_MedicalTreatments = new HashSet<M_MedicalTreatment>();
         }
     
         public int Id { get; private set; }
@@ -35,5 +37,8 @@ namespace MedicalCenter.Data
         public string Post { get; set; }
         public bool IsInsured { get; set; }
         public string NfzBranch { get; set; }
+    
+        public virtual ICollection<M_Visit> M_Visits { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments { get; set; }
     }
 }

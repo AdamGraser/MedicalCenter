@@ -17,6 +17,7 @@ namespace MedicalCenter.Data
         public M_DictionaryDisease()
         {
             this.New = 0;
+            this.M_L4Diseases = new HashSet<M_L4Disease>();
         }
     
         public int Id { get; private set; }
@@ -24,5 +25,7 @@ namespace MedicalCenter.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public int New { get; set; }
+    
+        public virtual ICollection<M_L4Disease> M_L4Diseases { get; set; }
     }
 }

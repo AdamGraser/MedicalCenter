@@ -25,5 +25,7 @@ namespace MedicalCenter.Data
         public string Password { get; set; }
         public System.DateTime Active { get; set; }
         public Nullable<System.DateTime> Expires { get; set; }
+    
+        public virtual A_Worker A_Worker { get; set; }
     }
 }
