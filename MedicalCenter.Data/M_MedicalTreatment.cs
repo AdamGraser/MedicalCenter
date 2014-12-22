@@ -20,6 +20,7 @@ namespace MedicalCenter.Data
             this.DoctorId = 0;
             this.PatientId = 0;
             this.DoerId = 0;
+            this.State = 0;
             this.MedicalTreatment = 0;
             this.IsPrivate = false;
         }

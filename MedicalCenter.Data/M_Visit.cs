@@ -19,6 +19,7 @@ namespace MedicalCenter.Data
             this.RegistrarId = 0;
             this.DoctorId = 0;
             this.PatientId = 0;
+            this.State = 0;
         }
     
         public int Id { get; private set; }

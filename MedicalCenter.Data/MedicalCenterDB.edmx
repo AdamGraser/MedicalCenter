@@ -156,7 +156,7 @@ true = kobieta (woman)</LongDescription>
           <Property Type="DateTime" Name="Registered" Nullable="false" />
           <Property Type="DateTime" Name="DateOfVisit" Nullable="false" />
           <Property Type="DateTime" Name="Started" Nullable="true" />
-          <Property Type="Byte" Name="State" Nullable="false" />
+          <Property Type="Byte" Name="State" Nullable="false" DefaultValue="0" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" />
           <Property Type="String" Name="Diagnosis" Nullable="true" FixedLength="false" MaxLength="Max" />
         </EntityType>
@@ -172,7 +172,7 @@ true = kobieta (woman)</LongDescription>
           <Property Type="DateTime" Name="Ordered" Nullable="false" />
           <Property Type="DateTime" Name="DateOfExecution" Nullable="true" />
           <Property Type="DateTime" Name="Executed" Nullable="true" />
-          <Property Type="Byte" Name="State" Nullable="false" />
+          <Property Type="Byte" Name="State" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="MedicalTreatment" Nullable="false" DefaultValue="0" />
           <Property Type="Boolean" Name="IsPrivate" Nullable="false" DefaultValue="false" >
             <Documentation>
@@ -258,7 +258,7 @@ true = ubezpieczony (insured) [default]</LongDescription>
           </Property>
           <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="150" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="150" />
-          <Property Type="String" Name="Type" Nullable="false" FixedLength="true" MaxLength="1" >
+          <Property Type="String" Name="Type" Nullable="false" FixedLength="true" MaxLength="1" DefaultValue="Z" >
             <Documentation>
               <LongDescription>F = badanie fizykalne, L = badanie laboratoryjne, C = badanie zlecane, Z = inny zabieg medyczny
 (F = physical examination, L = laboratory test, C = ordered examination, Z = other medical treatment)</LongDescription>

@@ -16,6 +16,7 @@ namespace MedicalCenter.Data
     {
         public M_DictionaryMedicalTreatment()
         {
+            this.Type = "Z";
             this.IsDeleted = false;
             this.New = 0;
         }
