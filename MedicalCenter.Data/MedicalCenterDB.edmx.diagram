@@ -11,6 +11,17 @@
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" Width="1.5" PointX="0.5" PointY="2.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" Width="1.5" PointX="2.125" PointY="3.875" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" Width="1.5" PointX="3.75" PointY="5.25" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Worker" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Visit" Width="1.5" PointX="10.875" PointY="1.875" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Width="1.5" PointX="14" PointY="1.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Patient" Width="1.5" PointX="17.5" PointY="0.75" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Width="1.5" PointX="11" PointY="5.75" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Width="1.5" PointX="13.375" PointY="7.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment" Width="1.5" PointX="16.5" PointY="7.125" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Width="1.5" PointX="7.25" PointY="7.625" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Width="1.5" PointX="3.75" PointY="7.5" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" Width="1.5" PointX="0.5" PointY="7.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,5 +31,16 @@ namespace MedicalCenter.Data
         public DbSet<A_Schedule> A_Schedules { get; set; }
         public DbSet<A_DictionaryJobTitle> A_DictionaryJobTitles { get; set; }
         public DbSet<A_DictionarySpecialization> A_DictionarySpecializations { get; set; }
+        public DbSet<A_Worker> A_Workers { get; set; }
+        public DbSet<M_Visit> M_Visits { get; set; }
+        public DbSet<M_MedicalTreatment> M_MedicalTreatments { get; set; }
+        public DbSet<M_Patient> M_Patients { get; set; }
+        public DbSet<M_Prescription> M_Prescriptions { get; set; }
+        public DbSet<M_L4Disease> M_L4Diseases { get; set; }
+        public DbSet<M_DictionaryDisease> M_DictionaryDiseases { get; set; }
+        public DbSet<M_DictionaryMedicalTreatment> M_DictionaryMedicalTreatments { get; set; }
+        public DbSet<A_WorkersRoom> A_WorkersRooms { get; set; }
+        public DbSet<A_DictionaryRoom> A_DictionaryRooms { get; set; }
+        public DbSet<M_DictionaryClinic> M_DictionaryClinics { get; set; }
     }
 }

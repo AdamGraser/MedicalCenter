@@ -19,6 +19,17 @@
           <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" />
           <EntitySet Name="A_DictionaryJobTitles" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" />
           <EntitySet Name="A_DictionarySpecializations" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" />
+          <EntitySet Name="A_Workers" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Worker" />
+          <EntitySet Name="M_Visits" EntityType="MedicalCenter.Data.MedicalCenterDB.M_Visit" />
+          <EntitySet Name="M_MedicalTreatments" EntityType="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" />
+          <EntitySet Name="M_Patients" EntityType="MedicalCenter.Data.MedicalCenterDB.M_Patient" />
+          <EntitySet Name="M_Prescriptions" EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" />
+          <EntitySet Name="M_L4Diseases" EntityType="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" />
+          <EntitySet Name="M_DictionaryDiseases" EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" />
+          <EntitySet Name="M_DictionaryMedicalTreatments" EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment" />
+          <EntitySet Name="A_WorkersRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" />
+          <EntitySet Name="A_DictionaryRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" />
+          <EntitySet Name="M_DictionaryClinics" EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic" />
         </EntityContainer>
         <EntityType Name="A_Calendar" cg:TypeAccess="Public">
           <Key>
@@ -106,6 +117,188 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
           <Property Type="String" Name="Specialization" Nullable="false" FixedLength="false" MaxLength="20" />
           <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="7" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="A_Worker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="LastName" Nullable="false" FixedLength="false" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="false" FixedLength="false" MaxLength="25" />
+          <Property Type="String" Name="SecondName" Nullable="true" FixedLength="false" MaxLength="25" />
+          <Property Type="DateTime" Name="BirthDate" Nullable="false" />
+          <Property Type="Boolean" Name="Gender" Nullable="false" DefaultValue="false" >
+            <Documentation>
+              <LongDescription>false = mężczyzna (man) [default]
+true = kobieta (woman)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="Int64" Name="Pesel" Nullable="false" />
+          <Property Type="Int32" Name="JobTitle" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="Specialization" Nullable="false" DefaultValue="0" />
+          <Property Type="String" Name="Street" Nullable="true" FixedLength="false" MaxLength="30" />
+          <Property Type="String" Name="BuildingNumber" Nullable="false" FixedLength="false" MaxLength="5" />
+          <Property Type="String" Name="Apartment" Nullable="true" FixedLength="false" MaxLength="5" />
+          <Property Type="String" Name="PostalCode" Nullable="false" FixedLength="true" MaxLength="6" />
+          <Property Type="String" Name="City" Nullable="false" FixedLength="false" MaxLength="50" />
+          <Property Type="String" Name="Post" Nullable="true" FixedLength="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="RegistrarId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="DoctorId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="PatientId" Nullable="false" DefaultValue="0" />
+          <Property Type="DateTime" Name="Registered" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfVisit" Nullable="false" />
+          <Property Type="DateTime" Name="Started" Nullable="true" />
+          <Property Type="Byte" Name="State" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="Diagnosis" Nullable="true" FixedLength="false" MaxLength="Max" />
+        </EntityType>
+        <EntityType Name="M_MedicalTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="VisitId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="DoctorId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="PatientId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="DoerId" Nullable="false" DefaultValue="0" />
+          <Property Type="DateTime" Name="Ordered" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfExecution" Nullable="true" />
+          <Property Type="DateTime" Name="Executed" Nullable="true" />
+          <Property Type="Byte" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="MedicalTreatment" Nullable="false" DefaultValue="0" />
+          <Property Type="Boolean" Name="IsPrivate" Nullable="false" DefaultValue="false" >
+            <Documentation>
+              <LongDescription>false = nie (no) [default]
+true = tak (yes)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="Result" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="Comments" Nullable="true" FixedLength="false" MaxLength="Max" />
+        </EntityType>
+        <EntityType Name="M_Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="LastName" Nullable="false" FixedLength="false" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="false" FixedLength="false" MaxLength="25" />
+          <Property Type="String" Name="SecondName" Nullable="true" FixedLength="false" MaxLength="25" />
+          <Property Type="DateTime" Name="BirthDate" Nullable="false" />
+          <Property Type="Boolean" Name="Gender" Nullable="false" DefaultValue="false" >
+            <Documentation>
+              <LongDescription>false = mężczyzna (man) [default]
+true = kobieta (woman)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="Int64" Name="Pesel" Nullable="false" />
+          <Property Type="String" Name="Street" Nullable="true" FixedLength="false" MaxLength="30" />
+          <Property Type="String" Name="BuildingNumber" Nullable="false" FixedLength="false" MaxLength="5" />
+          <Property Type="String" Name="Apartment" Nullable="true" FixedLength="false" MaxLength="5" />
+          <Property Type="String" Name="PostalCode" Nullable="false" FixedLength="true" MaxLength="6" />
+          <Property Type="String" Name="City" Nullable="false" FixedLength="false" MaxLength="50" />
+          <Property Type="String" Name="Post" Nullable="true" FixedLength="false" MaxLength="50" />
+          <Property Type="Boolean" Name="IsInsured" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <LongDescription>false = nieubezpieczony (not insured)
+true = ubezpieczony (insured) [default]</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="String" Name="NfzBranch" Nullable="false" FixedLength="false" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="M_Prescription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="VisitId" Nullable="false" DefaultValue="0" />
+          <Property Type="String" Name="Number" Nullable="false" FixedLength="false" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="M_L4Disease">
+          <Key>
+            <PropertyRef Name="VisitId" />
+          </Key>
+          <Property Type="Int32" Name="VisitId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="Disease" Nullable="false" DefaultValue="0" />
+          <Property Type="String" Name="L4Number" Nullable="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="M_DictionaryDisease">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="Code" Nullable="false" FixedLength="false" MaxLength="5" >
+            <Documentation>
+              <LongDescription>3 lub 5 znaków, [A-Z][0-9]{2}(.[0-9]){0,1}, np. A00 lub A00.0
+(3 or 5 characters, [A-Z][0-9]{2}(.[0-9]){0,1}, ie. A00 or A00.0)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="150" />
+          <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="150" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="M_DictionaryMedicalTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="Code" Nullable="false" FixedLength="false" MaxLength="5" >
+            <Documentation>
+              <LongDescription>3 - 5 znaków, [A-Z][0-9]{2} LUB [0-9]{2}.[0-9]{2}
+(3 - 5 characters, [A-Z][0-9]{2} OR [0-9]{2}.[0-9]{2})</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="150" />
+          <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="150" />
+          <Property Type="String" Name="Type" Nullable="false" FixedLength="true" MaxLength="1" >
+            <Documentation>
+              <LongDescription>F = badanie fizykalne, L = badanie laboratoryjne, C = badanie zlecane, Z = inny zabieg medyczny
+(F = physical examination, L = laboratory test, C = ordered examination, Z = other medical treatment)</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="A_WorkersRoom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="Int32" Name="RoomId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
+          <Property Type="DateTime" Name="DateFrom" Nullable="false" />
+          <Property Type="DateTime" Name="DateTo" Nullable="true" />
+        </EntityType>
+        <EntityType Name="A_DictionaryRoom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="Number" Nullable="false" FixedLength="false" MaxLength="5" />
+          <Property Type="Int32" Name="ClinicId" Nullable="false" DefaultValue="0" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
+          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="M_DictionaryClinic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+          <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="40" />
+          <Property Type="Boolean" Name="IsNfzContracted" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <LongDescription>false = bez kontraktu z NFZ (without NFZ contract)
+true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
+            </Documentation>
+          </Property>
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
           <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
         </EntityType>
