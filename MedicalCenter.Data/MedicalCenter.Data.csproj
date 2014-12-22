@@ -55,6 +55,9 @@
     <Compile Include="A_DictionaryJobTitle.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="A_DictionaryRoom.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="A_DictionarySpecialization.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
@@ -62,6 +65,12 @@
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
     <Compile Include="A_User.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_Worker.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_WorkersRoom.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
@@ -79,6 +88,30 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MedicalCenterDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="M_DictionaryClinic.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_DictionaryDisease.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_DictionaryMedicalTreatment.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_L4Disease.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_MedicalTreatment.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_Patient.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_Prescription.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="M_Visit.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
