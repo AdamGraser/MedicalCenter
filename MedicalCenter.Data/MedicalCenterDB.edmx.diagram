@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1dc92b2d951842c393ee630591076149" Name="Diagram1" >
+      <Diagram DiagramId="1dc92b2d951842c393ee630591076149" Name="Diagram1" ZoomLevel="97" >
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Absence" Width="1.5" PointX="2.25" PointY="0.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" Width="1.5" PointX="4.375" PointY="1.5" />

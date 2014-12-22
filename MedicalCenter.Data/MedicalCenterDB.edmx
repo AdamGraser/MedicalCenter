@@ -228,7 +228,7 @@ true = ubezpieczony (insured) [default]</LongDescription>
           </Key>
           <Property Type="Int32" Name="VisitId" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="Disease" Nullable="false" DefaultValue="0" />
-          <Property Type="String" Name="L4Number" Nullable="false" FixedLength="false" />
+          <Property Type="String" Name="L4Number" Nullable="false" FixedLength="false" MaxLength="15" />
         </EntityType>
         <EntityType Name="M_DictionaryDisease">
           <Key>
