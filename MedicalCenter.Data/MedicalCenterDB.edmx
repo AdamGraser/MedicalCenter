@@ -4,11 +4,546 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="MedicalCenterDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="MedicalCenterDBTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="MedicalCenter.Data.MedicalCenterDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MedicalCenterDataMedicalCenterDBStoreContainer">
+    <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Calendars" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_Absences" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Absences" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_Users" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Schedules" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_DictionaryJobTitles" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionaryJobTitles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_DictionarySpecializations" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionarySpecializations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_Workers" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_Visits" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_MedicalTreatments" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_Patients" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_Patients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_Prescriptions" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_Prescriptions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_L4Diseases" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_L4Diseases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_DictionaryDiseases" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryDiseases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_DictionaryMedicalTreatments" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryMedicalTreatments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_WorkersRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_WorkersRooms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_DictionaryRooms" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionaryRooms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="M_DictionaryClinics" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryClinics" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_A_Absence_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_Absence_A_Worker">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="A_Absence" EntitySet="A_Absences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_User_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_User_A_Worker">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="A_User" EntitySet="A_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_Worker_A_DictionaryJobTitle" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_Worker_A_DictionaryJobTitle">
+      <End Role="A_DictionaryJobTitle" EntitySet="A_DictionaryJobTitles" />
+      <End Role="A_Worker" EntitySet="A_Workers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_Worker_A_DictionarySpecialization" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_Worker_A_DictionarySpecialization">
+      <End Role="A_DictionarySpecialization" EntitySet="A_DictionarySpecializations" />
+      <End Role="A_Worker" EntitySet="A_Workers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_Visit_A_Worker_RegistrarID" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_Visit_A_Worker_RegistrarID">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_Visit" EntitySet="M_Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_Visit_A_Worker_DoctorId" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_Visit_A_Worker_DoctorId">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_Visit" EntitySet="M_Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_Visit_M_Patient" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_Visit_M_Patient">
+      <End Role="M_Patient" EntitySet="M_Patients" />
+      <End Role="M_Visit" EntitySet="M_Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_M_Visit">
+      <End Role="M_Visit" EntitySet="M_Visits" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_DoctorId" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_A_Worker_DoctorId">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_M_Patient" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_M_Patient">
+      <End Role="M_Patient" EntitySet="M_Patients" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_DoerId" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_A_Worker_DoerId">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment">
+      <End Role="M_DictionaryMedicalTreatment" EntitySet="M_DictionaryMedicalTreatments" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_L4Disease_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_L4Disease_M_Visit">
+      <End Role="M_Visit" EntitySet="M_Visits" />
+      <End Role="M_L4Disease" EntitySet="M_L4Diseases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_L4Disease_M_DictionaryDisease" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_L4Disease_M_DictionaryDisease">
+      <End Role="M_DictionaryDisease" EntitySet="M_DictionaryDiseases" />
+      <End Role="M_L4Disease" EntitySet="M_L4Diseases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_Prescription_M_Visit" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_Prescription_M_Visit">
+      <End Role="M_Visit" EntitySet="M_Visits" />
+      <End Role="M_Prescription" EntitySet="M_Prescriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_WorkersRoom_A_DictionaryRoom" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_WorkersRoom_A_DictionaryRoom">
+      <End Role="A_DictionaryRoom" EntitySet="A_DictionaryRooms" />
+      <End Role="A_WorkersRoom" EntitySet="A_WorkersRooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_WorkersRoom_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_WorkersRoom_A_Worker">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="A_WorkersRoom" EntitySet="A_WorkersRooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_DictionaryRoom_M_DictionaryClinic" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_DictionaryRoom_M_DictionaryClinic">
+      <End Role="M_DictionaryClinic" EntitySet="M_DictionaryClinics" />
+      <End Role="A_DictionaryRoom" EntitySet="A_DictionaryRooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_A_Schedule_A_Worker" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_A_Schedule_A_Worker">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="A_Schedule" EntitySet="A_Schedules" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="A_Calendars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsHoliday" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Weekday" Type="tinyint" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="A_Absences">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="DateFrom" Type="datetime" Nullable="false" />
+    <Property Name="DateTo" Type="datetime" Nullable="true" />
+    <Property Name="Type" Type="char" Nullable="false" DefaultValue="L" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="A_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Login" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="Password" Type="varchar(max)" Nullable="false" />
+    <Property Name="Active" Type="datetime" Nullable="false" />
+    <Property Name="Expires" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="A_Schedules">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="ValidFrom" Type="datetime" Nullable="false" />
+    <Property Name="ValidTo" Type="datetime" Nullable="true" />
+    <Property Name="D1From" Type="datetime" Nullable="true" />
+    <Property Name="D1To" Type="datetime" Nullable="true" />
+    <Property Name="D2From" Type="datetime" Nullable="true" />
+    <Property Name="D2To" Type="datetime" Nullable="true" />
+    <Property Name="D3From" Type="datetime" Nullable="true" />
+    <Property Name="D3To" Type="datetime" Nullable="true" />
+    <Property Name="D4From" Type="datetime" Nullable="true" />
+    <Property Name="D4To" Type="datetime" Nullable="true" />
+    <Property Name="D5From" Type="datetime" Nullable="true" />
+    <Property Name="D5To" Type="datetime" Nullable="true" />
+    <Property Name="D6From" Type="datetime" Nullable="true" />
+    <Property Name="D6To" Type="datetime" Nullable="true" />
+    <Property Name="D7From" Type="datetime" Nullable="true" />
+    <Property Name="D7To" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="A_DictionaryJobTitles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobTitle" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Code" Type="char" Nullable="false" MaxLength="4" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="A_DictionarySpecializations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Specialization" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Code" Type="char" Nullable="false" MaxLength="7" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="A_Workers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="SecondName" Type="varchar" Nullable="true" MaxLength="25" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Pesel" Type="bigint" Nullable="false" />
+    <Property Name="JobTitle" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Specialization" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Street" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="BuildingNumber" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="Apartment" Type="varchar" Nullable="true" MaxLength="5" />
+    <Property Name="PostalCode" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Post" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="M_Visits">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegistrarId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="DoctorId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="PatientId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Registered" Type="datetime" Nullable="false" />
+    <Property Name="DateOfVisit" Type="datetime" Nullable="false" />
+    <Property Name="Started" Type="datetime" Nullable="true" />
+    <Property Name="State" Type="tinyint" Nullable="false" DefaultValue="0" />
+    <Property Name="Description" Type="varchar(max)" Nullable="true" />
+    <Property Name="Diagnosis" Type="varchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="M_MedicalTreatments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VisitId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="DoctorId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="PatientId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="DoerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Ordered" Type="datetime" Nullable="false" />
+    <Property Name="DateOfExecution" Type="datetime" Nullable="true" />
+    <Property Name="Executed" Type="datetime" Nullable="true" />
+    <Property Name="State" Type="tinyint" Nullable="false" DefaultValue="0" />
+    <Property Name="MedicalTreatment" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="IsPrivate" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Description" Type="varchar(max)" Nullable="true" />
+    <Property Name="Result" Type="varchar(max)" Nullable="true" />
+    <Property Name="Comments" Type="varchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="M_Patients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="SecondName" Type="varchar" Nullable="true" MaxLength="25" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Pesel" Type="bigint" Nullable="false" />
+    <Property Name="Street" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="BuildingNumber" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="Apartment" Type="varchar" Nullable="true" MaxLength="5" />
+    <Property Name="PostalCode" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Post" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="IsInsured" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="NfzBranch" Type="varchar" Nullable="false" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="M_Prescriptions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VisitId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="Number" Type="varchar" Nullable="false" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="M_L4Diseases">
+    <Key>
+      <PropertyRef Name="VisitId" />
+    </Key>
+    <Property Name="VisitId" Type="int" Nullable="false" />
+    <Property Name="Disease" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="L4Number" Type="varchar" Nullable="false" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="M_DictionaryDiseases">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="150" />
+    <Property Name="Description" Type="varchar" Nullable="true" MaxLength="150" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="M_DictionaryMedicalTreatments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="150" />
+    <Property Name="Description" Type="varchar" Nullable="true" MaxLength="150" />
+    <Property Name="Type" Type="char" Nullable="false" DefaultValue="Z" MaxLength="1" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="A_WorkersRooms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="WorkerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="DateFrom" Type="datetime" Nullable="false" />
+    <Property Name="DateTo" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="A_DictionaryRooms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="ClinicId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="M_DictionaryClinics">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="40" />
+    <Property Name="IsNfzContracted" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <Association Name="FK_A_Absence_A_Worker">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="A_Absence" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Absences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_Absence">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_User_A_Worker">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="A_User" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_User">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_Worker_A_DictionaryJobTitle">
+    <End Role="A_DictionaryJobTitle" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionaryJobTitles" Multiplicity="1" />
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_DictionaryJobTitle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_Worker">
+        <PropertyRef Name="JobTitle" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_Worker_A_DictionarySpecialization">
+    <End Role="A_DictionarySpecialization" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionarySpecializations" Multiplicity="1" />
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_DictionarySpecialization">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_Worker">
+        <PropertyRef Name="Specialization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_Visit_A_Worker_RegistrarID">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_Visit">
+        <PropertyRef Name="RegistrarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_Visit_A_Worker_DoctorId">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_Visit">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_Visit_M_Patient">
+    <End Role="M_Patient" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Patients" Multiplicity="1" />
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_Visit">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_M_Visit">
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Visit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="VisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_A_Worker_DoctorId">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_M_Patient">
+    <End Role="M_Patient" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Patients" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_A_Worker_DoerId">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="DoerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_M_DictionaryMedicalTreatment">
+    <End Role="M_DictionaryMedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryMedicalTreatments" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_DictionaryMedicalTreatment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="MedicalTreatment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_L4Disease_M_Visit">
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="1" />
+    <End Role="M_L4Disease" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_L4Diseases" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="M_Visit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_L4Disease">
+        <PropertyRef Name="VisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_L4Disease_M_DictionaryDisease">
+    <End Role="M_DictionaryDisease" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryDiseases" Multiplicity="1" />
+    <End Role="M_L4Disease" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_L4Diseases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_DictionaryDisease">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_L4Disease">
+        <PropertyRef Name="Disease" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_Prescription_M_Visit">
+    <End Role="M_Visit" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Visits" Multiplicity="1" />
+    <End Role="M_Prescription" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_Prescriptions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Visit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_Prescription">
+        <PropertyRef Name="VisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_WorkersRoom_A_DictionaryRoom">
+    <End Role="A_DictionaryRoom" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionaryRooms" Multiplicity="1" />
+    <End Role="A_WorkersRoom" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_WorkersRooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_DictionaryRoom">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_WorkersRoom">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_WorkersRoom_A_Worker">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="A_WorkersRoom" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_WorkersRooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_WorkersRoom">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_DictionaryRoom_M_DictionaryClinic">
+    <End Role="M_DictionaryClinic" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_DictionaryClinics" Multiplicity="1" />
+    <End Role="A_DictionaryRoom" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_DictionaryRooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_DictionaryClinic">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_DictionaryRoom">
+        <PropertyRef Name="ClinicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_A_Schedule_A_Worker">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="A_Schedule" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="A_Schedule">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedicalCenter.Data.MedicalCenterDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -163,20 +698,20 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="Int32" Name="WorkerId" Nullable="false" DefaultValue="0" />
           <Property Type="DateTime" Name="ValidFrom" Nullable="false" />
           <Property Type="DateTime" Name="ValidTo" Nullable="true" />
-          <Property Type="DateTime" Name="D1From" Nullable="false" />
-          <Property Type="DateTime" Name="D1To" Nullable="false" />
-          <Property Type="DateTime" Name="D2From" Nullable="false" />
-          <Property Type="DateTime" Name="D2To" Nullable="false" />
-          <Property Type="DateTime" Name="D3From" Nullable="false" />
-          <Property Type="DateTime" Name="D3To" Nullable="false" />
-          <Property Type="DateTime" Name="D4From" Nullable="false" />
-          <Property Type="DateTime" Name="D4To" Nullable="false" />
-          <Property Type="DateTime" Name="D5From" Nullable="false" />
-          <Property Type="DateTime" Name="D5To" Nullable="false" />
-          <Property Type="DateTime" Name="D6From" Nullable="false" />
-          <Property Type="DateTime" Name="D6To" Nullable="false" />
-          <Property Type="DateTime" Name="D7From" Nullable="false" />
-          <Property Type="DateTime" Name="D7To" Nullable="false" />
+          <Property Type="DateTime" Name="D1From" Nullable="true" />
+          <Property Type="DateTime" Name="D1To" Nullable="true" />
+          <Property Type="DateTime" Name="D2From" Nullable="true" />
+          <Property Type="DateTime" Name="D2To" Nullable="true" />
+          <Property Type="DateTime" Name="D3From" Nullable="true" />
+          <Property Type="DateTime" Name="D3To" Nullable="true" />
+          <Property Type="DateTime" Name="D4From" Nullable="true" />
+          <Property Type="DateTime" Name="D4To" Nullable="true" />
+          <Property Type="DateTime" Name="D5From" Nullable="true" />
+          <Property Type="DateTime" Name="D5To" Nullable="true" />
+          <Property Type="DateTime" Name="D6From" Nullable="true" />
+          <Property Type="DateTime" Name="D6To" Nullable="true" />
+          <Property Type="DateTime" Name="D7From" Nullable="true" />
+          <Property Type="DateTime" Name="D7To" Nullable="true" />
           <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" FromRole="A_Schedule" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionaryJobTitle">
@@ -648,13 +1183,242 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="MedicalCenterDB" />
-        <Alias Key="Target" Value="MedicalCenterDB.Store" />
-        <EntityContainerMapping CdmEntityContainer="MedicalCenterDBContainer" StorageEntityContainer="MedicalCenterDBTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MedicalCenterDataMedicalCenterDBStoreContainer" CdmEntityContainer="MedicalCenterDBContainer">
+    <EntitySetMapping Name="A_Calendars">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Calendar)">
+        <MappingFragment StoreEntitySet="A_Calendars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
+          <ScalarProperty Name="Weekday" ColumnName="Weekday" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_Absences">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Absence)">
+        <MappingFragment StoreEntitySet="A_Absences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_Users">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_User)">
+        <MappingFragment StoreEntitySet="A_Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Expires" ColumnName="Expires" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_Schedules">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Schedule)">
+        <MappingFragment StoreEntitySet="A_Schedules">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+          <ScalarProperty Name="D1From" ColumnName="D1From" />
+          <ScalarProperty Name="D1To" ColumnName="D1To" />
+          <ScalarProperty Name="D2From" ColumnName="D2From" />
+          <ScalarProperty Name="D2To" ColumnName="D2To" />
+          <ScalarProperty Name="D3From" ColumnName="D3From" />
+          <ScalarProperty Name="D3To" ColumnName="D3To" />
+          <ScalarProperty Name="D4From" ColumnName="D4From" />
+          <ScalarProperty Name="D4To" ColumnName="D4To" />
+          <ScalarProperty Name="D5From" ColumnName="D5From" />
+          <ScalarProperty Name="D5To" ColumnName="D5To" />
+          <ScalarProperty Name="D6From" ColumnName="D6From" />
+          <ScalarProperty Name="D6To" ColumnName="D6To" />
+          <ScalarProperty Name="D7From" ColumnName="D7From" />
+          <ScalarProperty Name="D7To" ColumnName="D7To" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_DictionaryJobTitles">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle)">
+        <MappingFragment StoreEntitySet="A_DictionaryJobTitles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_DictionarySpecializations">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization)">
+        <MappingFragment StoreEntitySet="A_DictionarySpecializations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_Workers">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Worker)">
+        <MappingFragment StoreEntitySet="A_Workers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Pesel" ColumnName="Pesel" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+          <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="BuildingNumber" ColumnName="BuildingNumber" />
+          <ScalarProperty Name="Apartment" ColumnName="Apartment" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Post" ColumnName="Post" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Visits">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_Visit)">
+        <MappingFragment StoreEntitySet="M_Visits">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RegistrarId" ColumnName="RegistrarId" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="Registered" ColumnName="Registered" />
+          <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_MedicalTreatments">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment)">
+        <MappingFragment StoreEntitySet="M_MedicalTreatments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="DoerId" ColumnName="DoerId" />
+          <ScalarProperty Name="Ordered" ColumnName="Ordered" />
+          <ScalarProperty Name="DateOfExecution" ColumnName="DateOfExecution" />
+          <ScalarProperty Name="Executed" ColumnName="Executed" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="MedicalTreatment" ColumnName="MedicalTreatment" />
+          <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Patients">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_Patient)">
+        <MappingFragment StoreEntitySet="M_Patients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Pesel" ColumnName="Pesel" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="BuildingNumber" ColumnName="BuildingNumber" />
+          <ScalarProperty Name="Apartment" ColumnName="Apartment" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Post" ColumnName="Post" />
+          <ScalarProperty Name="IsInsured" ColumnName="IsInsured" />
+          <ScalarProperty Name="NfzBranch" ColumnName="NfzBranch" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Prescriptions">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_Prescription)">
+        <MappingFragment StoreEntitySet="M_Prescriptions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_L4Diseases">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_L4Disease)">
+        <MappingFragment StoreEntitySet="M_L4Diseases">
+          <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+          <ScalarProperty Name="Disease" ColumnName="Disease" />
+          <ScalarProperty Name="L4Number" ColumnName="L4Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_DictionaryDiseases">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease)">
+        <MappingFragment StoreEntitySet="M_DictionaryDiseases">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_DictionaryMedicalTreatments">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment)">
+        <MappingFragment StoreEntitySet="M_DictionaryMedicalTreatments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_WorkersRooms">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom)">
+        <MappingFragment StoreEntitySet="A_WorkersRooms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="A_DictionaryRooms">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom)">
+        <MappingFragment StoreEntitySet="A_DictionaryRooms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_DictionaryClinics">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.M_DictionaryClinic)">
+        <MappingFragment StoreEntitySet="M_DictionaryClinics">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsNfzContracted" ColumnName="IsNfzContracted" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="New" ColumnName="New" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

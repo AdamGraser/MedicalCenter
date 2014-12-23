@@ -23,20 +23,20 @@ namespace MedicalCenter.Data
         public int WorkerId { get; set; }
         public System.DateTime ValidFrom { get; set; }
         public Nullable<System.DateTime> ValidTo { get; set; }
-        public System.DateTime D1From { get; set; }
-        public System.DateTime D1To { get; set; }
-        public System.DateTime D2From { get; set; }
-        public System.DateTime D2To { get; set; }
-        public System.DateTime D3From { get; set; }
-        public System.DateTime D3To { get; set; }
-        public System.DateTime D4From { get; set; }
-        public System.DateTime D4To { get; set; }
-        public System.DateTime D5From { get; set; }
-        public System.DateTime D5To { get; set; }
-        public System.DateTime D6From { get; set; }
-        public System.DateTime D6To { get; set; }
-        public System.DateTime D7From { get; set; }
-        public System.DateTime D7To { get; set; }
+        public Nullable<System.DateTime> D1From { get; set; }
+        public Nullable<System.DateTime> D1To { get; set; }
+        public Nullable<System.DateTime> D2From { get; set; }
+        public Nullable<System.DateTime> D2To { get; set; }
+        public Nullable<System.DateTime> D3From { get; set; }
+        public Nullable<System.DateTime> D3To { get; set; }
+        public Nullable<System.DateTime> D4From { get; set; }
+        public Nullable<System.DateTime> D4To { get; set; }
+        public Nullable<System.DateTime> D5From { get; set; }
+        public Nullable<System.DateTime> D5To { get; set; }
+        public Nullable<System.DateTime> D6From { get; set; }
+        public Nullable<System.DateTime> D6To { get; set; }
+        public Nullable<System.DateTime> D7From { get; set; }
+        public Nullable<System.DateTime> D7To { get; set; }
     
         public virtual A_Worker A_Worker { get; set; }
     }
