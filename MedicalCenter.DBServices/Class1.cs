@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedicalCenter.Data
+namespace MedicalCenter.DBServices
 {
     public class Class1
     {
