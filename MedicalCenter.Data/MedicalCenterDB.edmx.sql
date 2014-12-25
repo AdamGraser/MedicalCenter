@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/23/2014 08:58:42
+-- Date Created: 12/25/2014 21:53:53
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,119 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_A_Absence_A_Worker]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_Absences] DROP CONSTRAINT [FK_A_Absence_A_Worker];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_User_A_Worker]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_Users] DROP CONSTRAINT [FK_A_User_A_Worker];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_Worker_A_DictionaryJobTitle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_Workers] DROP CONSTRAINT [FK_A_Worker_A_DictionaryJobTitle];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_Worker_A_DictionarySpecialization]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_Workers] DROP CONSTRAINT [FK_A_Worker_A_DictionarySpecialization];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_Visit_A_Worker_RegistrarID]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_Visits] DROP CONSTRAINT [FK_M_Visit_A_Worker_RegistrarID];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_Visit_A_Worker_DoctorId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_Visits] DROP CONSTRAINT [FK_M_Visit_A_Worker_DoctorId];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_Visit_M_Patient]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_Visits] DROP CONSTRAINT [FK_M_Visit_M_Patient];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_M_Visit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_M_Visit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_A_Worker_DoctorId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_A_Worker_DoctorId];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_M_Patient]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_M_Patient];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_A_Worker_DoerId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_A_Worker_DoerId];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_M_DictionaryMedicalTreatment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_M_DictionaryMedicalTreatment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_L4Disease_M_Visit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_L4Diseases] DROP CONSTRAINT [FK_M_L4Disease_M_Visit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_L4Disease_M_DictionaryDisease]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_L4Diseases] DROP CONSTRAINT [FK_M_L4Disease_M_DictionaryDisease];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_Prescription_M_Visit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_Prescriptions] DROP CONSTRAINT [FK_M_Prescription_M_Visit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_WorkersRoom_A_DictionaryRoom]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_WorkersRooms] DROP CONSTRAINT [FK_A_WorkersRoom_A_DictionaryRoom];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_WorkersRoom_A_Worker]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_WorkersRooms] DROP CONSTRAINT [FK_A_WorkersRoom_A_Worker];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_DictionaryRoom_M_DictionaryClinic]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_DictionaryRooms] DROP CONSTRAINT [FK_A_DictionaryRoom_M_DictionaryClinic];
+GO
+IF OBJECT_ID(N'[dbo].[FK_A_Schedule_A_Worker]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[A_Schedules] DROP CONSTRAINT [FK_A_Schedule_A_Worker];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[A_Calendars]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_Calendars];
+GO
+IF OBJECT_ID(N'[dbo].[A_Absences]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_Absences];
+GO
+IF OBJECT_ID(N'[dbo].[A_Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_Users];
+GO
+IF OBJECT_ID(N'[dbo].[A_Schedules]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_Schedules];
+GO
+IF OBJECT_ID(N'[dbo].[A_DictionaryJobTitles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_DictionaryJobTitles];
+GO
+IF OBJECT_ID(N'[dbo].[A_DictionarySpecializations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_DictionarySpecializations];
+GO
+IF OBJECT_ID(N'[dbo].[A_Workers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_Workers];
+GO
+IF OBJECT_ID(N'[dbo].[M_Visits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_Visits];
+GO
+IF OBJECT_ID(N'[dbo].[M_MedicalTreatments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_MedicalTreatments];
+GO
+IF OBJECT_ID(N'[dbo].[M_Patients]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_Patients];
+GO
+IF OBJECT_ID(N'[dbo].[M_Prescriptions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_Prescriptions];
+GO
+IF OBJECT_ID(N'[dbo].[M_L4Diseases]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_L4Diseases];
+GO
+IF OBJECT_ID(N'[dbo].[M_DictionaryDiseases]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_DictionaryDiseases];
+GO
+IF OBJECT_ID(N'[dbo].[M_DictionaryMedicalTreatments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_DictionaryMedicalTreatments];
+GO
+IF OBJECT_ID(N'[dbo].[A_WorkersRooms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_WorkersRooms];
+GO
+IF OBJECT_ID(N'[dbo].[A_DictionaryRooms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[A_DictionaryRooms];
+GO
+IF OBJECT_ID(N'[dbo].[M_DictionaryClinics]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[M_DictionaryClinics];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -51,7 +159,7 @@ CREATE TABLE [dbo].[A_Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [WorkerId] int  NOT NULL,
     [Login] varchar(10)  NOT NULL,
-    [Password] text  NOT NULL,
+    [Password] varchar(max)  NOT NULL,
     [Active] datetime  NOT NULL,
     [Expires] datetime  NULL
 );
@@ -169,8 +277,7 @@ CREATE TABLE [dbo].[M_Patients] (
     [PostalCode] char(6)  NOT NULL,
     [City] varchar(50)  NOT NULL,
     [Post] varchar(50)  NULL,
-    [IsInsured] bit  NOT NULL,
-    [NfzBranch] varchar(5)  NOT NULL
+    [IsInsured] bit  NOT NULL
 );
 GO
 

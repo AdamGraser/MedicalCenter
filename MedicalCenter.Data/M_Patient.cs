@@ -36,7 +36,6 @@ namespace MedicalCenter.Data
         public string City { get; set; }
         public string Post { get; set; }
         public bool IsInsured { get; set; }
-        public string NfzBranch { get; set; }
     
         public virtual ICollection<M_Visit> M_Visits { get; set; }
         public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments { get; set; }

@@ -548,7 +548,7 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedicalCenter.Data.MedicalCenterDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="MedicalCenterDBContainer" annotation:LazyLoadingEnabled="true" cg:TypeAccess="Public">
-          <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" cg:GetterAccess="Internal" />
+          <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" />
           <EntitySet Name="A_Absences" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Absence" />
           <EntitySet Name="A_Users" EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" />
           <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" />
@@ -849,7 +849,6 @@ true = kobieta (woman)</LongDescription>
 true = ubezpieczony (insured) [default]</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="String" Name="NfzBranch" Nullable="false" FixedLength="false" MaxLength="5" Unicode="false" />
           <NavigationProperty Name="M_Visits" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_Visit_M_Patient" FromRole="M_Patient" ToRole="M_Visit" />
           <NavigationProperty Name="M_MedicalTreatments" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient" FromRole="M_Patient" ToRole="M_MedicalTreatment" />
         </EntityType>
@@ -1338,7 +1337,6 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Post" ColumnName="Post" />
           <ScalarProperty Name="IsInsured" ColumnName="IsInsured" />
-          <ScalarProperty Name="NfzBranch" ColumnName="NfzBranch" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
