@@ -245,7 +245,6 @@
     <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="Post" Type="varchar" Nullable="true" MaxLength="50" />
     <Property Name="IsInsured" Type="bit" Nullable="false" DefaultValue="true" />
-    <Property Name="NfzBranch" Type="varchar" Nullable="false" MaxLength="5" />
   </EntityType>
   <EntityType Name="M_Prescriptions">
     <Key>
