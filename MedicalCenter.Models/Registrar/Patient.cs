@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MedicalCenter.Models
 {
+    /// <summary>
+    /// Reprezentuje obiekt klasy <see cref="M_Patient"/> w widoku dla rejestratorki.
+    /// </summary>
     public class Patient
     {
         #region Public properties
