@@ -99,6 +99,14 @@
       <End Role="A_Worker" EntitySet="A_Workers" />
       <End Role="A_Schedule" EntitySet="A_Schedules" />
     </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_VerifierId" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_A_Worker_VerifierId">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_EditorId" Association="MedicalCenter.Data.MedicalCenterDB.Store.FK_M_MedicalTreatment_A_Worker_EditorId">
+      <End Role="A_Worker" EntitySet="A_Workers" />
+      <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="A_Calendars">
     <Key>
@@ -150,8 +158,6 @@
     <Property Name="D5To" Type="datetime" Nullable="true" />
     <Property Name="D6From" Type="datetime" Nullable="true" />
     <Property Name="D6To" Type="datetime" Nullable="true" />
-    <Property Name="D7From" Type="datetime" Nullable="true" />
-    <Property Name="D7To" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="A_DictionaryJobTitles">
     <Key>
@@ -204,6 +210,8 @@
     <Property Name="Registered" Type="datetime" Nullable="false" />
     <Property Name="DateOfVisit" Type="datetime" Nullable="false" />
     <Property Name="Started" Type="datetime" Nullable="true" />
+    <Property Name="Ended" Type="datetime" Nullable="true" />
+    <Property Name="LastEdit" Type="datetime" Nullable="true" />
     <Property Name="State" Type="tinyint" Nullable="false" DefaultValue="0" />
     <Property Name="Description" Type="varchar(max)" Nullable="true" />
     <Property Name="Diagnosis" Type="varchar(max)" Nullable="true" />
@@ -217,9 +225,14 @@
     <Property Name="DoctorId" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="PatientId" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="DoerId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="VerifierId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="EditorId" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="Ordered" Type="datetime" Nullable="false" />
     <Property Name="DateOfExecution" Type="datetime" Nullable="true" />
-    <Property Name="Executed" Type="datetime" Nullable="true" />
+    <Property Name="StartOfExecution" Type="datetime" Nullable="true" />
+    <Property Name="EndOfExecution" Type="datetime" Nullable="true" />
+    <Property Name="Verified" Type="datetime" Nullable="true" />
+    <Property Name="LastEdit" Type="datetime" Nullable="true" />
     <Property Name="State" Type="tinyint" Nullable="false" DefaultValue="0" />
     <Property Name="MedicalTreatment" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="IsPrivate" Type="bit" Nullable="false" DefaultValue="false" />
@@ -539,6 +552,30 @@
       </Principal>
       <Dependent Role="A_Schedule">
         <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_A_Worker_VerifierId">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="VerifierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_MedicalTreatment_A_Worker_EditorId">
+    <End Role="A_Worker" Type="MedicalCenter.Data.MedicalCenterDB.Store.A_Workers" Multiplicity="1" />
+    <End Role="M_MedicalTreatment" Type="MedicalCenter.Data.MedicalCenterDB.Store.M_MedicalTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="A_Worker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="M_MedicalTreatment">
+        <PropertyRef Name="EditorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1276,7 +1313,7 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="D5To" ColumnName="D5To" />
           <ScalarProperty Name="D6From" ColumnName="D6From" />
           <ScalarProperty Name="D6To" ColumnName="D6To" />
-          </MappingFragment>
+        </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="A_DictionaryJobTitles">
@@ -1332,6 +1369,8 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="Registered" ColumnName="Registered" />
           <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
           <ScalarProperty Name="Started" ColumnName="Started" />
+          <ScalarProperty Name="Ended" ColumnName="Ended" />
+          <ScalarProperty Name="LastEdit" ColumnName="LastEdit" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
@@ -1346,9 +1385,14 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
           <ScalarProperty Name="DoerId" ColumnName="DoerId" />
+          <ScalarProperty Name="VerifierId" ColumnName="VerifierId" />
+          <ScalarProperty Name="EditorId" ColumnName="EditorId" />
           <ScalarProperty Name="Ordered" ColumnName="Ordered" />
           <ScalarProperty Name="DateOfExecution" ColumnName="DateOfExecution" />
-          <ScalarProperty Name="EndOfExecution" ColumnName="Executed" />
+          <ScalarProperty Name="StartOfExecution" ColumnName="StartOfExecution" />
+          <ScalarProperty Name="EndOfExecution" ColumnName="EndOfExecution" />
+          <ScalarProperty Name="Verified" ColumnName="Verified" />
+          <ScalarProperty Name="LastEdit" ColumnName="LastEdit" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="MedicalTreatment" ColumnName="MedicalTreatment" />
           <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />
