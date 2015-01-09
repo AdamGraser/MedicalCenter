@@ -20,6 +20,8 @@ namespace MedicalCenter.Data
             this.DoctorId = 0;
             this.PatientId = 0;
             this.DoerId = 0;
+            this.VerifierId = 0;
+            this.EditorId = 0;
             this.State = 0;
             this.MedicalTreatment = 0;
             this.IsPrivate = false;
@@ -30,9 +32,14 @@ namespace MedicalCenter.Data
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
         public int DoerId { get; set; }
+        public int VerifierId { get; set; }
+        public int EditorId { get; set; }
         public System.DateTime Ordered { get; set; }
         public Nullable<System.DateTime> DateOfExecution { get; set; }
-        public Nullable<System.DateTime> Executed { get; set; }
+        public Nullable<System.DateTime> StartOfExecution { get; set; }
+        public Nullable<System.DateTime> EndOfExecution { get; set; }
+        public Nullable<System.DateTime> Verified { get; set; }
+        public Nullable<System.DateTime> LastEdit { get; set; }
         public byte State { get; set; }
         public int MedicalTreatment { get; set; }
         public bool IsPrivate { get; set; }
@@ -45,5 +52,7 @@ namespace MedicalCenter.Data
         public virtual M_Patient M_Patient { get; set; }
         public virtual A_Worker A_Worker_DoerId { get; set; }
         public virtual M_DictionaryMedicalTreatment M_DictionaryMedicalTreatment { get; set; }
+        public virtual A_Worker A_Worker_VerifierId { get; set; }
+        public virtual A_Worker A_Worker_EditorId { get; set; }
     }
 }

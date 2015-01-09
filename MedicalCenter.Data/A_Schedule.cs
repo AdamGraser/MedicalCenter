@@ -35,8 +35,6 @@ namespace MedicalCenter.Data
         public Nullable<System.DateTime> D5To { get; set; }
         public Nullable<System.DateTime> D6From { get; set; }
         public Nullable<System.DateTime> D6To { get; set; }
-        public Nullable<System.DateTime> D7From { get; set; }
-        public Nullable<System.DateTime> D7To { get; set; }
     
         public virtual A_Worker A_Worker { get; set; }
     }

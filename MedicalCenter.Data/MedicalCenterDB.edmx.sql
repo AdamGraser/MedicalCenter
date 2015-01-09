@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/25/2014 21:53:53
+-- Date Created: 01/09/2015 23:46:19
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -158,7 +158,7 @@ GO
 CREATE TABLE [dbo].[A_Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [WorkerId] int  NOT NULL,
-    [Login] varchar(10)  NOT NULL,
+    [Login] varchar(10)  NOT NULL UNIQUE,
     [Password] varchar(max)  NOT NULL,
     [Active] datetime  NOT NULL,
     [Expires] datetime  NULL
@@ -182,9 +182,7 @@ CREATE TABLE [dbo].[A_Schedules] (
     [D5From] datetime  NULL,
     [D5To] datetime  NULL,
     [D6From] datetime  NULL,
-    [D6To] datetime  NULL,
-    [D7From] datetime  NULL,
-    [D7To] datetime  NULL
+    [D6To] datetime  NULL
 );
 GO
 
@@ -192,7 +190,7 @@ GO
 CREATE TABLE [dbo].[A_DictionaryJobTitles] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [JobTitle] varchar(20)  NOT NULL,
-    [Code] char(4)  NOT NULL,
+    [Code] char(4)  NOT NULL UNIQUE,
     [IsDeleted] bit  NOT NULL,
     [New] int  NOT NULL
 );
@@ -202,7 +200,7 @@ GO
 CREATE TABLE [dbo].[A_DictionarySpecializations] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Specialization] varchar(20)  NOT NULL,
-    [Code] char(7)  NOT NULL,
+    [Code] char(7)  NOT NULL UNIQUE,
     [IsDeleted] bit  NOT NULL,
     [New] int  NOT NULL
 );
@@ -216,7 +214,7 @@ CREATE TABLE [dbo].[A_Workers] (
     [SecondName] varchar(25)  NULL,
     [BirthDate] datetime  NOT NULL,
     [Gender] bit  NOT NULL,
-    [Pesel] bigint  NOT NULL,
+    [Pesel] bigint  NOT NULL UNIQUE,
     [JobTitle] int  NOT NULL,
     [Specialization] int  NOT NULL,
     [Street] varchar(30)  NULL,
@@ -237,6 +235,8 @@ CREATE TABLE [dbo].[M_Visits] (
     [Registered] datetime  NOT NULL,
     [DateOfVisit] datetime  NOT NULL,
     [Started] datetime  NULL,
+    [Ended] datetime  NULL,
+    [LastEdit] datetime  NULL,
     [State] tinyint  NOT NULL,
     [Description] varchar(max)  NULL,
     [Diagnosis] varchar(max)  NULL
@@ -250,9 +250,14 @@ CREATE TABLE [dbo].[M_MedicalTreatments] (
     [DoctorId] int  NOT NULL,
     [PatientId] int  NOT NULL,
     [DoerId] int  NOT NULL,
+    [VerifierId] int  NOT NULL,
+    [EditorId] int  NOT NULL,
     [Ordered] datetime  NOT NULL,
     [DateOfExecution] datetime  NULL,
-    [Executed] datetime  NULL,
+    [StartOfExecution] datetime  NULL,
+    [EndOfExecution] datetime  NULL,
+    [Verified] datetime  NULL,
+    [LastEdit] datetime  NULL,
     [State] tinyint  NOT NULL,
     [MedicalTreatment] int  NOT NULL,
     [IsPrivate] bit  NOT NULL,
@@ -270,7 +275,7 @@ CREATE TABLE [dbo].[M_Patients] (
     [SecondName] varchar(25)  NULL,
     [BirthDate] datetime  NOT NULL,
     [Gender] bit  NOT NULL,
-    [Pesel] bigint  NOT NULL,
+    [Pesel] bigint  NOT NULL UNIQUE,
     [Street] varchar(30)  NULL,
     [BuildingNumber] varchar(5)  NOT NULL,
     [Apartment] varchar(5)  NULL,
@@ -300,7 +305,7 @@ GO
 -- Creating table 'M_DictionaryDiseases'
 CREATE TABLE [dbo].[M_DictionaryDiseases] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Code] varchar(5)  NOT NULL,
+    [Code] varchar(5)  NOT NULL UNIQUE,
     [Name] varchar(150)  NOT NULL,
     [Description] varchar(150)  NULL,
     [New] int  NOT NULL
@@ -310,7 +315,7 @@ GO
 -- Creating table 'M_DictionaryMedicalTreatments'
 CREATE TABLE [dbo].[M_DictionaryMedicalTreatments] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Code] varchar(5)  NOT NULL,
+    [Code] varchar(5)  NOT NULL UNIQUE,
     [Name] varchar(150)  NOT NULL,
     [Description] varchar(150)  NULL,
     [Type] char(1)  NOT NULL,
@@ -718,6 +723,34 @@ ADD CONSTRAINT [FK_A_Schedule_A_Worker]
 CREATE INDEX [IX_FK_A_Schedule_A_Worker]
 ON [dbo].[A_Schedules]
     ([WorkerId]);
+GO
+
+-- Creating foreign key on [VerifierId] in table 'M_MedicalTreatments'
+ALTER TABLE [dbo].[M_MedicalTreatments]
+ADD CONSTRAINT [FK_M_MedicalTreatment_A_Worker_VerifierId]
+    FOREIGN KEY ([VerifierId])
+    REFERENCES [dbo].[A_Workers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_M_MedicalTreatment_A_Worker_VerifierId'
+CREATE INDEX [IX_FK_M_MedicalTreatment_A_Worker_VerifierId]
+ON [dbo].[M_MedicalTreatments]
+    ([VerifierId]);
+GO
+
+-- Creating foreign key on [EditorId] in table 'M_MedicalTreatments'
+ALTER TABLE [dbo].[M_MedicalTreatments]
+ADD CONSTRAINT [FK_M_MedicalTreatment_A_Worker_EditorId]
+    FOREIGN KEY ([EditorId])
+    REFERENCES [dbo].[A_Workers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_M_MedicalTreatment_A_Worker_EditorId'
+CREATE INDEX [IX_FK_M_MedicalTreatment_A_Worker_EditorId]
+ON [dbo].[M_MedicalTreatments]
+    ([EditorId]);
 GO
 
 -- --------------------------------------------------

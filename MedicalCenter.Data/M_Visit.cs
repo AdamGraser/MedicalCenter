@@ -31,6 +31,8 @@ namespace MedicalCenter.Data
         public System.DateTime Registered { get; set; }
         public System.DateTime DateOfVisit { get; set; }
         public Nullable<System.DateTime> Started { get; set; }
+        public Nullable<System.DateTime> Ended { get; set; }
+        public Nullable<System.DateTime> LastEdit { get; set; }
         public byte State { get; set; }
         public string Description { get; set; }
         public string Diagnosis { get; set; }

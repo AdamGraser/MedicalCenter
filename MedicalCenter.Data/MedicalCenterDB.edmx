@@ -640,6 +640,14 @@
             <End Role="A_Worker" EntitySet="A_Workers" />
             <End Role="A_Schedule" EntitySet="A_Schedules" />
           </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_VerifierId" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_VerifierId">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_M_MedicalTreatment_A_Worker_EditorId" Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_EditorId">
+            <End Role="A_Worker" EntitySet="A_Workers" />
+            <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="A_Calendar" cg:TypeAccess="Public">
           <Key>
@@ -709,8 +717,6 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="DateTime" Name="D5To" Nullable="true" />
           <Property Type="DateTime" Name="D6From" Nullable="true" />
           <Property Type="DateTime" Name="D6To" Nullable="true" />
-          <Property Type="DateTime" Name="D7From" Nullable="true" />
-          <Property Type="DateTime" Name="D7To" Nullable="true" />
           <NavigationProperty Name="A_Worker" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" FromRole="A_Schedule" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionaryJobTitle">
@@ -769,6 +775,8 @@ true = kobieta (woman)</LongDescription>
           <NavigationProperty Name="M_MedicalTreatments_DoerId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId" FromRole="A_Worker" ToRole="M_MedicalTreatment" />
           <NavigationProperty Name="A_WorkersRooms" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker" FromRole="A_Worker" ToRole="A_WorkersRoom" />
           <NavigationProperty Name="A_Schedules" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" FromRole="A_Worker" ToRole="A_Schedule" />
+          <NavigationProperty Name="M_MedicalTreatment_VerifierId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_VerifierId" FromRole="A_Worker" ToRole="M_MedicalTreatment" />
+          <NavigationProperty Name="M_MedicalTreatment_EditorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_EditorId" FromRole="A_Worker" ToRole="M_MedicalTreatment" />
         </EntityType>
         <EntityType Name="M_Visit">
           <Key>
@@ -781,6 +789,8 @@ true = kobieta (woman)</LongDescription>
           <Property Type="DateTime" Name="Registered" Nullable="false" />
           <Property Type="DateTime" Name="DateOfVisit" Nullable="false" />
           <Property Type="DateTime" Name="Started" Nullable="true" />
+          <Property Type="DateTime" Name="Ended" Nullable="true" />
+          <Property Type="DateTime" Name="LastEdit" Nullable="true" />
           <Property Type="Byte" Name="State" Nullable="false" DefaultValue="0" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="Max" Unicode="false" />
           <Property Type="String" Name="Diagnosis" Nullable="true" FixedLength="false" MaxLength="Max" Unicode="false" />
@@ -800,9 +810,14 @@ true = kobieta (woman)</LongDescription>
           <Property Type="Int32" Name="DoctorId" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="PatientId" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="DoerId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="VerifierId" Nullable="false" DefaultValue="0" />
+          <Property Type="Int32" Name="EditorId" Nullable="false" DefaultValue="0" />
           <Property Type="DateTime" Name="Ordered" Nullable="false" />
           <Property Type="DateTime" Name="DateOfExecution" Nullable="true" />
-          <Property Type="DateTime" Name="Executed" Nullable="true" />
+          <Property Type="DateTime" Name="StartOfExecution" Nullable="true" />
+          <Property Type="DateTime" Name="EndOfExecution" Nullable="true" />
+          <Property Type="DateTime" Name="Verified" Nullable="true" />
+          <Property Type="DateTime" Name="LastEdit" Nullable="true" />
           <Property Type="Byte" Name="State" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="MedicalTreatment" Nullable="false" DefaultValue="0" />
           <Property Type="Boolean" Name="IsPrivate" Nullable="false" DefaultValue="false" >
@@ -819,6 +834,8 @@ true = tak (yes)</LongDescription>
           <NavigationProperty Name="M_Patient" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_Patient" FromRole="M_MedicalTreatment" ToRole="M_Patient" />
           <NavigationProperty Name="A_Worker_DoerId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_DoerId" FromRole="M_MedicalTreatment" ToRole="A_Worker" />
           <NavigationProperty Name="M_DictionaryMedicalTreatment" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_M_DictionaryMedicalTreatment" FromRole="M_MedicalTreatment" ToRole="M_DictionaryMedicalTreatment" />
+          <NavigationProperty Name="A_Worker_VerifierId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_VerifierId" FromRole="M_MedicalTreatment" ToRole="A_Worker" />
+          <NavigationProperty Name="A_Worker_EditorId" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_EditorId" FromRole="M_MedicalTreatment" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="M_Patient">
           <Key>
@@ -1177,6 +1194,30 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_M_MedicalTreatment_A_Worker_VerifierId">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="VerifierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_M_MedicalTreatment_A_Worker_EditorId">
+          <End Type="MedicalCenter.Data.MedicalCenterDB.A_Worker" Role="A_Worker" Multiplicity="1" />
+          <End Type="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Role="M_MedicalTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A_Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="M_MedicalTreatment">
+              <PropertyRef Name="EditorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1235,9 +1276,7 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="D5To" ColumnName="D5To" />
           <ScalarProperty Name="D6From" ColumnName="D6From" />
           <ScalarProperty Name="D6To" ColumnName="D6To" />
-          <ScalarProperty Name="D7From" ColumnName="D7From" />
-          <ScalarProperty Name="D7To" ColumnName="D7To" />
-        </MappingFragment>
+          </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="A_DictionaryJobTitles">
@@ -1309,7 +1348,7 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="DoerId" ColumnName="DoerId" />
           <ScalarProperty Name="Ordered" ColumnName="Ordered" />
           <ScalarProperty Name="DateOfExecution" ColumnName="DateOfExecution" />
-          <ScalarProperty Name="Executed" ColumnName="Executed" />
+          <ScalarProperty Name="EndOfExecution" ColumnName="Executed" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="MedicalTreatment" ColumnName="MedicalTreatment" />
           <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />

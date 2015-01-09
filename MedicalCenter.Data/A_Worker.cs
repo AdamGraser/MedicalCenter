@@ -27,6 +27,8 @@ namespace MedicalCenter.Data
             this.M_MedicalTreatments_DoerId = new HashSet<M_MedicalTreatment>();
             this.A_WorkersRooms = new HashSet<A_WorkersRoom>();
             this.A_Schedules = new HashSet<A_Schedule>();
+            this.M_MedicalTreatment_VerifierId = new HashSet<M_MedicalTreatment>();
+            this.M_MedicalTreatment_EditorId = new HashSet<M_MedicalTreatment>();
         }
     
         public int Id { get; private set; }
@@ -55,5 +57,7 @@ namespace MedicalCenter.Data
         public virtual ICollection<M_MedicalTreatment> M_MedicalTreatments_DoerId { get; set; }
         public virtual ICollection<A_WorkersRoom> A_WorkersRooms { get; set; }
         public virtual ICollection<A_Schedule> A_Schedules { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatment_VerifierId { get; set; }
+        public virtual ICollection<M_MedicalTreatment> M_MedicalTreatment_EditorId { get; set; }
     }
 }

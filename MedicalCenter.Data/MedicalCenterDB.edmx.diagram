@@ -41,6 +41,8 @@
         <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_WorkersRoom_A_Worker" />
         <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_DictionaryRoom_M_DictionaryClinic" />
         <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_A_Schedule_A_Worker" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_VerifierId" />
+        <AssociationConnector Association="MedicalCenter.Data.MedicalCenterDB.FK_M_MedicalTreatment_A_Worker_EditorId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
