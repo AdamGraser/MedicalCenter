@@ -21,6 +21,11 @@ namespace MedicalCenter.Models.Registrar
         public string ClinicName { get; private set; }
 
         /// <summary>
+        /// Przechowuje ID rekordu z tabeli A_Workers, odpowiadającemu danemu lekarzowi.
+        /// </summary>
+        public int DoctorId { get; private set; }
+        
+        /// <summary>
         /// Przechowuje nazwisko wskazanego lekarza.
         /// Jest to wartość z kolumny LastName z tabeli A_Workers.
         /// </summary>
@@ -59,9 +64,10 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="DoctorFirstName">Wartość z kolumny FirstName z tabeli A_Workers.</param>
         /// <param name="PatientsNumber">Liczba pacjentów zarejestrowana do wskazanego lekarza na podany dzień, w ramach danej poradni medycznej.</param>
         /// <param name="RoomNumber">Numer gabinetu, w którym przyjmuje wskazany lekarz w ramach danej poradni medycznej.</param>
-        public DoctorsListItem(string ClinicName, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber)
+        public DoctorsListItem(string ClinicName, int DoctorId, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber)
         {
             this.ClinicName = ClinicName;
+            this.DoctorId = DoctorId;
             this.DoctorLastName = DoctorLastName;
             this.DoctorFirstName = DoctorFirstName;
             this.PatientsNumber = PatientsNumber;
