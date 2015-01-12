@@ -19,6 +19,7 @@ namespace MedicalCenter.Data
             this.RegistrarId = 0;
             this.DoctorId = 0;
             this.PatientId = 0;
+            this.IsEmergency = false;
             this.State = 0;
             this.M_MedicalTreatments = new HashSet<M_MedicalTreatment>();
             this.M_Prescriptions = new HashSet<M_Prescription>();
@@ -28,6 +29,7 @@ namespace MedicalCenter.Data
         public int RegistrarId { get; set; }
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
+        public bool IsEmergency { get; set; }
         public System.DateTime Registered { get; set; }
         public System.DateTime DateOfVisit { get; set; }
         public Nullable<System.DateTime> Started { get; set; }

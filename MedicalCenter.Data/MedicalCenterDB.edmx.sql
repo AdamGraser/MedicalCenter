@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/09/2015 23:46:19
+-- Date Created: 01/12/2015 21:57:04
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -73,6 +73,12 @@ IF OBJECT_ID(N'[dbo].[FK_A_DictionaryRoom_M_DictionaryClinic]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_A_Schedule_A_Worker]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[A_Schedules] DROP CONSTRAINT [FK_A_Schedule_A_Worker];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_A_Worker_VerifierId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_A_Worker_VerifierId];
+GO
+IF OBJECT_ID(N'[dbo].[FK_M_MedicalTreatment_A_Worker_EditorId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[M_MedicalTreatments] DROP CONSTRAINT [FK_M_MedicalTreatment_A_Worker_EditorId];
 GO
 
 -- --------------------------------------------------
@@ -232,6 +238,7 @@ CREATE TABLE [dbo].[M_Visits] (
     [RegistrarId] int  NOT NULL,
     [DoctorId] int  NOT NULL,
     [PatientId] int  NOT NULL,
+    [IsEmergency] bit  NOT NULL,
     [Registered] datetime  NOT NULL,
     [DateOfVisit] datetime  NOT NULL,
     [Started] datetime  NULL,

@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryJobTitle" Width="1.5" PointX="2.125" PointY="3.875" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionarySpecialization" Width="1.5" PointX="3.75" PointY="5.25" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_Worker" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Visit" Width="1.5" PointX="10.875" PointY="1.875" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Visit" Width="1.5" PointX="10.875" PointY="1.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_MedicalTreatment" Width="1.5" PointX="14" PointY="1.5" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Patient" Width="1.5" PointX="17.5" PointY="0.75" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Width="1.5" PointX="8.75" PointY="7.375" />

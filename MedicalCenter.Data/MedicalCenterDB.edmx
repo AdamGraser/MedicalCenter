@@ -207,6 +207,7 @@
     <Property Name="RegistrarId" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="DoctorId" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="PatientId" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="IsEmergency" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="Registered" Type="datetime" Nullable="false" />
     <Property Name="DateOfVisit" Type="datetime" Nullable="false" />
     <Property Name="Started" Type="datetime" Nullable="true" />
@@ -823,6 +824,7 @@ true = kobieta (woman)</LongDescription>
           <Property Type="Int32" Name="RegistrarId" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="DoctorId" Nullable="false" DefaultValue="0" />
           <Property Type="Int32" Name="PatientId" Nullable="false" DefaultValue="0" />
+          <Property Type="Boolean" Name="IsEmergency" Nullable="false" DefaultValue="false" />
           <Property Type="DateTime" Name="Registered" Nullable="false" />
           <Property Type="DateTime" Name="DateOfVisit" Nullable="false" />
           <Property Type="DateTime" Name="Started" Nullable="true" />
@@ -1366,6 +1368,7 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="RegistrarId" ColumnName="RegistrarId" />
           <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="IsEmergency" ColumnName="IsEmergency" />
           <ScalarProperty Name="Registered" ColumnName="Registered" />
           <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
           <ScalarProperty Name="Started" ColumnName="Started" />
