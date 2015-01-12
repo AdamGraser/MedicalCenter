@@ -43,6 +43,7 @@
     <Compile Include="Registrar\DoctorsListItem.cs" />
     <Compile Include="Registrar\Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registrar\Visit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
