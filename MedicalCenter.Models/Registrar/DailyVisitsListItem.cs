@@ -33,6 +33,12 @@ namespace MedicalCenter.Models.Registrar
         public string PatientFirstName { get; private set; }
 
         /// <summary>
+        /// Przechowuje stan wizyty.
+        /// Jest to wartość z kolumny State z tabeli M_Visits.
+        /// </summary>
+        public byte State { get; set; }
+
+        /// <summary>
         /// Określa czy wizyta została zarejestrowana jako nagły przypadek.
         /// Jest to wartość z kolumny IsEmergency z tabeli M_Visits.
         /// </summary>
@@ -54,6 +60,7 @@ namespace MedicalCenter.Models.Registrar
         public DailyVisitsListItem(DateTime DateOfVisit)
         {
             this.DateOfVisit = DateOfVisit;
+            this.State = 0;
             this.IsEmergency = false;
         }
 
@@ -64,11 +71,12 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="PatientLastName">Nazwisko pacjenta, dla którego dana wizyta została zarejestrowana.</param>
         /// <param name="PatientFirstName">Imię pacjenta, dla którego dana wizyta została zarejestrowana.</param>
         /// <param name="IsEmergency">Określa czy wskazana wizyta została zarejestrowana jako nagły przypadek.</param>
-        public DailyVisitsListItem(DateTime DateOfVisit, string PatientLastName, string PatientFirstName, bool IsEmergency)
+        public DailyVisitsListItem(DateTime DateOfVisit, string PatientLastName, string PatientFirstName, byte State, bool IsEmergency)
         {
             this.DateOfVisit = DateOfVisit;
             this.PatientLastName = PatientLastName;
             this.PatientFirstName = PatientFirstName;
+            this.State = State;
             this.IsEmergency = IsEmergency;
         }
 
