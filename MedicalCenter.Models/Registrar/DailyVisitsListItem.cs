@@ -70,6 +70,7 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="DateOfVisit">Data i godzina, na którą dana wizyta została zarejestrowana.</param>
         /// <param name="PatientLastName">Nazwisko pacjenta, dla którego dana wizyta została zarejestrowana.</param>
         /// <param name="PatientFirstName">Imię pacjenta, dla którego dana wizyta została zarejestrowana.</param>
+        /// <param name="State">Wartość z kolumny State z tabeli M_Visits.</param>
         /// <param name="IsEmergency">Określa czy wskazana wizyta została zarejestrowana jako nagły przypadek.</param>
         public DailyVisitsListItem(DateTime DateOfVisit, string PatientLastName, string PatientFirstName, byte State, bool IsEmergency)
         {
