@@ -48,6 +48,11 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public string RoomNumber { get; private set; }
 
+        /// <summary>
+        /// Określa czy lekarz przyjmuje w danym dniu (!= null) i czy można jeszcze do niego zarejestrować nową wizytę (true).
+        /// </summary>
+        public bool? State { get; private set; }
+
         #endregion // Public properties
 
         #region Ctors
@@ -66,7 +71,8 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="DoctorFirstName">Wartość z kolumny FirstName z tabeli A_Workers.</param>
         /// <param name="PatientsNumber">Liczba pacjentów zarejestrowana do wskazanego lekarza na podany dzień, w ramach danej poradni medycznej.</param>
         /// <param name="RoomNumber">Wartość z kolumny Number z tabeli A_DictionaryRoom.</param>
-        public DoctorsListItem(string ClinicName, int DoctorId, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber)
+        /// <param name="State">Określa czy lekarz przyjmuje w danym dniu (!= null) i czy można jeszcze do niego zarejestrować nową wizytę (true).</param>
+        public DoctorsListItem(string ClinicName, int DoctorId, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber, bool? State)
         {
             this.ClinicName = ClinicName;
             this.DoctorId = DoctorId;
@@ -74,6 +80,7 @@ namespace MedicalCenter.Models.Registrar
             this.DoctorFirstName = DoctorFirstName;
             this.PatientsNumber = PatientsNumber;
             this.RoomNumber = RoomNumber;
+            this.State = State;
         }
 
         #endregion // Ctors
