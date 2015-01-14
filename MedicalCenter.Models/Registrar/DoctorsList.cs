@@ -50,7 +50,7 @@ namespace MedicalCenter.Models.Registrar
         /// Zmiana elementu o wskazanym indeksie jest dostępna tylko wewnątrz klasy.
         /// </summary>
         /// <param name="index">Indeks elementu, do którego referencja ma zostać zwrócona.</param>
-        /// <returns>Element o wskazanym indeksie lub null, jeśli podany indeks jest z poza zakresu.</returns>
+        /// <returns>Element o wskazanym indeksie lub null, jeśli podany indeks jest spoza zakresu.</returns>
         public DoctorsListItem this[int index]
         {
             get
@@ -61,7 +61,7 @@ namespace MedicalCenter.Models.Registrar
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    System.Console.WriteLine(e.Message);
+                    Console.WriteLine(e.Message);
                     return null;
                 }
             }
@@ -73,7 +73,7 @@ namespace MedicalCenter.Models.Registrar
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    System.Console.WriteLine(e.Message);
+                    Console.WriteLine(e.Message);
                 }
             }
         }
@@ -107,7 +107,7 @@ namespace MedicalCenter.Models.Registrar
         #region Ctors
 
         /// <summary>
-        /// Konstruktor inicjalizujący listę lekarzy.
+        /// Konstruktor tworzący pustą listę lekarzy.
         /// </summary>
         public DoctorsList()
         {
@@ -162,7 +162,14 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="newItem">Element, który ma zostać wstawiony do listy.</param>
         public void Insert(int index, DoctorsListItem newItem)
         {
-            listOfDoctors.Insert(index, newItem);
+            try
+            {
+                listOfDoctors.Insert(index, newItem);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -180,7 +187,14 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="index">Indeks elementu, który ma zostać usunięty.</param>
         public void RemoveAt(int index)
         {
-            listOfDoctors.RemoveAt(index);
+            try
+            {
+                listOfDoctors.RemoveAt(index);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -190,7 +204,14 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="index">Indeks, jaki ma mieć pierwszy element listy po skopiowaniu do tablicy.</param>
         public void CopyTo(DoctorsListItem[] array, int index)
         {
-            listOfDoctors.CopyTo(array, index);
+            try
+            {
+                listOfDoctors.CopyTo(array, index);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -203,33 +224,5 @@ namespace MedicalCenter.Models.Registrar
         }
 
         #endregion // Public methods
-
-        #region Public operators
-
-        /// <summary>
-        /// Umożliwia dodanie nowego elementu do listy.
-        /// </summary>
-        /// <param name="listToExtend">Lista, do której element ma zostać dodany.</param>
-        /// <param name="newItem">Element, który ma zostać dodany do listy.</param>
-        /// <returns>Zwraca listę po dodaniu nowego elementu na jej końcu.</returns>
-        public static DoctorsList operator +(DoctorsList listToExtend, DoctorsListItem newItem)
-        {
-            listToExtend.Add(newItem);
-            return listToExtend;
-        }
-
-        /// <summary>
-        /// Umożliwia usunięcie z listy wskazanego elementu.
-        /// </summary>
-        /// <param name="sourceList">Lista, z której ma zostać usunięty element.</param>
-        /// <param name="itemToDelete">Element, który ma zostać usunięty z listy.</param>
-        /// <returns>Zwraca kopię oryginalnej listy, pozbawioną wskaznego elementu.</returns>
-        public static DoctorsList operator -(DoctorsList sourceList, DoctorsListItem itemToDelete)
-        {
-            sourceList.Remove(itemToDelete);
-            return sourceList;
-        }
-
-        #endregion // Public operators
     }
 }
