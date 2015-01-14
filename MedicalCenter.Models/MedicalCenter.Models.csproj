@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Registrar\ClinicsList.cs" />
+    <Compile Include="Registrar\DailyVisitsList.cs" />
     <Compile Include="Registrar\DailyVisitsListItem.cs" />
     <Compile Include="Registrar\DoctorsList.cs" />
     <Compile Include="Registrar\DoctorsListItem.cs" />
