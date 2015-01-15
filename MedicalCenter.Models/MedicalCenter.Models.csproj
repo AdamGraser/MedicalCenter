@@ -45,6 +45,7 @@
     <Compile Include="Registrar\DailyVisitsListItem.cs" />
     <Compile Include="Registrar\DoctorsList.cs" />
     <Compile Include="Registrar\DoctorsListItem.cs" />
+    <Compile Include="Registrar\Month.cs" />
     <Compile Include="Registrar\Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrar\PatientsList.cs" />
