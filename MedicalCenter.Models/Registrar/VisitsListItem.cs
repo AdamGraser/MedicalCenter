@@ -60,6 +60,18 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public string RoomNumber { get; private set; }
 
+        /// <summary>
+        /// Przechowuje stan wizyty.
+        /// Jest to wartość z kolumny State z tabeli M_Visits.
+        /// </summary>
+        public byte State { get; set; }
+
+        /// <summary>
+        /// Określa czy wizyta została zarejestrowana jako nagły przypadek.
+        /// Jest to wartość z kolumny IsEmergency z tabeli M_Visits.
+        /// </summary>
+        public bool IsEmergency { get; private set; }
+
         #endregion // Public properties
 
         #region Ctors
@@ -80,6 +92,8 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="DoctorLastName">Wartość z kolumny LastName z tabeli A_Workers.</param>
         /// <param name="DoctorFirstName">Wartość z kolumny FirstName z tabeli A_Workers.</param>
         /// <param name="RoomNumber">Wartość z kolumny Number z tabeli A_DictionaryRoom.</param>
+        /// <param name="State">Wartość z kolumny State z tabeli M_Visits.</param>
+        /// <param name="IsEmergency">Wartość z kolumny IsEmergency z tabeli M_Visits.</param>
         public VisitsListItem(int VisitId,
                               int PatientId,
                               string PatientLastName,
@@ -87,7 +101,9 @@ namespace MedicalCenter.Models.Registrar
                               DateTime DateOfVisit,
                               string DoctorLastName,
                               string DoctorFirstName,
-                              string RoomNumber)
+                              string RoomNumber,
+                              byte State,
+                              bool IsEmergency)
         {
             this.VisitId = VisitId;
             this.PatientId = PatientId;
@@ -97,6 +113,8 @@ namespace MedicalCenter.Models.Registrar
             this.DoctorLastName = DoctorLastName;
             this.DoctorFirstName = DoctorFirstName;
             this.RoomNumber = RoomNumber;
+            this.State = State;
+            this.IsEmergency = IsEmergency;
         }
 
         #endregion // Ctors
