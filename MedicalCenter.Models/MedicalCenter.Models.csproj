@@ -40,21 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Doctor\DoneMedicalTreatment.cs" />
-    <Compile Include="Doctor\TodaysVisitsList.cs" />
     <Compile Include="Doctor\TodaysVisitsListItem.cs" />
     <Compile Include="Doctor\Visit.cs" />
     <Compile Include="Registrar\AbsencesList.cs" />
-    <Compile Include="Registrar\ClinicsList.cs" />
-    <Compile Include="Registrar\DailyVisitsList.cs" />
     <Compile Include="Registrar\DailyVisitsListItem.cs" />
-    <Compile Include="Registrar\DoctorsList.cs" />
     <Compile Include="Registrar\DoctorsListItem.cs" />
     <Compile Include="Registrar\Month.cs" />
     <Compile Include="Registrar\Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registrar\PatientsList.cs" />
     <Compile Include="Registrar\Visit.cs" />
-    <Compile Include="Registrar\VisitsList.cs" />
     <Compile Include="Registrar\VisitsListItem.cs" />
   </ItemGroup>
   <ItemGroup />
