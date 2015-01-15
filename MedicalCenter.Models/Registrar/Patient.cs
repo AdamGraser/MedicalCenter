@@ -7,81 +7,94 @@ using System.Threading.Tasks;
 namespace MedicalCenter.Models
 {
     /// <summary>
-    /// Reprezentuje obiekt klasy <see cref="M_Patient"/> w widoku dla rejestratorki.
+    /// Reprezentuje obiekt klasy M_Patient w widoku dla rejestratorki.
     /// </summary>
     public class Patient
     {
         #region Public properties
 
         /// <summary>
-        /// Przechowuje wartość z kolumny Id rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje ID rekordu z tabeli M_Patients, reprezentującego danego pacjenta.
         /// Wartość 0 oznacza użycie domyślnego konstruktora, co jest rozumiane jako utworzenie nowego obiektu (rekordu).
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny LastName rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje nazwisko pacjenta.
+        /// Jest to wartość z kolumny LastName z tabeli z tabeli M_Patients.
         /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny FirstName rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje pierwsze imię pacjenta.
+        /// Jest to wartość z kolumny FirstName z tabeli M_Patients.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny SecondName rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje drugie imię pacjenta.
+        /// Jest to wartość z kolumny SecondName z tabeli M_Patients.
         /// </summary>
         public string SecondName { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny BirthDate rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje datę urodzenia pacjenta.
+        /// Jest to wartość z kolumny BirthDate z tabeli M_Patients.
         /// </summary>
         public DateTime BirthDate { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny Gender rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje informację o płci pacjenta.
+        /// Jest to wartość z kolumny Gender z tabeli M_Patients.
         /// </summary>
         public bool Gender { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny Pesel rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje numer PESEL pacjenta.
+        /// Jest to wartość z kolumny Pesel z tabeli M_Patients.
         /// Ta wartość musi być unikatowa w tabeli.
         /// </summary>
         public long Pesel { get; set; }
         
         /// <summary>
-        /// Przechowuje wartość z kolumny Street rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje nazwę ulicy z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny Street z tabeli M_Patients.
         /// </summary>
         public string Street { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny BuildingNumber rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje numer budynku z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny BuildingNumber z tabeli M_Patients.
         /// </summary>
         public string BuildingNumber { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny Apartment rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje numer lokalu z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny Apartment z tabeli M_Patients.
         /// </summary>
         public string Apartment { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny PostalCode rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje kod pocztowy z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny PostalCode z tabeli M_Patients.
         /// </summary>
         public string PostalCode { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny City rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje nazwę miejscowości z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny City z tabeli M_Patients.
         /// </summary>
         public string City { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny Post rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje nazwę urzędu pocztowego z adresu podanego przez pacjenta.
+        /// Jest to wartość z kolumny Post z tabeli M_Patients.
         /// </summary>
         public string Post { get; set; }
 
         /// <summary>
-        /// Przechowuje wartość z kolumny IsInsured rekordu reprezentowanego przez obiekt klasy <see cref="M_Patient"/>.
+        /// Przechowuje informację o ubezpieczeniu pacjenta.
+        /// Jest to wartość z kolumny IsInsured z tabeli M_Patients.
         /// </summary>
         public bool IsInsured { get; set; }
 
