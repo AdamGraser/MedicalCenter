@@ -13,5 +13,14 @@ namespace MedicalCenter.GUI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindow app = new MainWindow();
+            Presenters.TestPresenter testPresenter = new Presenters.TestPresenter();
+            app.DataContext = testPresenter;
+            app.Show();
+        }
     }
 }
