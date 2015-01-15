@@ -294,7 +294,7 @@
     <Property Name="Code" Type="varchar" Nullable="false" MaxLength="5" />
     <Property Name="Name" Type="varchar" Nullable="false" MaxLength="150" />
     <Property Name="Description" Type="varchar" Nullable="true" MaxLength="150" />
-    <Property Name="Type" Type="char" Nullable="false" DefaultValue="Z" MaxLength="1" />
+    <Property Name="Type" Type="varchar" Nullable="false" DefaultValue="Z" MaxLength="3" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
   </EntityType>
@@ -955,10 +955,10 @@ true = ubezpieczony (insured) [default]</LongDescription>
           </Property>
           <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="150" Unicode="false" />
           <Property Type="String" Name="Description" Nullable="true" FixedLength="false" MaxLength="150" Unicode="false" />
-          <Property Type="String" Name="Type" Nullable="false" FixedLength="true" MaxLength="1" DefaultValue="Z" Unicode="false" >
+          <Property Type="String" Name="Type" Nullable="false" FixedLength="false" MaxLength="3" DefaultValue="Z" Unicode="false" >
             <Documentation>
-              <LongDescription>F = badanie fizykalne, L = badanie laboratoryjne, C = badanie zlecane, Z = inny zabieg medyczny
-(F = physical examination, L = laboratory test, C = ordered examination, Z = other medical treatment)</LongDescription>
+              <LongDescription>Kombinacja do 3 flag: F = badanie fizykalne, L = badanie laboratoryjne, Z = zabieg, I = inna procedura medyczna; P = może wykonać pielęgniarka; R = można prywatnie
+(F = physical examination, L = laboratory test, Z = medical treatment (e.g. surgery procedure), I = other medical procedure; P = may be executed by nurse; R = may be for private order)</LongDescription>
             </Documentation>
           </Property>
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />

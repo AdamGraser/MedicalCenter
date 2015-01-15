@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Patient" Width="1.5" PointX="17.5" PointY="0.75" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_Prescription" Width="1.5" PointX="8.75" PointY="7.375" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_L4Disease" Width="1.5" PointX="11" PointY="7.375" />
-        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Width="1.5" PointX="14.625" PointY="7.375" />
+        <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryDisease" Width="1.5" PointX="14.625" PointY="7.875" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.M_DictionaryMedicalTreatment" Width="1.5" PointX="16.5" PointY="7.125" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_WorkersRoom" Width="1.5" PointX="7" PointY="8.375" />
         <EntityTypeShape EntityType="MedicalCenter.Data.MedicalCenterDB.A_DictionaryRoom" Width="1.5" PointX="3.75" PointY="8.375" />

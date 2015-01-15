@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/12/2015 21:57:04
+-- Date Created: 01/15/2015 14:00:44
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -164,7 +164,7 @@ GO
 CREATE TABLE [dbo].[A_Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [WorkerId] int  NOT NULL,
-    [Login] varchar(10)  NOT NULL UNIQUE,
+    [Login] varchar(10)  NOT NULL,
     [Password] varchar(max)  NOT NULL,
     [Active] datetime  NOT NULL,
     [Expires] datetime  NULL
@@ -196,7 +196,7 @@ GO
 CREATE TABLE [dbo].[A_DictionaryJobTitles] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [JobTitle] varchar(20)  NOT NULL,
-    [Code] char(4)  NOT NULL UNIQUE,
+    [Code] char(4)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [New] int  NOT NULL
 );
@@ -206,7 +206,7 @@ GO
 CREATE TABLE [dbo].[A_DictionarySpecializations] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Specialization] varchar(20)  NOT NULL,
-    [Code] char(7)  NOT NULL UNIQUE,
+    [Code] char(7)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [New] int  NOT NULL
 );
@@ -220,7 +220,7 @@ CREATE TABLE [dbo].[A_Workers] (
     [SecondName] varchar(25)  NULL,
     [BirthDate] datetime  NOT NULL,
     [Gender] bit  NOT NULL,
-    [Pesel] bigint  NOT NULL UNIQUE,
+    [Pesel] bigint  NOT NULL,
     [JobTitle] int  NOT NULL,
     [Specialization] int  NOT NULL,
     [Street] varchar(30)  NULL,
@@ -282,7 +282,7 @@ CREATE TABLE [dbo].[M_Patients] (
     [SecondName] varchar(25)  NULL,
     [BirthDate] datetime  NOT NULL,
     [Gender] bit  NOT NULL,
-    [Pesel] bigint  NOT NULL UNIQUE,
+    [Pesel] bigint  NOT NULL,
     [Street] varchar(30)  NULL,
     [BuildingNumber] varchar(5)  NOT NULL,
     [Apartment] varchar(5)  NULL,
@@ -312,7 +312,7 @@ GO
 -- Creating table 'M_DictionaryDiseases'
 CREATE TABLE [dbo].[M_DictionaryDiseases] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Code] varchar(5)  NOT NULL UNIQUE,
+    [Code] varchar(5)  NOT NULL,
     [Name] varchar(150)  NOT NULL,
     [Description] varchar(150)  NULL,
     [New] int  NOT NULL
@@ -322,10 +322,10 @@ GO
 -- Creating table 'M_DictionaryMedicalTreatments'
 CREATE TABLE [dbo].[M_DictionaryMedicalTreatments] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Code] varchar(5)  NOT NULL UNIQUE,
+    [Code] varchar(5)  NOT NULL,
     [Name] varchar(150)  NOT NULL,
     [Description] varchar(150)  NULL,
-    [Type] char(1)  NOT NULL,
+    [Type] varchar(3)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [New] int  NOT NULL
 );
@@ -759,6 +759,31 @@ CREATE INDEX [IX_FK_M_MedicalTreatment_A_Worker_EditorId]
 ON [dbo].[M_MedicalTreatments]
     ([EditorId]);
 GO
+
+-- --------------------------------------------------
+-- Creating all UNIQUE constraints
+-- --------------------------------------------------
+
+ALTER TABLE [dbo].[A_Users]
+ADD CONSTRAINT UQ_A_Users_Login UNIQUE ([Login]);
+
+ALTER TABLE [dbo].[A_DictionaryJobTitles]
+ADD CONSTRAINT UQ_A_DictionaryJobTitles_Code UNIQUE ([Code]);
+
+ALTER TABLE [dbo].[A_DictionarySpecializations]
+ADD CONSTRAINT UQ_A_DictionarySpecializations_Code UNIQUE ([Code]);
+
+ALTER TABLE [dbo].[A_Workers]
+ADD CONSTRAINT UQ_A_Workers_Pesel UNIQUE ([Pesel]);
+
+ALTER TABLE [dbo].[M_Patients]
+ADD CONSTRAINT UQ_M_Patients_Pesel UNIQUE ([Pesel]);
+
+ALTER TABLE [dbo].[M_DictionaryDiseases]
+ADD CONSTRAINT UQ_M_DictionaryDiseases_Code UNIQUE ([Code]);
+
+ALTER TABLE [dbo].[M_DictionaryMedicalTreatments]
+ADD CONSTRAINT UQ_M_DictionaryMedicalTreatments_Code UNIQUE ([Code]);
 
 -- --------------------------------------------------
 -- Script has ended
