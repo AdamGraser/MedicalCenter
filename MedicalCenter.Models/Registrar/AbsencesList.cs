@@ -16,7 +16,7 @@ namespace MedicalCenter.Models.Registrar
         /// <summary>
         /// Data wskazująca dzień, w którym nieobecni są lekarze znajdujący się na tej liście.
         /// </summary>
-        public DateTime Date { get; set; }
+        public int Day { get; set; }
 
         /// <summary>
         /// Lista lekarzy nieobecnych w danym dniu.
@@ -32,6 +32,7 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public AbsencesList()
         {
+            Day = 0;
             DoctorsList = new List<string>();
         }
 

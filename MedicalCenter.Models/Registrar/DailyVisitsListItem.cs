@@ -49,11 +49,6 @@ namespace MedicalCenter.Models.Registrar
         #region Ctors
 
         /// <summary>
-        /// Ukrycie domyślnego konstruktora.
-        /// </summary>
-        private DailyVisitsListItem() { }
-
-        /// <summary>
         /// Tworzy obiekt listy wizyt, reprezentujący "wolną godzinę" (na którą nikt dotychczas nie zarejestrował wizyty do wskazanego lekarza).
         /// </summary>
         /// <param name="DateOfVisit">Data i godzina, na którą wciąż można zarejestrować wizytę.</param>

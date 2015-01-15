@@ -77,11 +77,6 @@ namespace MedicalCenter.Models.Registrar
         #region Ctors
 
         /// <summary>
-        /// Ukrycie domyślnego konstruktora.
-        /// </summary>
-        private VisitsListItem() { }
-
-        /// <summary>
         /// Konstruktor zapisujący w tworzonym obiekcie wartości podane w argumentach.
         /// </summary>
         /// <param name="VisitId">ID rekordu z tabeli M_Visits.</param>

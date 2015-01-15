@@ -58,11 +58,6 @@ namespace MedicalCenter.Models.Registrar
         #region Ctors
 
         /// <summary>
-        /// Ukrycie domyślnego konstruktora.
-        /// </summary>
-        private DoctorsListItem() { }
-
-        /// <summary>
         /// Konstruktor zapisujący w tworzonym obiekcie wartości podane w argumentach.
         /// </summary>
         /// <param name="ClinicName">Wartość z kolumny Name z tabeli M_DictionaryClinics.</param>
