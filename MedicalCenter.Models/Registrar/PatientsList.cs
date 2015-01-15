@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace MedicalCenter.Models.Registrar
 {
     /// <summary>
-    /// Reprezentuje listę wizyt u danego lekarza we wskazanym dniu.
+    /// Reprezentuje listę pacjentów widoczną podczas rejestrowania wizyty przez rejestratorkę.
     /// </summary>
-    class DailyVisitsList : IList
+    class PatientsList : IList
     {
         #region Private fields
 
         /// <summary>
-        /// Lista wizyt u danego lekarza we wskazanym dniu.
+        /// Lista pacjentów.
         /// </summary>
-        private List<DailyVisitsListItem> dailyVisitsList;
+        private List<Patient> patientsList;
 
         #endregion // Private fields
 
@@ -46,18 +46,18 @@ namespace MedicalCenter.Models.Registrar
         #region Public properties
 
         /// <summary>
-        /// Umożliwia pobranie referencji do elementu listy o wskazanym indeksie.
+        /// Umożliwia pobranie nazwiska i imienia pacjenta o wskazanym indeksie w liście.
         /// Zmiana elementu o wskazanym indeksie jest dostępna tylko wewnątrz klasy.
         /// </summary>
-        /// <param name="index">Indeks elementu, do którego referencja ma zostać zwrócona.</param>
-        /// <returns>Element o wskazanym indeksie lub null, jeśli podany indeks jest spoza zakresu.</returns>
-        public DailyVisitsListItem this[int index]
+        /// <param name="index">Indeks pacjenta, którego nazwisko i imię mają zostać zwrócone.</param>
+        /// <returns>Nazwisko i imię pacjenta o wskazanym indeksie lub null, jeśli podany indeks jest spoza zakresu.</returns>
+        public string this[int index]
         {
             get
             {
                 try
                 {
-                    return dailyVisitsList[index];
+                    return patientsList[index].LastName + " " + patientsList[index].FirstName;
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
@@ -65,17 +65,8 @@ namespace MedicalCenter.Models.Registrar
                     return null;
                 }
             }
-            private set
-            {
-                try
-                {
-                    dailyVisitsList[index] = value;
-                }
-                catch (ArgumentOutOfRangeException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
+
+            private set;
         }
 
         /// <summary>
@@ -99,7 +90,7 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public int Count
         {
-            get { return dailyVisitsList.Count; }
+            get { return patientsList.Count; }
         }
 
         #endregion // Public properties
@@ -107,11 +98,11 @@ namespace MedicalCenter.Models.Registrar
         #region Ctors
 
         /// <summary>
-        /// Konstruktor tworzący pustą dzienną listę wizyt.
+        /// Konstruktor tworzący pustą listę pacjentów.
         /// </summary>
-        public DailyVisitsList()
+        public PatientsList()
         {
-            dailyVisitsList = new List<DailyVisitsListItem>();
+            patientsList = new List<Patient>();
         }
 
         #endregion // Ctors
@@ -122,9 +113,9 @@ namespace MedicalCenter.Models.Registrar
         /// Dodaje nowy element na koniec listy.
         /// </summary>
         /// <param name="newItem">Element, który ma zostać dodany do listy.</param>
-        public void Add(DailyVisitsListItem newItem)
+        public void Add(Patient newItem)
         {
-            dailyVisitsList.Add(newItem);
+            patientsList.Add(newItem);
         }
 
         /// <summary>
@@ -132,7 +123,7 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public void Clear()
         {
-            dailyVisitsList.Clear();
+            patientsList.Clear();
         }
 
         /// <summary>
@@ -140,9 +131,9 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="item">Element, którego obecność w liście ma zostać sprawdzona.</param>
         /// <returns>Zwraca true jeśli lista zawiera podany element, false w przeciwnym razie.</returns>
-        public bool Contains(DailyVisitsListItem item)
+        public bool Contains(Patient item)
         {
-            return dailyVisitsList.Contains(item);
+            return patientsList.Contains(item);
         }
 
         /// <summary>
@@ -150,9 +141,9 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="item">Element, którego indeks ma zostać podany.</param>
         /// <returns>Zwraca indeks podanego elementu lub -1, jeśli nie znaleziono.</returns>
-        public int IndexOf(DailyVisitsListItem item)
+        public int IndexOf(Patient item)
         {
-            return dailyVisitsList.IndexOf(item);
+            return patientsList.IndexOf(item);
         }
 
         /// <summary>
@@ -160,11 +151,11 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="index">Indeks, jaki ma mieć element po wstawieniu do listy.</param>
         /// <param name="newItem">Element, który ma zostać wstawiony do listy.</param>
-        public void Insert(int index, DailyVisitsListItem newItem)
+        public void Insert(int index, Patient newItem)
         {
             try
             {
-                dailyVisitsList.Insert(index, newItem);
+                patientsList.Insert(index, newItem);
             }
             catch (Exception e)
             {
@@ -176,9 +167,9 @@ namespace MedicalCenter.Models.Registrar
         /// Usuwa z listy pierwsze znalezione wystąpienie podanego elementu.
         /// </summary>
         /// <param name="item">Element, którego pierwsze wystąpienie ma zostać usunięte z listy.</param>
-        public void Remove(DailyVisitsListItem item)
+        public void Remove(Patient item)
         {
-            dailyVisitsList.Remove(item);
+            patientsList.Remove(item);
         }
 
         /// <summary>
@@ -189,7 +180,7 @@ namespace MedicalCenter.Models.Registrar
         {
             try
             {
-                dailyVisitsList.RemoveAt(index);
+                patientsList.RemoveAt(index);
             }
             catch (Exception e)
             {
@@ -202,11 +193,11 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="array">Tablica, do której mają zostać skopiowane elementy listy.</param>
         /// <param name="index">Indeks, jaki ma mieć pierwszy element listy po skopiowaniu do tablicy.</param>
-        public void CopyTo(DailyVisitsListItem[] array, int index)
+        public void CopyTo(Patient[] array, int index)
         {
             try
             {
-                dailyVisitsList.CopyTo(array, index);
+                patientsList.CopyTo(array, index);
             }
             catch (Exception e)
             {
@@ -220,7 +211,49 @@ namespace MedicalCenter.Models.Registrar
         /// <returns>Zwraca enumerator tej listy.</returns>
         public IEnumerator GetEnumerator()
         {
-            return dailyVisitsList.GetEnumerator();
+            return patientsList.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Determinuje czy lista zawiera pacjenta o podanym numerze PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL do znalezienia na liście.</param>
+        /// <returns>Zwraca true jeśli lista zawiera pacjenta o podanym numerze PESEL, false w przeciwnym razie.</returns>
+        public bool Contains(Int64 pesel)
+        {
+            bool found = false;
+            
+            foreach (Patient p in patientsList)
+            {
+                if (p.Pesel == pesel)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
+        }
+
+        /// <summary>
+        /// Podaje indeks w liście pacjenta o podanym numerze PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL do znalezienia na liście.</param>
+        /// <returns>Zwraca indeks podanego elementu lub -1, jeśli nie znaleziono.</returns>
+        public int IndexOf(Int64 pesel)
+        {
+            int index = 0;
+
+            for (; index < patientsList.Count; ++index)
+            {
+                if (patientsList[index].Pesel == pesel)
+                    break;
+            }
+
+            if (index >= patientsList.Count)
+                index = -1;
+
+            return index;
         }
 
         #endregion // Public methods
