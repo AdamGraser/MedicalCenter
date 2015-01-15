@@ -94,7 +94,7 @@ namespace MedicalCenter.Models.Doctor
         /// <summary>
         /// Przechowuje ID rekordu z tabeli M_DictionaryMedicalTreatments, odpowiadającego wybranej do wykonania procedurze medycznej.
         /// </summary>
-        public int MedicalTreatment { get; set; }
+        public int MedicalTreatmentId { get; set; }
 
         /// <summary>
         /// Określa czy ta procedura medyczna została zlecona prywatnie, na wniosek pacjenta.
@@ -139,7 +139,7 @@ namespace MedicalCenter.Models.Doctor
             this.DoerId = 0;
             this.VerifierId = 0;
             this.EditorId = 0;
-            this.MedicalTreatment = 0;
+            this.MedicalTreatmentId = 0;
             IsPrivate = false;
         }
 
@@ -199,7 +199,7 @@ namespace MedicalCenter.Models.Doctor
             this.Verified = Verified;
             this.LastEdit = LastEdit;
             this.State = State;
-            this.MedicalTreatment = MedicalTreatment;
+            this.MedicalTreatmentId = MedicalTreatment;
             this.IsPrivate = IsPrivate;
             this.Description = Description;
             this.Result = Result;

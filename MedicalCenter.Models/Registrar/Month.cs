@@ -21,39 +21,17 @@ namespace MedicalCenter.Models.Registrar
 
         #endregion // Private fields
 
-        #region Private properties
-
-        /// <summary>
-        /// Zwraca wartość określającą czy dostęp do kolekcji ICollection jest synchronizowany pomiędzy wątkami. (Odziedziczone z ICollection.)
-        /// Zwraca wartość false.
-        /// </summary>
-        private bool IsSynchronized
-        {
-            get { return false; }
-        }
-
-        /// <summary>
-        /// Zwraca obiekt, który może zostać użyty do synchronizacji dostępu do kolekcji ICollection. (Odziedziczone z ICollection.)
-        /// Zwraca null.
-        /// </summary>
-        private object SyncRoot
-        {
-            get { return null; }
-        }
-
-        #endregion // Private properties
-
         #region Public properties
 
         /// <summary>
         /// Miesiąc, z którego nieobecności przechowywane są w tej liście.
         /// </summary>
-        public int Month { get; set; }
+        public int MonthNumber { get; set; }
 
         /// <summary>
         /// Rok, z którego miesiąc jest brany pod uwagę.
         /// </summary>
-        public int Year { get; set; }
+        public int YearNumber { get; set; }
 
         /// <summary>
         /// Umożliwia pobranie referencji do elementu listy o wskazanym indeksie.
@@ -61,7 +39,7 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="index">Indeks elementu, do którego referencja ma zostać zwrócona.</param>
         /// <returns>Element o wskazanym indeksie lub null, jeśli podany indeks jest spoza zakresu.</returns>
-        public AbsencesList this[int index]
+        public object this[int index]
         {
             get
             {
@@ -75,16 +53,9 @@ namespace MedicalCenter.Models.Registrar
                     return null;
                 }
             }
-            private set
+            set
             {
-                try
-                {
-                    absencesList[index] = value;
-                }
-                catch (ArgumentOutOfRangeException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                for(int i = 0; i < index; ++i);
             }
         }
 
@@ -112,6 +83,24 @@ namespace MedicalCenter.Models.Registrar
             get { return absencesList.Count; }
         }
 
+        /// <summary>
+        /// Zwraca wartość określającą czy dostęp do kolekcji ICollection jest synchronizowany pomiędzy wątkami. (Odziedziczone z ICollection.)
+        /// Zwraca wartość false.
+        /// </summary>
+        public bool IsSynchronized
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Zwraca obiekt, który może zostać użyty do synchronizacji dostępu do kolekcji ICollection. (Odziedziczone z ICollection.)
+        /// Zwraca null.
+        /// </summary>
+        public object SyncRoot
+        {
+            get { return null; }
+        }
+
         #endregion // Public properties
 
         #region Ctors
@@ -132,9 +121,12 @@ namespace MedicalCenter.Models.Registrar
         /// Dodaje nowy element na koniec listy.
         /// </summary>
         /// <param name="newItem">Element, który ma zostać dodany do listy.</param>
-        public void Add(AbsencesList newItem)
+        /// <returns>Pozycja, na którą element został wstawiony, lub -1 by wskazać, że obiekt nie został dodany do kolekcji.</returns>
+        public int Add(object newItem)
         {
-            absencesList.Add(newItem);
+            absencesList.Add(newItem as AbsencesList);
+
+            return absencesList.Count - 1;
         }
 
         /// <summary>
@@ -150,9 +142,9 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="item">Element, którego obecność w liście ma zostać sprawdzona.</param>
         /// <returns>Zwraca true jeśli lista zawiera podany element, false w przeciwnym razie.</returns>
-        public bool Contains(AbsencesList item)
+        public bool Contains(object item)
         {
-            return absencesList.Contains(item);
+            return absencesList.Contains(item as AbsencesList);
         }
 
         /// <summary>
@@ -160,9 +152,9 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="item">Element, którego indeks ma zostać podany.</param>
         /// <returns>Zwraca indeks podanego elementu lub -1, jeśli nie znaleziono.</returns>
-        public int IndexOf(AbsencesList item)
+        public int IndexOf(object item)
         {
-            return absencesList.IndexOf(item);
+            return absencesList.IndexOf(item as AbsencesList);
         }
 
         /// <summary>
@@ -170,11 +162,11 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         /// <param name="index">Indeks, jaki ma mieć element po wstawieniu do listy.</param>
         /// <param name="newItem">Element, który ma zostać wstawiony do listy.</param>
-        public void Insert(int index, AbsencesList newItem)
+        public void Insert(int index, object newItem)
         {
             try
             {
-                absencesList.Insert(index, newItem);
+                absencesList.Insert(index, newItem as AbsencesList);
             }
             catch (Exception e)
             {
@@ -186,9 +178,9 @@ namespace MedicalCenter.Models.Registrar
         /// Usuwa z listy pierwsze znalezione wystąpienie podanego elementu.
         /// </summary>
         /// <param name="item">Element, którego pierwsze wystąpienie ma zostać usunięte z listy.</param>
-        public void Remove(AbsencesList item)
+        public void Remove(object item)
         {
-            absencesList.Remove(item);
+            absencesList.Remove(item as AbsencesList);
         }
 
         /// <summary>
@@ -208,21 +200,11 @@ namespace MedicalCenter.Models.Registrar
         }
 
         /// <summary>
-        /// Kopiuje wszystkie elementy listy do podanej tablicy, wstawiając pierwszy element na pozycję o wskazanym indeksie.
+        /// Pusta metoda (implementacja z konieczności).
         /// </summary>
-        /// <param name="array">Tablica, do której mają zostać skopiowane elementy listy.</param>
-        /// <param name="index">Indeks, jaki ma mieć pierwszy element listy po skopiowaniu do tablicy.</param>
-        public void CopyTo(AbsencesList[] array, int index)
-        {
-            try
-            {
-                absencesList.CopyTo(array, index);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
+        /// <param name="array"></param>
+        /// <param name="index"></param>
+        public void CopyTo(Array array, int index) { }
 
         /// <summary>
         /// Zwraca enumerator tej listy.
