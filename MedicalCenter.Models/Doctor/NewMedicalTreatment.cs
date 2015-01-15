@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace MedicalCenter.Models.Doctor
 {
     /// <summary>
-    /// Reprezentuje wykonywaną przez lekarza podczas wizyty procedurę medyczną.
+    /// Reprezentuje nową, wykonaną bądź zlecaną, procedurę medyczną.
     /// </summary>
-    class DoneMedicalTreatment
+    class NewMedicalTreatment
     {
         #region Public properties
 
@@ -33,6 +33,12 @@ namespace MedicalCenter.Models.Doctor
         /// Przechowuje ID rekordu z tabeli M_Patients, reprezentującego danego pacjenta.
         /// </summary>
         public int PatientId { get; private set; }
+
+        /// <summary>
+        /// Przechowuje planową datę wykonania procedury medycznej.
+        /// Jest to wartość z kolumny DateOfExecution z tabeli M_MedicalTreatments.
+        /// </summary>
+        public Nullable<System.DateTime> DateOfExecution { get; set; }
 
         /// <summary>
         /// Przechowuje datę zakończenia wykonywania (wykonania) procedury medycznej.
@@ -73,7 +79,7 @@ namespace MedicalCenter.Models.Doctor
         /// <param name="VisitId">ID rekordu z tabeli M_Visits, odpowiadającemu tej wizycie.</param>
         /// <param name="DoctorId">ID rekordu z tabeli A_Workers, odpowiadającego danemu lekarzowi.</param>
         /// <param name="PatientId">ID rekordu z tabeli M_Patients, reprezentującego danego pacjenta.</param>
-        public DoneMedicalTreatment(int VisitId, int DoctorId, int PatientId)
+        public NewMedicalTreatment(int VisitId, int DoctorId, int PatientId)
         {
             this.Id = 0;
             this.VisitId = VisitId;
@@ -89,15 +95,17 @@ namespace MedicalCenter.Models.Doctor
         /// <param name="VisitId">ID rekordu z tabeli M_Visits, odpowiadającemu tej wizycie.</param>
         /// <param name="DoctorId">ID rekordu z tabeli A_Workers, odpowiadającego danemu lekarzowi.</param>
         /// <param name="PatientId">ID rekordu z tabeli M_Patients, reprezentującego danego pacjenta.</param>
+        /// <param name="DateOfExecution">Wartość z kolumny DateOfExecution z tabeli M_MedicalTreatments.</param>
         /// <param name="EndOfExecution">Wartość z kolumny EndOfExecution z tabeli M_MedicalTreatments.</param>
         /// <param name="State">Wartość z kolumny State z tabeli M_MedicalTreatments.</param>
         /// <param name="MedicalTreatment">ID rekordu z tabeli M_DictionaryMedicalTreatments, odpowiadającego wybranej do wykonania procedurze medycznej.</param>
         /// <param name="Description">Wartość z kolumny Description z tabeli M_MedicalTreatments.</param>
         /// <param name="Result">Wartość z kolumny Result z tabeli M_MedicalTreatments.</param>
-        public DoneMedicalTreatment(int Id,
+        public NewMedicalTreatment(int Id,
                                     int VisitId,
                                     int DoctorId,
                                     int PatientId,
+                                    Nullable<System.DateTime> DateOfExecution,
                                     Nullable<System.DateTime> EndOfExecution,
                                     byte State,
                                     int MedicalTreatment,
@@ -108,6 +116,7 @@ namespace MedicalCenter.Models.Doctor
             this.VisitId = VisitId;
             this.DoctorId = DoctorId;
             this.PatientId = PatientId;
+            this.DateOfExecution = DateOfExecution;
             this.EndOfExecution = EndOfExecution;
             this.State = State;
             this.MedicalTreatment = MedicalTreatment;
