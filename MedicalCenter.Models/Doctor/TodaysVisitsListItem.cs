@@ -37,6 +37,18 @@ namespace MedicalCenter.Models.Doctor
         /// </summary>
         public string PatientFirstName { get; private set; }
 
+        /// <summary>
+        /// Przechowuje stan wizyty.
+        /// Jest to wartość z kolumny State z tabeli M_Visits.
+        /// </summary>
+        public byte State { get; set; }
+
+        /// <summary>
+        /// Określa czy wizyta została zarejestrowana jako nagły przypadek.
+        /// Jest to wartość z kolumny IsEmergency z tabeli M_Visits.
+        /// </summary>
+        public bool IsEmergency { get; private set; }
+
         #endregion // Public properties
 
         #region Ctors
@@ -53,12 +65,16 @@ namespace MedicalCenter.Models.Doctor
         /// <param name="DateOfVisit">Wartość z kolumny DateOfVisit z tabeli M_Visits.</param>
         /// <param name="PatientLastName">Wartość z kolumny LastName z tabeli M_Patients.</param>
         /// <param name="PatientFirstName">Wartość z kolumny FirstName z tabeli M_Patients.</param>
-        public TodaysVisitsListItem(int VisitId, DateTime DateOfVisit, string PatientLastName, string PatientFirstName)
+        /// <param name="State">Wartość z kolumny State z tabeli M_Visits.</param>
+        /// <param name="IsEmergency">Określa czy wskazana wizyta została zarejestrowana jako nagły przypadek.</param>
+        public TodaysVisitsListItem(int VisitId, DateTime DateOfVisit, string PatientLastName, string PatientFirstName, byte State, bool IsEmergency)
         {
             this.VisitId = VisitId;
             this.DateOfVisit = DateOfVisit;
             this.PatientLastName = PatientLastName;
             this.PatientFirstName = PatientFirstName;
+            this.State = State;
+            this.IsEmergency = IsEmergency;
         }
 
         #endregion // Ctors
