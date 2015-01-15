@@ -36,6 +36,12 @@ namespace MedicalCenter.Models.Doctor
         public string PatientFirstName { get; private set; }
 
         /// <summary>
+        /// Przechowuje planową datę i godzinę odbycia się wskazanej wizyty.
+        /// Jest to wartość z kolumny DateOfVisit z tabeli M_Visits.
+        /// </summary>
+        public DateTime DateOfVisit { get; private set; }
+
+        /// <summary>
         /// Przechowuje datę zakończenia tej wizyty.
         /// Jest to wartość z kolumny Ended z tabeli M_Visits.
         /// </summary>
@@ -46,6 +52,12 @@ namespace MedicalCenter.Models.Doctor
         /// Jest to wartość z kolumny State z tabeli M_Visits.
         /// </summary>
         public byte State { get; set; }
+
+        /// <summary>
+        /// Określa czy wizyta została zarejestrowana jako nagły przypadek.
+        /// Jest to wartość z kolumny IsEmergency z tabeli M_Visits.
+        /// </summary>
+        public bool IsEmergency { get; private set; }
 
         /// <summary>
         /// Przechowuje opis wizyty.
@@ -70,18 +82,31 @@ namespace MedicalCenter.Models.Doctor
         /// <param name="PatientId">Wartość z kolumny LastName z tabeli z tabeli M_Patients.</param>
         /// <param name="PatientLastName">Wartość z kolumny LastName z tabeli z tabeli M_Patients.</param>
         /// <param name="PatientFirstName">Wartość z kolumny FirstName z tabeli M_Patients.</param>
+        /// <param name="DateOfVisit">Wartość z kolumny DateOfVisit z tabeli M_Visits.</param>
         /// <param name="Ended">Wartość z kolumny Ended z tabeli M_Visits.</param>
         /// <param name="State">Wartość z kolumny State z tabeli M_Visits.</param>
+        /// <param name="IsEmergency">Wartość z kolumny IsEmergency z tabeli M_Visits.</param>
         /// <param name="Description">Wartość z kolumny Description z tabeli M_Visits.</param>
         /// <param name="Diagnosis">Wartość z kolumny Diagnosis z tabeli M_Visits.</param>
-        public Visit(int Id, int PatientId, string PatientLastName, string PatientFirstName, Nullable<System.DateTime> Ended, byte State, string Description, string Diagnosis)
+        public Visit(int Id,
+            int PatientId,
+            string PatientLastName,
+            string PatientFirstName,
+            DateTime DateOfVisit,
+            Nullable<System.DateTime> Ended,
+            byte State,
+            bool IsEmergency,
+            string Description,
+            string Diagnosis)
         {
             this.Id = Id;
             this.PatientId = PatientId;
             this.PatientLastName = PatientLastName;
             this.PatientFirstName = PatientFirstName;
+            this.DateOfVisit = DateOfVisit;
             this.Ended = Ended;
             this.State = State;
+            this.IsEmergency = IsEmergency;
             this.Description = Description;
             this.Diagnosis = Diagnosis;
         }
