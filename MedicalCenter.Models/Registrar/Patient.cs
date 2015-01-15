@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedicalCenter.Models
+namespace MedicalCenter.Models.Registrar
 {
     /// <summary>
     /// Reprezentuje obiekt klasy M_Patient w widoku dla rejestratorki.
