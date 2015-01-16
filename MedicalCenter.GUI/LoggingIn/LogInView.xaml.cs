@@ -12,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MedicalCenter.GUI.LoggingIn;
 
-namespace MedicalCenter.GUI
+namespace MedicalCenter.GUI.LoggingIn
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LogInView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LogInView : UserControl
     {
-        public MainWindow()
+        public LogInView()
         {
             InitializeComponent();
-
-            ContentArea.Content = new LogInView();
         }
     }
 }
