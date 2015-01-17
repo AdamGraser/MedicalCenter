@@ -34,10 +34,10 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Content="Login" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" />
-            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Name="Login" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" />
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Name="Login" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="Hasło" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" />
-            <PasswordBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="Password" Width="210" Height="36" Margin="5,6,0,30" BorderBrush="CornflowerBlue" BorderThickness="1" />
+            <PasswordBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="Password" Width="210" Height="36" Margin="5,6,0,30" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" />
 
             <Button Grid.Row="2" Grid.Column="2" Name="Logon" Content="Zaloguj" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Right" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" />
         </Grid>

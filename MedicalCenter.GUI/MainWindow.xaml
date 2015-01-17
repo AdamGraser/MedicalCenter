@@ -1,8 +1,8 @@
 ﻿<Window x:Class="MedicalCenter.GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="System wspomagający pracę przychodni" Height="570" Width="796">
+        Title="System wspomagający pracę przychodni" Height="570" Width="796" MinHeight="570" MinWidth="796">
     <DockPanel>
-        <ContentControl Name="ContentArea" />
+        <ContentControl Name="ContentArea" IsTabStop="False" />
     </DockPanel>
 </Window>
