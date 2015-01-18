@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="796">
+             d:DesignHeight="521" d:DesignWidth="781" MinHeight="521" MinWidth="781" Height="521" Width="781" MaxHeight="521" MaxWidth="781">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="26*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="L O G O W A N I E" Background="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="48" Foreground="White" Padding="75,3,0,3" Margin="0,47,0,130" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="L O G O W A N I E" Background="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="48" Foreground="White" Padding="75,3,0,3" Margin="0,41,0,125" />
         </Grid>
 
         <Grid Grid.Row="1" Margin="150,0,0,0">
@@ -42,6 +42,6 @@
             <Button Grid.Row="2" Grid.Column="2" Name="Logon" Content="Zaloguj" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Right" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" />
         </Grid>
 
-        <Button Grid.Row="2" Name="ConfigureDBConnection" Content="Konfiguruj połączenie z bazą danych" Padding="20,16,5,15" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,10" />
+        <Button Grid.Row="2" Name="ConfigureDBConnection" Content="Konfiguruj połączenie z bazą danych" Padding="20,16,5,15" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,15" />
     </Grid>
 </UserControl>
