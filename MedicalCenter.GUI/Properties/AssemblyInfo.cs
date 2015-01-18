@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Medical Center 2014")]
+[assembly: AssemblyTitle("Medical Center 2015")]
 [assembly: AssemblyDescription("System wspomagający pracę prywatnego centrum medycznego (przychodni).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Adam Gräser")]
-[assembly: AssemblyProduct("Medical Center 2014")]
-[assembly: AssemblyCopyright("Copyright © Adam Gräser 2014")]
+[assembly: AssemblyProduct("Medical Center 2015")]
+[assembly: AssemblyCopyright("Copyright © Adam Gräser 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.7")]
-[assembly: AssemblyFileVersion("1.0.0.4")]
+[assembly: AssemblyVersion("1.0.0.8")]
+[assembly: AssemblyFileVersion("1.0.0.5")]
 [assembly: NeutralResourcesLanguageAttribute("pl-PL")]
