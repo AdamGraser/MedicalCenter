@@ -37,6 +37,7 @@
     <StartupObject>MedicalCenter.GUI.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
