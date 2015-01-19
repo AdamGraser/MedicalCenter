@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Doctor\MedicalTreatment.cs" />
     <Compile Include="Doctor\Visit.cs" />
+    <Compile Include="LoggingIn\User.cs" />
     <Compile Include="Registrar\AbsencesList.cs" />
     <Compile Include="Registrar\DailyVisitsListItem.cs" />
     <Compile Include="Registrar\DoctorsListItem.cs" />
