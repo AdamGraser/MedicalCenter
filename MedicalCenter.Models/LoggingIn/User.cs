@@ -31,17 +31,10 @@ namespace MedicalCenter.Models.LoggingIn
         public int Id { get; set; }
 
         /// <summary>
-        /// Przechowuje nazwisko aktualnie zalogowanej osoby.
-        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
+        /// Przechowuje imię i nazwisko aktualnie zalogowanej osoby.
         /// </summary>
-        public string LastName { get; set; }
+        public string Name { get; set; }
         
-        /// <summary>
-        /// Przechowuje imię aktualnie zalogowanej osoby.
-        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
-        /// </summary>
-        public string FirstName { get; set; }
-
         #endregion // Public properties
 
         #region Ctors
