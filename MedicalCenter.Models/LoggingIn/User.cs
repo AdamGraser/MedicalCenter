@@ -31,20 +31,21 @@ namespace MedicalCenter.Models.LoggingIn
         public int Id { get; set; }
 
         /// <summary>
-        /// Przechowuje imię i nazwisko aktualnie zalogowanej osoby.
+        /// Przechowuje nazwę stanowiska, imię i nazwisko aktualnie zalogowanej osoby.
         /// </summary>
-        public string Name { get; set; }
+        public string Title { get; set; }
         
         #endregion // Public properties
 
         #region Ctors
 
         /// <summary>
-        /// Konstruktor tworzący obiekt z domyślną wartością Id.
+        /// Konstruktor tworzący obiekt z wartościami domyślnymi.
         /// </summary>
         public User()
         {
             Id = 0;
+            Title = "Nazwa placówki medycznej";
         }
 
         #endregion // Ctors
