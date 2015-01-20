@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.LoggingIn
     /// <summary>
     /// Reprezentuje użytkownika systemu.
     /// </summary>
-    class User
+    public class User
     {
         #region Public properties
 

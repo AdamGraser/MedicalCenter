@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.Doctor
     /// <summary>
     /// Reprezentuje jedną pozycję z listy wykonanych/zleconych procedur medycznych.
     /// </summary>
-    class MedicalTreatment
+    public class MedicalTreatment
     {
         #region Public properties
 

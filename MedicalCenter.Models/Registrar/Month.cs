@@ -10,7 +10,7 @@ namespace MedicalCenter.Models.Registrar
     /// <summary>
     /// Reprezentuje zbiór list nieobecnych lekarzy ze wszystkich dni wskazanego miesiąca w danym roku.
     /// </summary>
-    class Month : IList
+    public class Month : IList
     {
         #region Private fields
 

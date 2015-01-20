@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.Doctor
     /// <summary>
     /// Reprezentuje zbiór informacji o pojedynczej wizycie.
     /// </summary>
-    class Visit
+    public class Visit
     {
         #region Public properties
 

@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.Registrar
     /// <summary>
     /// Reprezentuje rejestrowaną wizytę.
     /// </summary>
-    class Visit
+    public class Visit
     {
         #region Public properties
 

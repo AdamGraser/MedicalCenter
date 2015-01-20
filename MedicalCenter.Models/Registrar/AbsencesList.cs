@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.Registrar
     /// <summary>
     /// Reprezentuje listę lekarzy nieobecnych we wskazanym dniu.
     /// </summary>
-    class AbsencesList
+    public class AbsencesList
     {
         #region Public properties
 

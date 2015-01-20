@@ -9,7 +9,7 @@ namespace MedicalCenter.Models.Registrar
     /// <summary>
     /// Reprezentuje jedną pozycję z listy lekarzy w widoku głównym rejestrowania wizyty przez rejestratorkę.
     /// </summary>
-    class DoctorsListItem
+    public class DoctorsListItem
     {
         // Public getters, private setters
         #region Public properties
