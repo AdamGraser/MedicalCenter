@@ -17,49 +17,11 @@ namespace MedicalCenter.Services
         #region Private fields
 
         /// <summary>
-        /// Przechowuje nazwisko aktualnie zalogowanej osoby.
-        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
-        /// </summary>
-        string lastName;
-
-        /// <summary>
-        /// Przechowuje imię aktualnie zalogowanej osoby.
-        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
-        /// </summary>
-        string firstName;
-
-        /// <summary>
-        /// Przechowuje nazwę stanowiska aktualnie zalogowanej osoby.
-        /// Jest to wartość z kolumny JobTitle z tabeli A_DictionaryJobTitle.
-        /// </summary>
-        string jobTitle;
-
-        /// <summary>
         /// Usługa bazodanowa dla funkcjonalności obejmującej użytkowników systemu.
         /// </summary>
         UserService userService;
 
         #endregion // Private fields
-
-        #region Public properties
-
-        /// <summary>
-        /// Zwraca imię i nazwisko aktualnie zalogowanej osoby, oddzielone spacją.
-        /// </summary>
-        public string Title
-        {
-            get
-            {
-                return jobTitle + " - " + firstName + " " + lastName;
-            }
-
-            private set
-            {
-                jobTitle = firstName = lastName = "";
-            }
-        }
-
-        #endregion // Public properties
 
         #region Ctors
 
@@ -77,44 +39,42 @@ namespace MedicalCenter.Services
 
         /// <summary>
         /// Sprawdza w bazie danych podane poświadczenia.
-        /// Jeśli znaleziono w bazie odpowiadającego użytkownika, pobierane są również jego imię, nazwisko i nazwa stanowiska.
+        /// Jeśli znaleziono w bazie odpowiadającego użytkownika, pobierane są również jego imię, nazwisko oraz nazwa i kod stanowiska.
+        /// Informacje te zapisywane są w obiekcie wskazywanym przez argument.
         /// </summary>
-        /// <param name="user">Obiekt zawierający podane login i hasło.</param>
-        /// <returns>ID osoby, do której przypisany jest wskazany użytkownik systemu lub 0, jeśli podane poświadczenia nie figurują w bazie danych.</returns>
-        public int LogIn(User user)
+        /// <param name="user">Obiekt zawierający podany login i hash hasła.</param>
+        public void LogIn(User user)
         {
-            System.Security.Cryptography.HashAlgorithm sha = System.Security.Cryptography.HashAlgorithm.Create("SHA512");
-
             // sprawdzenie czy w systemie istnieje użytkownik o podanym loginie i hashu hasła
             A_User usr = userService.SelectUser(x => x.Login == user.Login &&
-                                              x.Password == System.Text.Encoding.ASCII.GetString(sha.ComputeHash(System.Text.Encoding.ASCII.GetBytes(user.Password))));
+                                              x.Password == user.Password);
             
             // jeśli podane poświadczenia są prawidłowe
             if (usr.WorkerId > 0)
             {
+                // zapisanie ID pracownika
+                user.Id = usr.WorkerId;
+
                 // pobranie informacji o pracowniku, do którego przypisany jest sprawdzony użytkownik systemu
                 A_Worker wrk = userService.SelectWorker(x => x.Id == usr.WorkerId);
 
                 // jeśli rekord użytkownika w bazie zawiera prawidłowe ID pracownika
                 if (wrk.Id > 0)
                 {
-                    // zapisanie imienia i nazwiska pracownika
-                    lastName = wrk.LastName;
-                    firstName = wrk.FirstName;
-
                     // pobranie informacji o stanowisku służbowym pracownika
-                    A_DictionaryJobTitle djt = userService.SelectJobTitle(x => x.Id == wrk.JobTitle);
+                    A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Id == wrk.JobTitle);
 
                     // jeśli rekord pracownika w bazie zawiera prawidłowe ID stanowiska
-                    if (djt.Id > 0)
+                    if (job.Id > 0)
                     {
-                        // zapisanie nazwy stanowiska
-                        jobTitle = djt.JobTitle;
+                        // zapisanie imienia, nazwiska i nazwy stanowiska
+                        user.Title = job.JobTitle + " - " + wrk.LastName + "  " + wrk.FirstName;
+
+                        // zapisanie kodu stanowiska
+                        user.JobTitleCode = job.Code;
                     }
                 }
             }
-
-            return usr.WorkerId;
         }
 
         #endregion // Public methods

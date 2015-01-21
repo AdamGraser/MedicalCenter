@@ -21,11 +21,28 @@ namespace MedicalCenter.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Public properties
+
+        /// <summary>
+        /// Przechowuje ID rekordu z tabeli A_Workers, reprezentującego osobę aktualnie zalogowaną.
+        /// </summary>
+        public int Id;
+
+        #endregion // Public properties
+
+        #region Ctors
+
+        /// <summary>
+        /// Konstruktor okna głównego - inicjalizuje komponenty, ładuje treść okna, ustawia wartości domyślne.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
 
             ContentArea.Content = new LogInView();
+            Id = 0;
         }
+
+        #endregion // Ctors
     }
 }

@@ -34,6 +34,12 @@ namespace MedicalCenter.Models.LoggingIn
         /// Przechowuje nazwę stanowiska, imię i nazwisko aktualnie zalogowanej osoby.
         /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// Przechowuje kod stanowiska aktualnie zalogowanej osoby.
+        /// Jest to wartość z kolumny Code z tabeli A_DictionaryJobTitles.
+        /// </summary>
+        public string JobTitleCode { get; set; }
         
         #endregion // Public properties
 
@@ -45,7 +51,6 @@ namespace MedicalCenter.Models.LoggingIn
         public User()
         {
             Id = 0;
-            Title = "Nazwa placówki medycznej";
         }
 
         #endregion // Ctors
