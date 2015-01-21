@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LoggingIn\LogInPresenter.cs" />
     <Compile Include="Registrar\AddPatientView.xaml.cs">
       <DependentUpon>AddPatientView.xaml</DependentUpon>
     </Compile>
@@ -118,7 +119,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MedicalCenter.Models\MedicalCenter.Models.csproj">
+      <Project>{a467fd60-a745-4845-a28e-0b0c86e6a345}</Project>
+      <Name>MedicalCenter.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedicalCenter.Services\MedicalCenter.Services.csproj">
+      <Project>{e88b82c0-ab1b-40b9-b85c-ced7708ed624}</Project>
+      <Name>MedicalCenter.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
