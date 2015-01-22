@@ -41,7 +41,7 @@ namespace MedicalCenter.GUI
         /// <summary>
         /// Rejestratorka - dodawanie nowego pacjenta do bazy.
         /// </summary>
-        public Registrar.AddPatientView RegistrarAddPatientView;
+        public Registrar.PatientDetailsView RegistrarPatientDetailsView;
 
         #endregion // Public properties
 

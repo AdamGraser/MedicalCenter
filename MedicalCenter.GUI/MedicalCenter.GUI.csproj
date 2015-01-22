@@ -62,6 +62,7 @@
     <Compile Include="Registrar\AddPatientView.xaml.cs">
       <DependentUpon>AddPatientView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Registrar\MainMenuPresenter.cs" />
     <Compile Include="Registrar\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>

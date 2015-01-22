@@ -20,6 +20,15 @@ namespace MedicalCenter.GUI.Registrar
     /// </summary>
     public partial class MainMenuView : UserControl
     {
+        #region Private fields
+
+        /// <summary>
+        /// Prezenter obsługujący zdarzenia użytkownika.
+        /// </summary>
+        MainMenuPresenter mainMenuPresenter;
+
+        #endregion // Private fields
+
         #region Public properties
 
         /// <summary>
@@ -43,5 +52,20 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         #endregion // Ctors
+
+        #region Events handlers
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Wyloguj".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            // rozpoczęcie procedury wylogowania
+            mainMenuPresenter.LogOut();
+        }
+
+        #endregion // Events handlers
     }
 }

@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="26*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="M E N U   G Ł Ó W N E" Background="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="48" Foreground="White" Padding="75,3,0,3" Margin="0,46,0,51" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="M E N U   G Ł Ó W N E" Background="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="48" Foreground="White" Padding="75,3,0,3" Margin="0,41,0,51" />
         </Grid>
 
         <Grid Grid.Row="1" Margin="79,0,0,0">
@@ -43,7 +43,7 @@
 
             <Button Grid.Row="2" Grid.Column="0" Name="DoctorsSchedule" Content="Grafik lekarzy" Width="225" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,17,0" Background="CornflowerBlue" BorderThickness="0" FontFamily="Segoe UI Light" FontSize="26" Foreground="White" />
 
-            <Button Grid.Row="2" Grid.Column="1" Name="LogOut" Content="Wyloguj" Width="225" Height="48" HorizontalAlignment="Left" VerticalAlignment="Top" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" />
+            <Button Grid.Row="2" Grid.Column="1" Name="LogOut" Content="Wyloguj" Width="225" Height="48" HorizontalAlignment="Left" VerticalAlignment="Top" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" Click="LogOut_Click" />
         </Grid>
     </Grid>
 </UserControl>

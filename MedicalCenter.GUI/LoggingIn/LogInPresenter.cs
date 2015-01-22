@@ -9,7 +9,7 @@ using MedicalCenter.Models.LoggingIn;
 namespace MedicalCenter.GUI.LoggingIn
 {
     /// <summary>
-    /// Obsługa zdarzeń użytkownika (działania na modelach i serwisach pod wpływem zdarzeń z widoku).
+    /// Obsługa zdarzeń użytkownika dla widoku logowania (działania na modelach i serwisach pod wpływem zdarzeń z widoku).
     /// </summary>
     public class LogInPresenter
     {
@@ -31,7 +31,7 @@ namespace MedicalCenter.GUI.LoggingIn
 
         /// <summary>
         /// Konstruktor tworzący obiekt logiki biznesowej w zakresie użytkowników systemu i
-        /// zapisujący referencję do obiektu danych użytkownika.
+        /// zapisujący referencję do zarządzanego widoku.
         /// </summary>
         /// <param name="view">Widok logowania zarządzany przez tego prezentera.</param>
         public LogInPresenter(LogInView view)

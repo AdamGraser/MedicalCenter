@@ -18,7 +18,7 @@ namespace MedicalCenter.GUI.Registrar
     /// <summary>
     /// Reprezentuje widok dodawania nowego pacjenta do bazy danych.
     /// </summary>
-    public partial class AddPatientView : UserControl
+    public partial class PatientDetailsView : UserControl
     {
         #region Public properties
 
@@ -35,7 +35,7 @@ namespace MedicalCenter.GUI.Registrar
         /// Konstruktor inicjalizujący pola i właściwości.
         /// </summary>
         /// <param name="parentWindow">Okno główne, którego treść stanowi ten widok.</param>
-        public AddPatientView(MainWindow parentWindow)
+        public PatientDetailsView(MainWindow parentWindow)
         {
             InitializeComponent();
 
