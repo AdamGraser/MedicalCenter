@@ -17,7 +17,7 @@ using MedicalCenter.Models.LoggingIn;
 namespace MedicalCenter.GUI.LoggingIn
 {
     /// <summary>
-    /// Interaction logic for LogInView.xaml
+    /// Reprezentuje widok logowania do systemu.
     /// </summary>
     public partial class LogInView : UserControl
     {
@@ -37,6 +37,11 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         public User UserData;
 
+        /// <summary>
+        /// Okno główne, którego treść stanowi ten widok.
+        /// </summary>
+        public MainWindow ParentWindow;
+
         #endregion // Public properties
 
         #region Ctors
@@ -44,9 +49,12 @@ namespace MedicalCenter.GUI.LoggingIn
         /// <summary>
         /// Konstruktor inicjalizujący pola i właściwości.
         /// </summary>
-        public LogInView()
+        /// <param name="parentWindow">Okno główne, którego treść stanowi ten widok.</param>
+        public LogInView(MainWindow parentWindow)
         {
             InitializeComponent();
+
+            this.ParentWindow = parentWindow;
 
             UserData = new User();
             UserData.Title = "Nazwa placówki medycznej";

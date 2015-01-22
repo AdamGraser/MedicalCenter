@@ -16,13 +16,32 @@ using System.Windows.Shapes;
 namespace MedicalCenter.GUI.Registrar
 {
     /// <summary>
-    /// Interaction logic for AddPatientView.xaml
+    /// Reprezentuje widok dodawania nowego pacjenta do bazy danych.
     /// </summary>
     public partial class AddPatientView : UserControl
     {
-        public AddPatientView()
+        #region Public properties
+
+        /// <summary>
+        /// Okno główne, którego treść stanowi ten widok.
+        /// </summary>
+        public MainWindow ParentWindow;
+
+        #endregion // Public properties
+
+        #region Ctors
+
+        /// <summary>
+        /// Konstruktor inicjalizujący pola i właściwości.
+        /// </summary>
+        /// <param name="parentWindow">Okno główne, którego treść stanowi ten widok.</param>
+        public AddPatientView(MainWindow parentWindow)
         {
             InitializeComponent();
+
+            this.ParentWindow = parentWindow;
         }
+
+        #endregion // Ctors
     }
 }

@@ -17,7 +17,7 @@ using MedicalCenter.GUI.LoggingIn;
 namespace MedicalCenter.GUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Reprezentuje okno główne aplikacji.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -27,6 +27,21 @@ namespace MedicalCenter.GUI
         /// Przechowuje ID rekordu z tabeli A_Workers, reprezentującego osobę aktualnie zalogowaną.
         /// </summary>
         public int Id;
+
+        /// <summary>
+        /// Ekran logowania.
+        /// </summary>
+        public LogInView LoginView;
+
+        /// <summary>
+        /// Rejestratorka - menu główne.
+        /// </summary>
+        public Registrar.MainMenuView RegistrarMainMenuView;
+
+        /// <summary>
+        /// Rejestratorka - dodawanie nowego pacjenta do bazy.
+        /// </summary>
+        public Registrar.AddPatientView RegistrarAddPatientView;
 
         #endregion // Public properties
 
@@ -39,7 +54,8 @@ namespace MedicalCenter.GUI
         {
             InitializeComponent();
 
-            ContentArea.Content = new LogInView();
+            ContentArea.Content = LoginView = new LogInView(this);
+
             Id = 0;
         }
 

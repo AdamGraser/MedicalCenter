@@ -20,9 +20,28 @@ namespace MedicalCenter.GUI.Registrar
     /// </summary>
     public partial class MainMenuView : UserControl
     {
-        public MainMenuView()
+        #region Public properties
+
+        /// <summary>
+        /// Okno główne, którego treść stanowi ten widok.
+        /// </summary>
+        public MainWindow ParentWindow;
+
+        #endregion // Public properties
+
+        #region Ctors
+
+        /// <summary>
+        /// Konstruktor inicjalizujący pola i właściwości.
+        /// </summary>
+        /// <param name="parentWindow">Okno główne, którego treść stanowi ten widok.</param>
+        public MainMenuView(MainWindow parentWindow)
         {
             InitializeComponent();
+
+            this.ParentWindow = parentWindow;
         }
+
+        #endregion // Ctors
     }
 }

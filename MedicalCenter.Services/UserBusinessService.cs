@@ -67,7 +67,7 @@ namespace MedicalCenter.Services
                     if (job.Id > 0)
                     {
                         // zapisanie imienia, nazwiska i nazwy stanowiska
-                        user.Title = job.JobTitle + " - " + wrk.LastName + "  " + wrk.FirstName;
+                        user.Title = job.JobTitle + " - " + wrk.LastName + " " + wrk.FirstName;
 
                         // zapisanie kodu stanowiska
                         user.JobTitleCode = job.Code;
