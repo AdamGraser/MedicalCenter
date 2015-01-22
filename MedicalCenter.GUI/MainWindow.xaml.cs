@@ -60,5 +60,36 @@ namespace MedicalCenter.GUI
         }
 
         #endregion // Ctors
+
+        #region Events handlers
+        
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku zamykającego okno główne aplikacji.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // TODO: jeśli zalogowany jest lekarz/laborant/kier. lab./pielęgniarka i jest w trakcie wykonywania czegoś, to ma się nie dać wylogować
+            // (to można robić nawet po widokach - np. jeśli ContentArea.Control == DoctorVisitView, to jest w trakcie wizyty i ni ma że boli!)
+            // (można od razu zrobić switch i sprawdzać jaki widok jest obecnie wyświetlany, a nie bawić się w sprawdzanie stanowiska)
+
+            // jeśli użytkownik jest zalogowany, należy go zapytać, czy jest pewien chęci wylogowania się i zamknięcia aplikacji
+            if (Id > 0)
+            {
+                // jeśli użytkownik kliknął przycisk "Nie", należy anulować procedurę wylogowania i zamknięcia aplikacji
+                if (System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz się wylogować i zamknąć aplikację?",
+                                                         "Pytanie",
+                                                         System.Windows.Forms.MessageBoxButtons.YesNo,
+                                                         System.Windows.Forms.MessageBoxIcon.Question,
+                                                         System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                    == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        #endregion // Events handlers
     }
 }
