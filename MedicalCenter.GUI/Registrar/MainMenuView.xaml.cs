@@ -49,6 +49,8 @@ namespace MedicalCenter.GUI.Registrar
             InitializeComponent();
 
             this.ParentWindow = parentWindow;
+
+            mainMenuPresenter = new MainMenuPresenter(this);
         }
 
         #endregion // Ctors

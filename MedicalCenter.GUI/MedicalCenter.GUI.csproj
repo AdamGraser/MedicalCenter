@@ -59,8 +59,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LoggingIn\LogInPresenter.cs" />
-    <Compile Include="Registrar\AddPatientView.xaml.cs">
-      <DependentUpon>AddPatientView.xaml</DependentUpon>
+    <Compile Include="Registrar\PatientDetailsView.xaml.cs">
+      <DependentUpon>PatientDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Registrar\MainMenuPresenter.cs" />
     <Compile Include="Registrar\MainMenuView.xaml.cs">
@@ -85,7 +85,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Registrar\AddPatientView.xaml">
+    <Page Include="Registrar\PatientDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
