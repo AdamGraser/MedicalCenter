@@ -86,6 +86,34 @@ namespace MedicalCenter.GUI.LoggingIn
             logInPresenter.Logon();
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola "Login".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Login_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
+            if (Login.Text.Length > 0 && Password.Password.Length > 0)
+                Logon.IsEnabled = true;
+            else
+                Logon.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola "Password".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
+            if (Login.Text.Length > 0 && Password.Password.Length > 0)
+                Logon.IsEnabled = true;
+            else
+                Logon.IsEnabled = false;
+        }
+
         #endregion // Event handlers
     }
 }
