@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LoggingIn\LogInPresenter.cs" />
+    <Compile Include="Registrar\PatientDetailsPresenter.cs" />
     <Compile Include="Registrar\PatientDetailsView.xaml.cs">
       <DependentUpon>PatientDetailsView.xaml</DependentUpon>
     </Compile>

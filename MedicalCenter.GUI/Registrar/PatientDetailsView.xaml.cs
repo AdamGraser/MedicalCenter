@@ -20,6 +20,15 @@ namespace MedicalCenter.GUI.Registrar
     /// </summary>
     public partial class PatientDetailsView : UserControl
     {
+        #region Private fields
+
+        /// <summary>
+        /// Prezenter obsługujący zdarzenia użytkownika.
+        /// </summary>
+        PatientDetailsPresenter patientDetailsPresenter;
+
+        #endregion // Private fields
+
         #region Public properties
 
         /// <summary>
@@ -40,8 +49,25 @@ namespace MedicalCenter.GUI.Registrar
             InitializeComponent();
 
             this.ParentWindow = parentWindow;
+
+            patientDetailsPresenter = new PatientDetailsPresenter(this);
         }
 
         #endregion // Ctors
+
+        #region Events handlers
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Powrót".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            // wyczyszczenie wszystkich pól i powrót do menu głównego
+            patientDetailsPresenter.Back();
+        }
+
+        #endregion // Events handlers
     }
 }

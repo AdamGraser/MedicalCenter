@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace MedicalCenter.GUI.Registrar
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Reprezentuje widok menu głównego rejestratorki.
     /// </summary>
     public partial class MainMenuView : UserControl
     {
@@ -66,6 +66,17 @@ namespace MedicalCenter.GUI.Registrar
         {
             // rozpoczęcie procedury wylogowania
             mainMenuPresenter.LogOut();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Dodaj pacjenta".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddPatient_Click(object sender, RoutedEventArgs e)
+        {
+            // zmiana zawartości okna głównego z menu na widok szczegółów pacjenta
+            mainMenuPresenter.AddPatient();
         }
 
         #endregion // Events handlers

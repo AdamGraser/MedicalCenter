@@ -55,6 +55,19 @@ namespace MedicalCenter.GUI.Registrar
             }
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Dodaj pacjenta" w menu głównym rejestratorki.
+        /// </summary>
+        public void AddPatient()
+        {
+            // jeśli widok szczegółów pacjenta nie był dotychczas używany, należy go utworzyć
+            if (view.ParentWindow.RegistrarPatientDetailsView == null)
+                view.ParentWindow.RegistrarPatientDetailsView = new PatientDetailsView(view.ParentWindow);
+
+            // zmiana zawartości okna głównego z menu na szczegóły pacjenta
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
+        }
+
         #endregion // Public methods
     }
 }
