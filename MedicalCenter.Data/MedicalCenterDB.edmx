@@ -166,8 +166,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="JobTitle" Type="varchar" Nullable="false" MaxLength="20" />
     <Property Name="Code" Type="char" Nullable="false" MaxLength="4" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" DefaultValue="false" />
-    <Property Name="New" Type="int" Nullable="false" DefaultValue="0" />
   </EntityType>
   <EntityType Name="A_DictionarySpecializations">
     <Key>
@@ -764,8 +762,6 @@ N = powod nieznany (unknown reason)</LongDescription>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
           <Property Type="String" Name="JobTitle" Nullable="false" FixedLength="false" MaxLength="20" Unicode="false" />
           <Property Type="String" Name="Code" Nullable="false" FixedLength="true" MaxLength="4" Unicode="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="false" />
-          <Property Type="Int32" Name="New" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="A_Workers" Relationship="MedicalCenter.Data.MedicalCenterDB.FK_A_Worker_A_DictionaryJobTitle" FromRole="A_DictionaryJobTitle" ToRole="A_Worker" />
         </EntityType>
         <EntityType Name="A_DictionarySpecialization">
@@ -1324,8 +1320,6 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
           <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="New" ColumnName="New" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

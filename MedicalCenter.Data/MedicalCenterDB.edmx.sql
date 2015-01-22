@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/15/2015 14:00:44
+-- Date Created: 01/22/2015 01:18:35
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -196,9 +196,7 @@ GO
 CREATE TABLE [dbo].[A_DictionaryJobTitles] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [JobTitle] varchar(20)  NOT NULL,
-    [Code] char(4)  NOT NULL,
-    [IsDeleted] bit  NOT NULL,
-    [New] int  NOT NULL
+    [Code] char(4)  NOT NULL
 );
 GO
 
