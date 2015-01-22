@@ -52,6 +52,10 @@ namespace MedicalCenter.GUI.LoggingIn
             UserData.Title = "Nazwa placówki medycznej";
 
             logInPresenter = new LogInPresenter(this);
+
+            // powiązanie obiektu z danymi użytkownika z polem na login
+            // (w XAML'u zapisane zostało już konkretne powiązanie własciwości UserData.Login z właściwością Login.Text)
+            Login.DataContext = UserData;
         }
 
         #endregion // Ctors

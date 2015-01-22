@@ -46,11 +46,10 @@ namespace MedicalCenter.Services
         public void LogIn(User user)
         {
             // sprawdzenie czy w systemie istnieje użytkownik o podanym loginie i hashu hasła
-            A_User usr = userService.SelectUser(x => x.Login == user.Login &&
-                                              x.Password == user.Password);
+            A_User usr = userService.SelectUser(x => x.Login == user.Login && x.Password == user.Password);
             
             // jeśli podane poświadczenia są prawidłowe
-            if (usr.WorkerId > 0)
+            if (usr != null && usr.WorkerId > 0)
             {
                 // zapisanie ID pracownika
                 user.Id = usr.WorkerId;
