@@ -108,6 +108,7 @@ namespace MedicalCenter.Models.Registrar
         public Patient()
         {
             this.Id = 0;
+            this.BirthDate = DateTime.Today;
             this.Gender = false;
             this.IsInsured = true;
         }

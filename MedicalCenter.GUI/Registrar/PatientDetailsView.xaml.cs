@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MedicalCenter.Models.Registrar;
 
 namespace MedicalCenter.GUI.Registrar
 {
@@ -30,6 +31,11 @@ namespace MedicalCenter.GUI.Registrar
         #endregion // Private fields
 
         #region Public properties
+
+        /// <summary>
+        /// Dane pacjenta, którego dane są przeglądane lub edytowane/zbiór danych nowego pacjenta.
+        /// </summary>
+        public Patient PatientData;
 
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
@@ -51,6 +57,11 @@ namespace MedicalCenter.GUI.Registrar
             this.ParentWindow = parentWindow;
 
             patientDetailsPresenter = new PatientDetailsPresenter(this);
+
+            PatientData = new Patient();
+
+            // ustawienie kontekstu danych, aby móc powiązać obiekt PatientData z polami formularza
+            DataContext = PatientData;
         }
 
         #endregion // Ctors
@@ -67,6 +78,30 @@ namespace MedicalCenter.GUI.Registrar
             // wyczyszczenie wszystkich pól i powrót do menu głównego
             patientDetailsPresenter.Back();
         }
+
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola tekstowego "Pesel".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Pesel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // czyszczenie pola przy dodawaniu nowego pacjenta/dopełnianie zerami z lewej strony przy edycji danych istniejącego pacjenta
+            patientDetailsPresenter.PeselChanged();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia utraty focusa klawiatury przez pole tekstowe "Pesel".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Pesel_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // walidacja pola z peselem
+            patientDetailsPresenter.ValidatePesel();
+        }
+
+        // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk
 
         #endregion // Events handlers
     }
