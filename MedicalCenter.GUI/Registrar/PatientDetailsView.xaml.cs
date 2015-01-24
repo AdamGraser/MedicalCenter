@@ -185,6 +185,50 @@ namespace MedicalCenter.GUI.Registrar
                 patientDetailsPresenter.ValidatePesel();
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola tekstowego na miejscowość.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void City_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // usuwanie z pola niedozwolonych znaków
+            patientDetailsPresenter.CityChanged();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia wciśnięcia klawisza podczas edycji pola tekstowego na miejscowość.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void City_KeyDown(object sender, KeyEventArgs e)
+        {
+            // sprawdzenie czy wciśniety został dozwolony klawisz
+            e.Handled = !patientDetailsPresenter.CityKeyDown(e.Key);
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola tekstowego na kod pocztowy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PostalCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // usuwanie z pola niedozwolonych znaków
+            patientDetailsPresenter.PostalCodeChanged();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia wciśnięcia klawisza podczas edycji pola tekstowego na kod pocztowy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PostalCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            // sprawdzenie czy wciśniety został dozwolony klawisz
+            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "NUM");
+        }
+
         // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk
 
         #endregion // Events handlers

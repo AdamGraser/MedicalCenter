@@ -62,7 +62,7 @@
             <DatePicker Grid.Row="3" Grid.Column="1" Name="BirthDate" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" SelectedDate="{Binding Path=BirthDate, Mode=TwoWay}" TabIndex="3" SelectedDateChanged="BirthDate_SelectedDateChanged" />
 
             <Label Grid.Row="3" Grid.Column="2" Content="Kod pocztowy" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" HorizontalContentAlignment="Right" />
-            <TextBox Grid.Row="3" Grid.Column="3" Name="PostalCode" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" Text="{Binding Path=PostalCode, Mode=TwoWay}" TabIndex="10" MaxLength="6" />
+            <TextBox Grid.Row="3" Grid.Column="3" Name="PostalCode" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" Text="{Binding Path=PostalCode, Mode=TwoWay}" TabIndex="10" MaxLength="6" TextChanged="PostalCode_TextChanged" KeyDown="PostalCode_KeyDown" />
 
             <Label Grid.Row="4" Grid.Column="0" Content="Płeć" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" HorizontalContentAlignment="Right" />
             <ComboBox Grid.Row="4" Grid.Column="1" Name="Gender" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" Background="White" Style="{DynamicResource MedicalCenterComboBox}" SelectedIndex="0" TabIndex="4" SelectionChanged="Gender_SelectionChanged">
@@ -71,7 +71,7 @@
             </ComboBox>
 
             <Label Grid.Row="4" Grid.Column="2" Content="Miejscowość" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" HorizontalContentAlignment="Right" />
-            <TextBox Grid.Row="4" Grid.Column="3" Name="City" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" Text="{Binding Path=City, Mode=TwoWay}" TabIndex="11" MaxLength="50" />
+            <TextBox Grid.Row="4" Grid.Column="3" Name="City" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" Text="{Binding Path=City, Mode=TwoWay}" TabIndex="11" MaxLength="50" TextChanged="City_TextChanged" KeyDown="City_KeyDown" />
 
             <Label Grid.Row="5" Grid.Column="0" Content="Nr PESEL" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" HorizontalContentAlignment="Right" />
             <TextBox Grid.Row="5" Grid.Column="1" Name="Pesel" HorizontalAlignment="Left" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" Text="{Binding Path=Pesel, Mode=OneWay}" TabIndex="5" MaxLength="11" TextChanged="Pesel_TextChanged" LostKeyboardFocus="Pesel_LostKeyboardFocus" KeyDown="Pesel_KeyDown" />

@@ -186,6 +186,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <exception cref="ArgumentNullException">Jeden z argumentów ma wartość null.</exception>
         public void TextBoxChanged(TextBox textBox, string charactersGroup)
         {
+            bool change = false;
+            
             // rzucenie wyjątkiem, jeśli któryś z argumentów jest null'em
             if (textBox == null)
                 throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
@@ -201,8 +203,12 @@ namespace MedicalCenter.GUI.Registrar
                 {
                     // jeśli to nie cyfra            (i ew.           nie litera i nie spacja)
                     if (!char.IsDigit(c) && (!both || (!char.IsLetter(c) && c != ' ')))
+                    {
                         // znajdź i zamień
                         textBox.Text = textBox.Text.Replace(c.ToString(), "");
+
+                        change = true;
+                    }
                 }
             }
             // jeśli wybrana grupa to litery i spacja
@@ -210,10 +216,17 @@ namespace MedicalCenter.GUI.Registrar
             {
                 foreach (char c in textBox.Text)
                 {
-                    if(!char.IsLetter(c) && c != ' ')
+                    if (!char.IsLetter(c) && c != ' ')
+                    {
                         textBox.Text = textBox.Text.Replace(c.ToString(), "");
+
+                        change = true;
+                    }
                 }
             }
+
+            if (change)
+                textBox.CaretIndex = textBox.Text.Length;
         }
 
         /// <summary>
@@ -345,7 +358,13 @@ namespace MedicalCenter.GUI.Registrar
                     }
 
                     if (incorrectPesel == 0 && wrongChecksum.Length > 0)
+                    {
                         view.Pesel.ToolTip = wrongChecksum;
+
+                        view.BirthDate.BorderBrush = view.Gender.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                        view.BirthDate.BorderThickness = view.Gender.BorderThickness = thickness1;
+                        view.BirthDate.ToolTip = view.Gender.ToolTip = null;
+                    }
                     else
                     {
                         if (wrongChecksum.Length > 0)
@@ -364,6 +383,10 @@ namespace MedicalCenter.GUI.Registrar
                             view.Gender.BorderBrush = System.Windows.Media.Brushes.Red;
                             view.Gender.BorderThickness = thickness2;
                             view.Gender.ToolTip = view.Pesel.ToolTip = "Numer PESEL i płeć nie zgadzają się!" + wrongChecksum;
+
+                            view.BirthDate.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                            view.BirthDate.BorderThickness = thickness1;
+                            view.BirthDate.ToolTip = null;
                         }
                         // jeśli błąd dotyczy także wybranej daty urodzenia
                         else if (incorrectPesel == 2)
@@ -371,6 +394,16 @@ namespace MedicalCenter.GUI.Registrar
                             view.BirthDate.BorderBrush = System.Windows.Media.Brushes.Red;
                             view.BirthDate.BorderThickness = thickness2;
                             view.BirthDate.ToolTip = view.Pesel.ToolTip = "Numer PESEL i data urodzenia nie zgadzają się!" + wrongChecksum;
+
+                            view.Gender.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                            view.Gender.BorderThickness = thickness1;
+                            view.Gender.ToolTip = null;
+                        }
+                        else
+                        {
+                            view.BirthDate.BorderBrush = view.Gender.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                            view.BirthDate.BorderThickness = view.Gender.BorderThickness = thickness1;
+                            view.BirthDate.ToolTip = view.Gender.ToolTip = null;
                         }
                     }
                 }
@@ -402,6 +435,79 @@ namespace MedicalCenter.GUI.Registrar
                 // analogicznie dla daty maksymalnej
                 else if (view.BirthDate.SelectedDate.Value > maxDate)
                     view.BirthDate.SelectedDate = maxDate;
+            }
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola tekstowego na miejscowość w widoku szczegółów pacjenta.
+        /// </summary>
+        public void CityChanged()
+        {
+            bool change = false;
+            
+            // usuń z pola wszystkie znaki niebędące cyframi, literami, spacjami ani myślnikami
+            foreach (char c in view.City.Text)
+            {
+                if (!char.IsDigit(c) && !char.IsLetter(c) && c != ' ' && c != '-')
+                {
+                    // znajdź i zamień
+                    view.City.Text = view.City.Text.Replace(c.ToString(), "");
+
+                    change = true;
+                }
+            }
+
+            if (change)
+                view.City.CaretIndex = view.City.Text.Length;
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia wciśnięcia klawisza podczas edycji pola tekstowego na miejscowość w widoku szczegółów pacjenta.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool CityKeyDown(Key key)
+        {
+            // sprawdzenie, czy wskazany przycisk jest literą, spacją lub cyfrą
+            bool retval = KindOfKey(key, "LAN");
+
+            // jeśli żadne z powyższych:
+            if (!retval)
+            {
+                // sprawdzenie czy klawisz ten jest myślnikiem (minusem)
+                if (key == Key.Subtract || key == Key.OemMinus)
+                    retval = true;
+            }
+
+            return retval;
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia zmiany zawartości pola tekstowego na kod pocztowy w widoku szczegółów pacjenta.
+        /// </summary>
+        public void PostalCodeChanged()
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{1,3}$"))
+            {
+                TextBoxChanged(view.PostalCode, "NUM");
+
+                // cyfr w polu może być maksymalnie 5
+                if (view.PostalCode.Text.Length == 6)
+                    view.PostalCode.Text = view.PostalCode.Text.Substring(0, 5);
+
+                // jeśli w polu wpisanych jest więcej niż 2 cyfry, należy zadbać o obecność myślnika
+                if (view.PostalCode.Text.Length > 2)
+                {
+                    // sprawdzenie obecności myślnika na trzeciej pozycji
+                    if (view.PostalCode.Text[2] != '-')
+                    {
+                        // zmiana tekstu wg. szablonu ^\d{2}-\d{1,3}$
+                        view.PostalCode.Text = view.PostalCode.Text.Substring(0, 2) + "-" + view.PostalCode.Text.Substring(2, view.PostalCode.Text.Length - 2);
+                        
+                        // ustawienie karetki w polu na końcu tekstu
+                        view.PostalCode.CaretIndex = view.PostalCode.Text.Length;
+                    }
+                }
             }
         }
 
