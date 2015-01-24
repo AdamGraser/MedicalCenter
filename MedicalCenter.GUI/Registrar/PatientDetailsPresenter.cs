@@ -230,6 +230,15 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Obsługa zdarzenia utraty focus'a klawiatury przez pole tekstowe w widoku szczegółów pacjenta.
+        /// </summary>
+        public void TextBoxLostFocus()
+        {
+            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+            view.Save.IsEnabled = IsFormCompleted;
+        }
+
+        /// <summary>
         /// Obsługa zdarzenia zmiany zawartości pola tekstowego "Pesel" w widoku szczegółów pacjenta.
         /// </summary>
         public void PeselChanged()
@@ -413,6 +422,8 @@ namespace MedicalCenter.GUI.Registrar
                     view.Pesel.BorderThickness = view.BirthDate.BorderThickness = view.Gender.BorderThickness = thickness1;
                     view.Pesel.BorderBrush = view.BirthDate.BorderBrush = view.Gender.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
                     view.BirthDate.ToolTip = view.Gender.ToolTip = view.Pesel.ToolTip = null;
+
+                    validationErrors = false;
                 }
             }
 

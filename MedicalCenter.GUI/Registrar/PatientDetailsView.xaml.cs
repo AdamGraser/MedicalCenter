@@ -229,6 +229,17 @@ namespace MedicalCenter.GUI.Registrar
             e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "NUM");
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia utraty focus'a klawiatury przez pole tekstowe.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // sprawdzenie, czy formularz wypełniony został poprawnie i ew. aktywacja przycisku "Zapisz"
+            patientDetailsPresenter.TextBoxLostFocus();
+        }
+
         // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk
 
         #endregion // Events handlers
