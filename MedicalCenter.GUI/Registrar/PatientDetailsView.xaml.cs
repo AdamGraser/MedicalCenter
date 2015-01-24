@@ -109,7 +109,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Pesel_KeyDown(object sender, KeyEventArgs e)
         {
             // sprawdzenie czy wciśniety został dozwolony klawisz
-            e.Handled = patientDetailsPresenter.PeselKeyDown(e.Key);
+            e.Handled = !patientDetailsPresenter.PeselKeyDown(e.Key);
         }
 
         // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk

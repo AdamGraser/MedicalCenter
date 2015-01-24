@@ -125,8 +125,8 @@ namespace MedicalCenter.GUI.Registrar
         {
             bool retval = false;
 
-            if ((key > Key.D0 && key < Key.D9) ||
-                (key > Key.NumPad0 && key < Key.NumPad9) ||
+            if ((key >= Key.D0 && key <= Key.D9) ||
+                (key >= Key.NumPad0 && key <= Key.NumPad9) ||
                 (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter))
             {
                 retval = true;
@@ -219,8 +219,10 @@ namespace MedicalCenter.GUI.Registrar
                 // walidacja pesel'u pod kątem płci
                 int.TryParse(view.Pesel.Text.Substring(9, 1), out temp);
 
-                // cyfra płci nieparzysta == mężczyzna -> jeśli wybrano kobietę == błąd
-                if ((temp & 1) == 1 && view.Gender.SelectedIndex == 1 || view.Gender.SelectedIndex == 0)
+                // cyfra płci nieparzysta == mężczyzna, parzysta == kobieta
+                // na liście płci jest odwrotnie: SelectedIndex == 0 -> mężczyzna
+                // więc jeśli w pesel'u cyfra jest nieparzysta i SelectedIndex listy płci też jest nieparzysty (1) => błąd
+                if ((temp & 1) == view.Gender.SelectedIndex)
                 {
                     // jeśli wcześniej wykryto błąd na linii pesel <-> data urodzenia
                     if (incorrectPesel == 2)
