@@ -101,6 +101,17 @@ namespace MedicalCenter.GUI.Registrar
             patientDetailsPresenter.ValidatePesel();
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia wciśnięcia klawisza podczas edycji pola tekstowego "Pesel".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Pesel_KeyDown(object sender, KeyEventArgs e)
+        {
+            // sprawdzenie czy wciśniety został dozwolony klawisz
+            e.Handled = patientDetailsPresenter.PeselKeyDown(e.Key);
+        }
+
         // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk
 
         #endregion // Events handlers

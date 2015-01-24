@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MedicalCenter.GUI.Registrar
 {
@@ -115,6 +116,26 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Sprawdza, czy wskazany klawisz jest numeryczny lub jest to
+        /// delete lub backspace lub tab lub return lub escape lub enter.
+        /// </summary>
+        /// <param name="key">Klawisz do sprawdzenia.</param>
+        /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false</returns>
+        public bool PeselKeyDown(Key key)
+        {
+            bool retval = false;
+
+            if ((key > Key.D0 && key < Key.D9) ||
+                (key > Key.NumPad0 && key < Key.NumPad9) ||
+                (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter))
+            {
+                retval = true;
+            }
+
+            return retval;
+        }
+
+        /// <summary>
         /// Obsługa zdarzenia zmiany zawartości pola tekstowego "Pesel" w widoku szczegółów pacjenta.
         /// </summary>
         public void PeselChanged()
@@ -128,6 +149,13 @@ namespace MedicalCenter.GUI.Registrar
                 // pesel to liczba - brak zer z lewej strony
                 else if (view.Pesel.Text.Length == 10)
                     view.Pesel.Text = "0" + view.Pesel.Text;
+            }
+
+            // usunięcie wszystkich znaków innych niż cyfry
+            foreach (char c in view.Pesel.Text)
+            {
+                if (!char.IsDigit(c))
+                    view.Pesel.Text = view.Pesel.Text.Replace(c.ToString(), "");
             }
         }
 
