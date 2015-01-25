@@ -51,6 +51,10 @@ namespace MedicalCenter.Models.LoggingIn
         public User()
         {
             Id = 0;
+            Login = string.Empty;
+            Password = string.Empty;
+            Title = string.Empty;
+            JobTitleCode = string.Empty;
         }
 
         #endregion // Ctors

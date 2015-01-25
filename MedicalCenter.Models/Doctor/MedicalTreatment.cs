@@ -140,7 +140,10 @@ namespace MedicalCenter.Models.Doctor
             this.VerifierId = 0;
             this.EditorId = 0;
             this.MedicalTreatmentId = 0;
-            IsPrivate = false;
+            this.IsPrivate = false;
+            this.Description = string.Empty;
+            this.Result = string.Empty;
+            this.Comments = string.Empty;
         }
 
         /// <summary>

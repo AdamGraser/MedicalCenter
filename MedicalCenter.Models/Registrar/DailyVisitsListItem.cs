@@ -55,6 +55,8 @@ namespace MedicalCenter.Models.Registrar
         public DailyVisitsListItem(DateTime DateOfVisit)
         {
             this.DateOfVisit = DateOfVisit;
+            this.PatientFirstName = string.Empty;
+            this.PatientLastName = string.Empty;
             this.State = 0;
             this.IsEmergency = false;
         }

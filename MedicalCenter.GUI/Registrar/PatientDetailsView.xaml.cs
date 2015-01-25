@@ -230,14 +230,14 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
-        /// Obsługa zdarzenia utraty focus'a klawiatury przez pole tekstowe.
+        /// Obsługa zdarzenia utraty focus'a klawiatury przez pole na kod pocztowy.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void PostalCode_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            // sprawdzenie, czy formularz wypełniony został poprawnie i ew. aktywacja przycisku "Zapisz"
-            patientDetailsPresenter.TextBoxLostFocus();
+            // sprawdzenie poprawności kodu pocztowego
+            patientDetailsPresenter.ValidatePostalCode();
         }
 
         /// <summary>

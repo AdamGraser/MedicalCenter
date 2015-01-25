@@ -108,8 +108,18 @@ namespace MedicalCenter.Models.Registrar
         public Patient()
         {
             this.Id = 0;
+            this.LastName = string.Empty;
+            this.FirstName = string.Empty;
+            this.SecondName = string.Empty;
             this.BirthDate = DateTime.Today;
             this.Gender = false;
+            this.Pesel = 0;
+            this.Street = string.Empty;
+            this.BuildingNumber = string.Empty;
+            this.Apartment = string.Empty;
+            this.PostalCode = string.Empty;
+            this.City = string.Empty;
+            this.Post = string.Empty;
             this.IsInsured = true;
         }
 

@@ -202,13 +202,7 @@ namespace MedicalCenter.GUI.Registrar
 
             if (change)
                 textBox.CaretIndex = textBox.Text.Length;
-        }
 
-        /// <summary>
-        /// Obsługa zdarzenia utraty focus'a klawiatury przez pole tekstowe w widoku szczegółów pacjenta.
-        /// </summary>
-        public void TextBoxLostFocus()
-        {
             // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
             view.Save.IsEnabled = IsFormCompleted;
         }
@@ -239,9 +233,12 @@ namespace MedicalCenter.GUI.Registrar
                 view.LastName.Clear();
                 view.FirstName.Clear();
                 view.SecondName.Clear();
+                // istotne jest, aby czyszczenie pesel'u było przed czyszczeniem płci - jeśli wybrana była kobieta i był wpisany prawidłowy pesel,
+                // zmiana płci do wartości domyślnej (mężczyzna) spowoduje błąd walidacji pesel'u, który nie zostanie usunięty
+                // (wyczyszczenie najpierw pesel'u, a potem płci, jest chyba najprostszym rozwiązaniem)
+                view.Pesel.Clear();
                 view.BirthDate.SelectedDate = null;
                 view.Gender.SelectedIndex = 0;
-                view.Pesel.Clear();
                 view.Street.Clear();
                 view.BuildingNumber.Clear();
                 view.Apartment.Clear();
@@ -249,6 +246,7 @@ namespace MedicalCenter.GUI.Registrar
                 view.City.Clear();
                 view.Post.Clear();
                 view.IsInsured.IsChecked = true;
+                view.Save.IsEnabled = false;
 
                 // powrót do menu głównego
                 view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
@@ -512,9 +510,6 @@ namespace MedicalCenter.GUI.Registrar
                     validationErrors = false;
                 }
             }
-
-            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-            view.Save.IsEnabled = IsFormCompleted;
         }
 
         /// <summary>
@@ -605,6 +600,29 @@ namespace MedicalCenter.GUI.Registrar
                         view.PostalCode.CaretIndex = view.PostalCode.Text.Length;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Walidacja kodu pocztowego.
+        /// </summary>
+        public void ValidatePostalCode()
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{3}$"))
+            {
+                view.PostalCode.BorderBrush = System.Windows.Media.Brushes.Red;
+                view.PostalCode.BorderThickness = thickness2;
+                view.PostalCode.ToolTip = "Nieprawidłowy kod pocztowy!";
+
+                validationErrors = true;
+            }
+            else
+            {
+                view.PostalCode.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                view.PostalCode.BorderThickness = thickness1;
+                view.PostalCode.ToolTip = null;
+
+                validationErrors = false;
             }
         }
 
