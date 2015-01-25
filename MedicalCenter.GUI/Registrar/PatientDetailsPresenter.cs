@@ -94,39 +94,7 @@ namespace MedicalCenter.GUI.Registrar
 
         #region Public methods
 
-        /// <summary>
-        /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku szczegółów pacjenta.
-        /// </summary>
-        public void Back()
-        {
-            // należy zapytać użytkownika czy jest pewien chęci powrotu do menu głównego;
-            // tylko jeśli użytkownik kliknął przycisk "Tak", należy wyczyścić wszystkie pola i wrócić do menu głównego
-            if (System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do menu głównego? Wszelkie zmiany nie zostaną zapisane.",
-                                                     "Pytanie",
-                                                     System.Windows.Forms.MessageBoxButtons.YesNo,
-                                                     System.Windows.Forms.MessageBoxIcon.Question,
-                                                     System.Windows.Forms.MessageBoxDefaultButton.Button2)
-                == System.Windows.Forms.DialogResult.Yes)
-            {
-                // ustawienie wartości domyślnych w widoku szczegółów pacjenta
-                view.LastName.Clear();
-                view.FirstName.Clear();
-                view.SecondName.Clear();
-                view.BirthDate.SelectedDate = null;
-                view.Gender.SelectedIndex = 0;
-                view.Pesel.Clear();
-                view.Street.Clear();
-                view.BuildingNumber.Clear();
-                view.Apartment.Clear();
-                view.PostalCode.Clear();
-                view.City.Clear();
-                view.Post.Clear();
-                view.IsInsured.IsChecked = true;
-
-                // powrót do menu głównego
-                view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
-            }
-        }
+        #region Generic methods
 
         /// <summary>
         /// Sprawdza, czy wskazany klawisz należy do wskazanej grupy klawiszy.
@@ -238,6 +206,44 @@ namespace MedicalCenter.GUI.Registrar
             view.Save.IsEnabled = IsFormCompleted;
         }
 
+        #endregion // Generic methods
+
+        #region Detailed methods
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku szczegółów pacjenta.
+        /// </summary>
+        public void Back()
+        {
+            // należy zapytać użytkownika czy jest pewien chęci powrotu do menu głównego;
+            // tylko jeśli użytkownik kliknął przycisk "Tak", należy wyczyścić wszystkie pola i wrócić do menu głównego
+            if (System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do menu głównego? Wszelkie zmiany nie zostaną zapisane.",
+                                                     "Pytanie",
+                                                     System.Windows.Forms.MessageBoxButtons.YesNo,
+                                                     System.Windows.Forms.MessageBoxIcon.Question,
+                                                     System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                == System.Windows.Forms.DialogResult.Yes)
+            {
+                // ustawienie wartości domyślnych w widoku szczegółów pacjenta
+                view.LastName.Clear();
+                view.FirstName.Clear();
+                view.SecondName.Clear();
+                view.BirthDate.SelectedDate = null;
+                view.Gender.SelectedIndex = 0;
+                view.Pesel.Clear();
+                view.Street.Clear();
+                view.BuildingNumber.Clear();
+                view.Apartment.Clear();
+                view.PostalCode.Clear();
+                view.City.Clear();
+                view.Post.Clear();
+                view.IsInsured.IsChecked = true;
+
+                // powrót do menu głównego
+                view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
+            }
+        }
+
         /// <summary>
         /// Obsługa zdarzenia zmiany zawartości pola tekstowego "Pesel" w widoku szczegółów pacjenta.
         /// </summary>
@@ -285,35 +291,53 @@ namespace MedicalCenter.GUI.Registrar
                         // dwie pierwsze cyfry pesel'u to młodsza połowa roku
                         int.TryParse(view.Pesel.Text.Substring(0, 2), out temp);
 
-                        // rok podany w dacie urodzenia musi mieścić się w przedziale <1800; 2299>
-                        // (o ile dobrze mi wiadomo, dla lat późniejszych, a tym bardziej wcześniejszych, nie zdefiniowano wielkości,
-                        // jakie miałyby być dodane do numerów miesięcy)
-                        if (view.BirthDate.SelectedDate.Value.Year < 1800 || view.BirthDate.SelectedDate.Value.Year > 2299)
+                        // jeśli młodsza połowa numeru roku w podanej dacie urodzenia jest inna niż ta podana w peselu,
+                        // to należy zgłosić błąd w tych dwóch powiązanych ze sobą polach
+                        if (view.BirthDate.SelectedDate.Value.Year % 100 != temp)
                             incorrectPesel = 2;
                         else
                         {
-                            // jeśli młodsza połowa numeru roku w podanej dacie urodzenia jest inna niż ta podana w peselu,
-                            // to należy zgłosić błąd w tych dwóch powiązanych ze sobą polach
-                            if (view.BirthDate.SelectedDate.Value.Year % 100 != temp)
-                                incorrectPesel = 2;
-                            else
+                            // trzecia i czwarta cyfra pesel'u tworzą nr miesiąca
+                            int.TryParse(view.Pesel.Text.Substring(2, 2), out temp);
+
+                            // miesiąc z daty urodzenia inny niż podany w pesel'u -> błąd
+                            // (szczegóły tutaj: https://pl.wikipedia.org/wiki/PESEL#Data_urodzenia)
+                            if (view.BirthDate.SelectedDate.Value.Year >= 1900 && view.BirthDate.SelectedDate.Value.Year < 2000)
                             {
-                                // trzecia i czwarta cyfra pesel'u tworzą nr miesiąca
-                                int.TryParse(view.Pesel.Text.Substring(2, 2), out temp);
-
-                                // miesiąc z daty urodzenia inny niż podany w pesel'u -> błąd
-                                // (modulo 20, ponieważ https://pl.wikipedia.org/wiki/PESEL#Data_urodzenia)
-                                if (view.BirthDate.SelectedDate.Value.Month != temp % 20)
+                                if (view.BirthDate.SelectedDate.Value.Month != temp)
                                     incorrectPesel = 2;
-                                else
-                                {
-                                    // piąta i szósta cyfra pesel'u tworzą dzień miesiąca
-                                    int.TryParse(view.Pesel.Text.Substring(4, 2), out temp);
+                            }
+                            else if (view.BirthDate.SelectedDate.Value.Year >= 2000 && view.BirthDate.SelectedDate.Value.Year < 2100)
+                            {
+                                if (view.BirthDate.SelectedDate.Value.Month != temp - 20)
+                                    incorrectPesel = 2;
+                            }
+                            else if (view.BirthDate.SelectedDate.Value.Year >= 2100 && view.BirthDate.SelectedDate.Value.Year < 2200)
+                            {
+                                if (view.BirthDate.SelectedDate.Value.Month != temp - 40)
+                                    incorrectPesel = 2;
+                            }
+                            else if (view.BirthDate.SelectedDate.Value.Year >= 2200 && view.BirthDate.SelectedDate.Value.Year < 2300)
+                            {
+                                if (view.BirthDate.SelectedDate.Value.Month != temp - 60)
+                                    incorrectPesel = 2;
+                            }
+                            else if (view.BirthDate.SelectedDate.Value.Year >= 1800 && view.BirthDate.SelectedDate.Value.Year < 1900)
+                            {
+                                if (view.BirthDate.SelectedDate.Value.Month != temp - 80)
+                                    incorrectPesel = 2;
+                            }
+                            else
+                                incorrectPesel = 2;
 
-                                    // dzień z daty urodzenia inny niż podany w pesel'u -> błąd
-                                    if (view.BirthDate.SelectedDate.Value.Day != temp)
-                                        incorrectPesel = 2;
-                                }
+                            if(incorrectPesel == 0)
+                            {
+                                // piąta i szósta cyfra pesel'u tworzą dzień miesiąca
+                                int.TryParse(view.Pesel.Text.Substring(4, 2), out temp);
+
+                                // dzień z daty urodzenia inny niż podany w pesel'u -> błąd
+                                if (view.BirthDate.SelectedDate.Value.Day != temp)
+                                    incorrectPesel = 2;
                             }
                         }
                     }
@@ -521,6 +545,8 @@ namespace MedicalCenter.GUI.Registrar
                 }
             }
         }
+
+        #endregion // Detailed methods
 
         #endregion // Public methods
     }
