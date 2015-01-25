@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MedicalCenter.Services;
 
 namespace MedicalCenter.GUI.Registrar
 {
@@ -14,6 +15,11 @@ namespace MedicalCenter.GUI.Registrar
     public class PatientDetailsPresenter
     {
         #region Private fields
+
+        /// <summary>
+        /// Logika biznesowa w zakresie pacjentów.
+        /// </summary>
+        PatientBusinessService patientBusinessService;
 
         /// <summary>
         /// Widok szczegółów pacjenta zarządzany przez tego prezentera.
@@ -83,11 +89,12 @@ namespace MedicalCenter.GUI.Registrar
         public PatientDetailsPresenter(PatientDetailsView view)
         {
             this.view = view;
+            this.patientBusinessService = new PatientBusinessService();
             this.validationErrors = false;
-            thickness1 = new System.Windows.Thickness(1.0);
-            thickness2 = new System.Windows.Thickness(2.0);
-            minDate = new DateTime(1800, 1, 1);
-            maxDate = new DateTime(2299, 12, 31);
+            this.thickness1 = new System.Windows.Thickness(1.0);
+            this.thickness2 = new System.Windows.Thickness(2.0);
+            this.minDate = new DateTime(1800, 1, 1);
+            this.maxDate = new DateTime(2299, 12, 31);
         }
 
         #endregion // Ctors
@@ -213,16 +220,20 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku szczegółów pacjenta.
         /// </summary>
-        public void Back()
+        public void Back(bool question)
         {
-            // należy zapytać użytkownika czy jest pewien chęci powrotu do menu głównego;
+            System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.DialogResult.Yes;
+
+            // jeśli istnieje potrzeba, użytkownik pytany jest o potwierdzenie chęci powrotu do menu głównego bez zapisywania wprowadzonych zmian;
             // tylko jeśli użytkownik kliknął przycisk "Tak", należy wyczyścić wszystkie pola i wrócić do menu głównego
-            if (System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do menu głównego? Wszelkie zmiany nie zostaną zapisane.",
+            if (question)
+                dialogResult = System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do menu głównego? Wszelkie zmiany nie zostaną zapisane.",
                                                      "Pytanie",
                                                      System.Windows.Forms.MessageBoxButtons.YesNo,
                                                      System.Windows.Forms.MessageBoxIcon.Question,
-                                                     System.Windows.Forms.MessageBoxDefaultButton.Button2)
-                == System.Windows.Forms.DialogResult.Yes)
+                                                     System.Windows.Forms.MessageBoxDefaultButton.Button2);
+
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
                 // ustawienie wartości domyślnych w widoku szczegółów pacjenta
                 view.LastName.Clear();
@@ -241,6 +252,57 @@ namespace MedicalCenter.GUI.Registrar
 
                 // powrót do menu głównego
                 view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
+            }
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Zapisz" w widoku szczegółów pacjenta.
+        /// </summary>
+        public void SaveChanges()
+        {
+            long pesel;
+
+            // próba konwersji PESEL'u ze string'a na 8-bajtowy int
+            if (long.TryParse(view.Pesel.Text, out pesel))
+            {
+                // jeśli konwersja się powiodła, należy zapisać PESEL w postaci liczbowej do obiektu z danymi pacjenta
+                view.PatientData.Pesel = pesel;
+                
+                // zapis informacji o pacjencie do bazy danych
+                bool? saved = patientBusinessService.SavePatient(view.PatientData);
+
+                // PESEL nie jest unikatowy - błąd
+                if (saved == null)
+                    System.Windows.Forms.MessageBox.Show("Podany numer PESEL już istnieje w bazie danych!",
+                                                         "Nieprawidłowy PESEL!",
+                                                         System.Windows.Forms.MessageBoxButtons.OK,
+                                                         System.Windows.Forms.MessageBoxIcon.Warning);
+                // wystąpił inny błąd
+                else if (saved == false)
+                    System.Windows.Forms.MessageBox.Show("Wystąpił błąd podczas próby zapisu informacji o pacjencie w bazie danych.",
+                                                         "Błąd zapisu!",
+                                                         System.Windows.Forms.MessageBoxButtons.OK,
+                                                         System.Windows.Forms.MessageBoxIcon.Error);
+                // prawidłowy zapis
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Informacje o pacjencie zostały pomyślnie zapisane w bazie danych.",
+                                                         "Pomyślny zapis",
+                                                         System.Windows.Forms.MessageBoxButtons.OK,
+                                                         System.Windows.Forms.MessageBoxIcon.Information);
+
+                    Back(false);
+                }
+            }
+            // jeśli próba konwersji PESEL'u się nie powiodła, nie można zapisać danych pacjenta do bazy
+            else
+            {
+                System.Console.WriteLine("Błąd podczas konwersji numeru PESEL z postaci stringowej na liczbę");
+
+                System.Windows.Forms.MessageBox.Show("Wystąpił nieznany błąd.",
+                                                     "Nieznany błąd!",
+                                                     System.Windows.Forms.MessageBoxButtons.OK,
+                                                     System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
 

@@ -76,7 +76,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             // wyczyszczenie wszystkich pól i powrót do menu głównego
-            patientDetailsPresenter.Back();
+            patientDetailsPresenter.Back(true);
         }
 
         /// <summary>
@@ -240,7 +240,16 @@ namespace MedicalCenter.GUI.Registrar
             patientDetailsPresenter.TextBoxLostFocus();
         }
 
-        // TODO: w obsłudze kliknięcia przycisku "Zapisz" należy odbierać focus elementowi, który go aktualnie posiada, chyba, że jest to sam przycisk
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Zapisz".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            // zapisanie zawartości formularza do bazy danych
+            patientDetailsPresenter.SaveChanges();
+        }
 
         #endregion // Events handlers
     }

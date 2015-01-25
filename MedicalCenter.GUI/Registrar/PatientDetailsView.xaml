@@ -83,6 +83,6 @@
             <CheckBox Grid.Row="6" Grid.Column="1" Name="IsInsured" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Foreground="CornflowerBlue" Style="{DynamicResource MedicalCenterCheckBox}" IsChecked="{Binding Path=IsInsured, Mode=TwoWay}" TabIndex="6" LostKeyboardFocus="TextBox_LostKeyboardFocus" />
         </Grid>
 
-        <Button Grid.Row="2" Name="Save" Content="Zapisz" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" IsEnabled="False" TabIndex="13" Style="{Binding Source={StaticResource MedicalCenterButton}}" IsDefault="True" />
+        <Button Grid.Row="2" Name="Save" Content="Zapisz" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" IsEnabled="False" TabIndex="13" Style="{Binding Source={StaticResource MedicalCenterButton}}" IsDefault="True" Click="Save_Click" />
     </Grid>
 </UserControl>

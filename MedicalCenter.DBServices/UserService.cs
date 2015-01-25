@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MedicalCenter.Models.LoggingIn;
 using MedicalCenter.Data;
+using MedicalCenter.Models.LoggingIn;
 
 namespace MedicalCenter.DBServices
 {
     /// <summary>
-    /// Obsługa podstawowych operacji na tabelach związanych z użytkownikami systemu (pracownikami).
+    /// Zestaw podstawowych operacji na tabelach związanych z użytkownikami systemu (pracownikami).
     /// </summary>
     public class UserService
     {
@@ -36,13 +36,15 @@ namespace MedicalCenter.DBServices
 
         #region Public methods
 
+        #region Select
+
         /// <summary>
-        /// Pobiera z bazy danych informacje o użytkowniku identyfikowanym przez podany login i hash hasła.
+        /// Pobiera z bazy danych informacje o wskazanym użytkowniku.
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli A_Users, odpowiadający szukanemu użytkownikowi,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono użytkownika o podanym loginie i/lub hashu hasła.
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono użytkownika odpowiadającego podanym warunkom.
         /// </returns>
         public A_User SelectUser(System.Linq.Expressions.Expression<Func<A_User, bool>> predicate)
         {
@@ -55,7 +57,7 @@ namespace MedicalCenter.DBServices
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli A_Workers,
-        /// lub obiekt z wartościami domyślnymi, jeżeli podane ID jest spoza zakresu.
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono pracownika odpowiadającego podanym warunkom.
         /// </returns>
         public A_Worker SelectWorker(System.Linq.Expressions.Expression<Func<A_Worker, bool>> predicate)
         {
@@ -68,12 +70,14 @@ namespace MedicalCenter.DBServices
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli A_DictionaryJobTitle,
-        /// lub obiekt z wartościami domyślnymi, jeżeli podane ID jest spoza zakresu.
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono stanowiska odpowiadającego podanym warunkom.
         /// </returns>
         public A_DictionaryJobTitle SelectJobTitle(System.Linq.Expressions.Expression<Func<A_DictionaryJobTitle, bool>> predicate)
         {
             return db.A_DictionaryJobTitles.FirstOrDefault(predicate);
         }
+
+        #endregion // Select
 
         #endregion // Public methods
     }

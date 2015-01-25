@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MedicalCenter.Data;
 using MedicalCenter.DBServices;
 using MedicalCenter.Models.LoggingIn;
-using MedicalCenter.Data;
 
 namespace MedicalCenter.Services
 {
