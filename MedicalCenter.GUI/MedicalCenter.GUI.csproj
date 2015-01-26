@@ -67,6 +67,10 @@
     <Compile Include="Registrar\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Registrar\RegisterVisitPresenter.cs" />
+    <Compile Include="Registrar\RegisterVisitView.xaml.cs">
+      <DependentUpon>RegisterVisitView.xaml</DependentUpon>
+    </Compile>
     <Page Include="LoggingIn\LogInView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -91,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Registrar\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Registrar\RegisterVisitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

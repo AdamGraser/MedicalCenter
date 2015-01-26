@@ -54,10 +54,13 @@ namespace MedicalCenter.GUI.Registrar
         {
             InitializeComponent();
 
+            // zapisanie referencji do nadrzędnego okna
             this.ParentWindow = parentWindow;
 
+            // utworzenie prezentera
             patientDetailsPresenter = new PatientDetailsPresenter(this);
 
+            // utworzenie pustego obiektu na dane pacjenta
             PatientData = new Patient();
 
             // ustawienie kontekstu danych, aby móc powiązać obiekt PatientData z polami formularza

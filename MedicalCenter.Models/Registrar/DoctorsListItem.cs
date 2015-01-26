@@ -11,6 +11,22 @@ namespace MedicalCenter.Models.Registrar
     /// </summary>
     public class DoctorsListItem
     {
+        #region Private fields
+
+        /// <summary>
+        /// Przechowuje nazwisko wskazanego lekarza.
+        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
+        /// </summary>
+        string doctorLastName;
+
+        /// <summary>
+        /// Przechowuje imię wskazanego lekarza.
+        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
+        /// </summary>
+        string doctorFirstName;
+
+        #endregion // Private fields
+
         // Public getters, private setters
         #region Public properties
 
@@ -24,19 +40,18 @@ namespace MedicalCenter.Models.Registrar
         /// Przechowuje ID rekordu z tabeli A_Workers, odpowiadającego danemu lekarzowi.
         /// </summary>
         public int DoctorId { get; private set; }
+
+        /// <summary>
+        /// Zwraca nazwisko i imię lekarza, oddzielone spacją.
+        /// </summary>
+        public string DoctorName
+        {
+            get
+            {
+                return doctorLastName + " " + doctorFirstName;
+            }
+        }
         
-        /// <summary>
-        /// Przechowuje nazwisko wskazanego lekarza.
-        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
-        /// </summary>
-        public string DoctorLastName { get; private set; }
-
-        /// <summary>
-        /// Przechowuje imię wskazanego lekarza.
-        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
-        /// </summary>
-        public string DoctorFirstName { get; private set; }
-
         /// <summary>
         /// Przechowuje liczbę pacjentów, jaka jest zarejestrowana do wskazanego lekarza na podany dzień, w ramach danej poradni medycznej.
         /// </summary>
@@ -71,8 +86,8 @@ namespace MedicalCenter.Models.Registrar
         {
             this.ClinicName = ClinicName;
             this.DoctorId = DoctorId;
-            this.DoctorLastName = DoctorLastName;
-            this.DoctorFirstName = DoctorFirstName;
+            this.doctorLastName = DoctorLastName;
+            this.doctorFirstName = DoctorFirstName;
             this.PatientsNumber = PatientsNumber;
             this.RoomNumber = RoomNumber;
             this.State = State;

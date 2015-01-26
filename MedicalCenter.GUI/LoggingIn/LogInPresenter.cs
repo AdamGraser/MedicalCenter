@@ -69,9 +69,6 @@ namespace MedicalCenter.GUI.LoggingIn
                 // zmiana ekranu logowania na menu główne
                 if (view.UserData.JobTitleCode.StartsWith("REJ"))
                 {
-                    // widok logowania z założenia nie będzie już potrzebny
-                    view.ParentWindow.LoginView = null;
-                    
                     // jeśli widok menu głównego nie był dotychczas wyświetlany, należy go najpierw utworzyć
                     if (view.ParentWindow.RegistrarMainMenuView == null)
                         view.ParentWindow.RegistrarMainMenuView = new Registrar.MainMenuView(view.ParentWindow);

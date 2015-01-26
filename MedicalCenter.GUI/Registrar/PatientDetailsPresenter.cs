@@ -83,7 +83,7 @@ namespace MedicalCenter.GUI.Registrar
         #region Ctors
 
         /// <summary>
-        /// Konstruktor zapisujący referencję do zarządzanego widoku.
+        /// Konstruktor zapisujący referencję do zarządzanego widoku i tworzący obiekt usług logiki biznesowej.
         /// </summary>
         /// <param name="view">Widok menu głównego rejestratorki zarządzany przez tego prezentera.</param>
         public PatientDetailsPresenter(PatientDetailsView view)
@@ -229,6 +229,18 @@ namespace MedicalCenter.GUI.Registrar
 
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
+                UserControl last = view.ParentWindow.History.Pop();
+                MainMenuView mainMenu = last as MainMenuView;
+
+                if (mainMenu == null)
+                {
+                    RegisterVisitView registerVisit = last as RegisterVisitView;
+
+                    // TODO: if(registerVisit == null) { kolejne zagłębienie} else { przekazanie ID pacjenta do tego widoku, ustawienie go jako treści okna głównego }
+                }
+                else
+                    view.ParentWindow.ContentArea.Content = mainMenu;
+
                 // ustawienie wartości domyślnych w widoku szczegółów pacjenta
                 view.LastName.Clear();
                 view.FirstName.Clear();
@@ -247,9 +259,6 @@ namespace MedicalCenter.GUI.Registrar
                 view.Post.Clear();
                 view.IsInsured.IsChecked = true;
                 view.Save.IsEnabled = false;
-
-                // powrót do menu głównego
-                view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
             }
         }
 

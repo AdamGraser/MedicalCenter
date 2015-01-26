@@ -29,9 +29,9 @@ namespace MedicalCenter.GUI
         public int Id;
 
         /// <summary>
-        /// Ekran logowania.
+        /// Historia stron, przez które przeszedł użytkownik.
         /// </summary>
-        public LogInView LoginView;
+        public Stack<UserControl> History;
 
         /// <summary>
         /// Rejestratorka - menu główne.
@@ -42,6 +42,11 @@ namespace MedicalCenter.GUI
         /// Rejestratorka - dodawanie nowego pacjenta do bazy.
         /// </summary>
         public Registrar.PatientDetailsView RegistrarPatientDetailsView;
+
+        /// <summary>
+        /// Rejestratorka - rejestrowanie wizyty - lista lekarzy.
+        /// </summary>
+        public Registrar.RegisterVisitView RegistrarRegisterVisitView;
 
         #endregion // Public properties
 
@@ -54,9 +59,14 @@ namespace MedicalCenter.GUI
         {
             InitializeComponent();
 
-            ContentArea.Content = LoginView = new LogInView(this);
+            // ustawienie początkowego widoku - formularza logowania
+            ContentArea.Content = new LogInView(this);
 
+            // domyślna wartość ID zalogowanego użytkownika
             Id = 0;
+
+            // utworzenie stosu na ostatnio wyświetlane widoki
+            History = new Stack<UserControl>();
         }
 
         #endregion // Ctors

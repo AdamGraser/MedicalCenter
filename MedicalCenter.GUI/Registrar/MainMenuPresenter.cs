@@ -49,9 +49,15 @@ namespace MedicalCenter.GUI.Registrar
                                                      System.Windows.Forms.MessageBoxDefaultButton.Button2)
                 == System.Windows.Forms.DialogResult.Yes)
             {
+                // ustawienie wartości domyślnych
                 view.ParentWindow.Id = 0;
                 view.ParentWindow.Title = "Nazwa placówki medycznej";
-                view.ParentWindow.ContentArea.Content = view.ParentWindow.LoginView = new LoggingIn.LogInView(view.ParentWindow);
+
+                // wyświetlenie ekranu logowania
+                view.ParentWindow.ContentArea.Content = new LoggingIn.LogInView(view.ParentWindow);
+
+                // wyczyszczenie stosu z ostatnio wyświetlanymi widokami
+                view.ParentWindow.History.Clear();
             }
         }
 
@@ -66,6 +72,9 @@ namespace MedicalCenter.GUI.Registrar
 
             // zmiana zawartości okna głównego z menu na szczegóły pacjenta
             view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
+
+            // zapisanie w historii referencji do widoku menu głównego
+            view.ParentWindow.History.Push(view);
         }
 
         #endregion // Public methods
