@@ -131,6 +131,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MedicalCenter.Data\MedicalCenter.Data.csproj">
+      <Project>{efce7a9b-dee6-479b-b707-73a0250d6a09}</Project>
+      <Name>MedicalCenter.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MedicalCenter.Models\MedicalCenter.Models.csproj">
       <Project>{a467fd60-a745-4845-a28e-0b0c86e6a345}</Project>
       <Name>MedicalCenter.Models</Name>

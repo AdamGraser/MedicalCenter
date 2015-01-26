@@ -79,6 +79,17 @@ namespace MedicalCenter.GUI.Registrar
             mainMenuPresenter.AddPatient();
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Zarejestruj wizytę".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RegisterVisit_Click(object sender, RoutedEventArgs e)
+        {
+            // zmiana zawartości okna głównego z menu na widok listy lekarzy przy rejestracji wizyty
+            mainMenuPresenter.RegisterVisit();
+        }
+
         #endregion // Events handlers
     }
 }

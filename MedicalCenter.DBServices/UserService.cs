@@ -64,6 +64,20 @@ namespace MedicalCenter.DBServices
             return db.A_Workers.FirstOrDefault(predicate);
         }
 
+
+        /// <summary>
+        /// Pobiera z bazy danych informacje o wskazanych pracownikach.
+        /// </summary>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <returns>
+        /// Lista obiektów reprezentujących rekordy z tabeli A_Workers,
+        /// lub null, jeżeli nie znaleziono pracowników odpowiadających podanym warunkom.
+        /// </returns>
+        public IEnumerable<A_Worker> SelectWorkers(Func<A_Worker, bool> predicate)
+        {
+            return db.A_Workers.Where(predicate);
+        }
+
         /// <summary>
         /// Pobiera z bazy danych informacje o wskazanym stanowisku służbowym.
         /// </summary>
@@ -75,6 +89,41 @@ namespace MedicalCenter.DBServices
         public A_DictionaryJobTitle SelectJobTitle(System.Linq.Expressions.Expression<Func<A_DictionaryJobTitle, bool>> predicate)
         {
             return db.A_DictionaryJobTitles.FirstOrDefault(predicate);
+        }
+
+        /// <summary>
+        /// Pobiera z bazy numer gabinetu, w którym przyjmuje/przyjmował dany lekarz we wskazanym dniu.
+        /// </summary>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <returns>
+        /// Obiekt reprezentujący rekord z tabeli A_DictionaryRoom,
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono gabinetu odpowiadającego podanym warunkom.
+        /// </returns>
+        public A_DictionaryRoom SelectRoom(System.Linq.Expressions.Expression<Func<A_WorkersRoom, bool>> predicate)
+        {
+            // A_DictionaryRoom <---> A_WorkersRoom <---> A_Workers
+
+            // znalezienie rekordu wiążącego A_Workers.Id z A_DictionaryRoom.Id
+            A_WorkersRoom temp = db.A_WorkersRooms.FirstOrDefault(predicate);
+
+            // zwrócenie numeru gabinetu lub null, jeśli nie znaleziono (lub nie znaleziono powiązania między gabinetem a pracownikiem)
+            if (temp != null)
+                return db.A_DictionaryRooms.FirstOrDefault(x => x.Id == temp.RoomId);
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych grafik spełniający podane warunki.
+        /// </summary>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <returns>
+        /// Obiekt reprezentujący rekord z tabeli A_Schedule,
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono grafika odpowiadającego podanym warunkom.
+        /// </returns>
+        public A_Schedule SelectSchedule(System.Linq.Expressions.Expression<Func<A_Schedule, bool>> predicate)
+        {
+            return db.A_Schedules.FirstOrDefault(predicate);
         }
 
         #endregion // Select

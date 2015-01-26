@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" Name="RegisterVisit" Content="Zarejestruj wizytę" Width="225" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,17,17" Background="CornflowerBlue" BorderThickness="0" FontFamily="Segoe UI Light" FontSize="26" Foreground="White" />
+            <Button Grid.Row="0" Grid.Column="0" Name="RegisterVisit" Content="Zarejestruj wizytę" Width="225" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,17,17" Background="CornflowerBlue" BorderThickness="0" FontFamily="Segoe UI Light" FontSize="26" Foreground="White" Click="RegisterVisit_Click" />
 
             <Button Grid.Row="0" Grid.Column="1" Name="RegisteredVisits" Width="225" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,17" Padding="0,0,0,2" Background="CornflowerBlue" BorderThickness="0" FontFamily="Segoe UI Light" FontSize="26" Foreground="White">
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center">Wizyty zarejestrowane</TextBlock>

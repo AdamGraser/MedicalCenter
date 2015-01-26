@@ -314,6 +314,46 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Włącza lub wyłącza tryb edycji formularza.
+        /// </summary>
+        /// <param name="editMode">Określa czy formularz ma być w trybie edycji (true) czy podglądu (false).</param>
+        public void EnableEditing(bool editMode)
+        {
+            // jeśli rzeczywiście nastąpić ma zmiana
+            if (editMode != view.EditMode)
+            {
+                // zapisanie nowego stanu formularza
+                view.EditMode = editMode;
+                
+                // zmiana stanu elementów formularza do domyślnego dla trybu edycji
+                if (editMode)
+                {
+                    view.Save.Content = "Zapisz";
+                    view.Save.IsEnabled = IsFormCompleted;
+                }
+                else
+                {
+                    view.Save.Content = "Edytuj";
+                    view.Save.IsEnabled = true;
+                }
+
+                view.LastName.IsEnabled = editMode;
+                view.FirstName.IsEnabled = editMode;
+                view.SecondName.IsEnabled = editMode;
+                view.BirthDate.IsEnabled = editMode;
+                view.Gender.IsEnabled = editMode;
+                view.Pesel.IsEnabled = editMode;
+                view.Street.IsEnabled = editMode;
+                view.BuildingNumber.IsEnabled = editMode;
+                view.Apartment.IsEnabled = editMode;
+                view.PostalCode.IsEnabled = editMode;
+                view.City.IsEnabled = editMode;
+                view.Post.IsEnabled = editMode;
+                view.IsInsured.IsEnabled = editMode;
+            }
+        }
+
+        /// <summary>
         /// Obsługa zdarzenia zmiany zawartości pola tekstowego "Pesel" w widoku szczegółów pacjenta.
         /// </summary>
         public void PeselChanged()

@@ -76,6 +76,117 @@ namespace MedicalCenter.Services
             }
         }
 
+        /// <summary>
+        /// Pobiera z bazy danych ID stanowiska określonego podanym kodem.
+        /// </summary>
+        /// <param name="code">Kod stanowiska, którego klucz ma zostać pobrany.</param>
+        /// <returns>ID stanowiska lub 0, jeśli nie znaleziono stanowiska o podanym kodzie.</returns>
+        public int GetJobTitleId(string code)
+        {
+            A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Code.StartsWith(code));
+
+            if (job != null)
+                return job.Id;
+            else
+                return 0;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych listę pracowników na tym samym stanowisku.
+        /// </summary>
+        /// <param name="jobTitleId">ID stanowiska</param>
+        /// <returns>Lista pracowników o tym samym stanowisku.</returns>
+        public List<A_Worker> GetSameWorkers(int jobTitleId)
+        {
+            return new List<A_Worker>(userService.SelectWorkers(x => x.JobTitle == jobTitleId));
+        }
+
+        /// <summary>
+        /// Pobiera z bazy numer gabinetu, w którym przyjmuje/przyjmował dany lekarz we wskazanym dniu.
+        /// </summary>
+        /// <param name="workerId">ID lekarza, którego gabinet ma zostać znaleziony.</param>
+        /// <param name="date">Data, dla której obowiązywać ma przypisanie wskazanego lekarza do poszukiwanego gabinetu.</param>
+        /// <returns>Numer gabinetu lub null, jeśli nie znaleziono.</returns>
+        public string GetRoomNumber(int workerId, DateTime date)
+        {
+            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
+
+            if (entity != null)
+                return entity.Number;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy ID poradni, w ramach której przyjmuje/przyjmował dany lekarz we wskazanym dniu.
+        /// </summary>
+        /// <param name="workerId">ID lekarza, dla którego poradnia ma zostać znaleziona.</param>
+        /// <param name="date">Data, dla której obowiązywać ma przynależność wskazanego lekarza do poszukiwanej poradni.</param>
+        /// <returns>ID poradni lub 0, jeśli nie znaleziono.</returns>
+        public int GetClinicId(int workerId, DateTime date)
+        {
+            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
+
+            if (entity != null)
+                return entity.ClinicId;
+            else
+                return 0;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy wybrany grafik wskazanego lekarza, a następnie oblicza ilu maksymalnie pacjentów może przyjąć w podanym dniu tygodnia ten lekarz.
+        /// </summary>
+        /// <param name="doctorId">ID lekarza, którego grafik ma zostać rozpatrzony.</param>
+        /// <param name="date">Data, którą objemować ma grafik.</param>
+        /// <returns>
+        /// Maksymalną liczbę pacjentów, jaką lekarz może przyjąć w danym dniu tygodnia, wg. wybranego grafika,
+        /// lub 0 jeśli nie znaleziono grafika dla wskazanego lekarza i/lub objemującego podaną datę.
+        /// </returns>
+        public int GetVisitsPerDay(int doctorId, DateTime date)
+        {
+            A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
+
+            int visitsPerDay = 0;
+
+            if (schedule != null)
+            {
+                switch (date.DayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        if(schedule.D1From != null && schedule.D1To != null)
+                            visitsPerDay = (int)(schedule.D1To.Value.Subtract(schedule.D1From.Value).TotalMinutes / 20.0);
+                        break;
+
+                    case DayOfWeek.Tuesday:
+                        if (schedule.D2From != null && schedule.D2To != null)
+                            visitsPerDay = (int)(schedule.D2To.Value.Subtract(schedule.D2From.Value).TotalMinutes / 20.0);
+                        break;
+
+                    case DayOfWeek.Wednesday:
+                        if (schedule.D3From != null && schedule.D3To != null)
+                            visitsPerDay = (int)(schedule.D3To.Value.Subtract(schedule.D3From.Value).TotalMinutes / 20.0);
+                        break;
+
+                    case DayOfWeek.Thursday:
+                        if (schedule.D4From != null && schedule.D4To != null)
+                            visitsPerDay = (int)(schedule.D4To.Value.Subtract(schedule.D4From.Value).TotalMinutes / 20.0);
+                        break;
+
+                    case DayOfWeek.Friday:
+                        if (schedule.D5From != null && schedule.D5To != null)
+                            visitsPerDay = (int)(schedule.D5To.Value.Subtract(schedule.D5From.Value).TotalMinutes / 20.0);
+                        break;
+
+                    case DayOfWeek.Saturday:
+                        if (schedule.D6From != null && schedule.D6To != null)
+                            visitsPerDay = (int)(schedule.D6To.Value.Subtract(schedule.D6From.Value).TotalMinutes / 20.0);
+                        break;
+                }
+            }
+
+            return visitsPerDay;
+        }
+
         #endregion // Public methods
     }
 }

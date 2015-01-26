@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MedicalBusinessService.cs" />
     <Compile Include="PatientBusinessService.cs" />
     <Compile Include="UserBusinessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

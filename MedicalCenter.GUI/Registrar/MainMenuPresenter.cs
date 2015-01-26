@@ -73,6 +73,25 @@ namespace MedicalCenter.GUI.Registrar
             // zmiana zawartości okna głównego z menu na szczegóły pacjenta
             view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
 
+            // włączenie trybu edycji formularza na ekranie ze szczegółami pacjenta
+            view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(true);
+
+            // zapisanie w historii referencji do widoku menu głównego
+            view.ParentWindow.History.Push(view);
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Zarejestruj wizytę" w menu głównym rejestratorki.
+        /// </summary>
+        public void RegisterVisit()
+        {
+            // jeśli widok listy lekarzy przy rejestracji wizyty nie był dotychczas używany, należy go utworzyć
+            if (view.ParentWindow.RegistrarRegisterVisitView == null)
+                view.ParentWindow.RegistrarRegisterVisitView = new RegisterVisitView(view.ParentWindow);
+
+            // zmiana zawartości okna głównego z menu na listę lekarzy (rejestracja wizyty)
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarRegisterVisitView;
+
             // zapisanie w historii referencji do widoku menu głównego
             view.ParentWindow.History.Push(view);
         }

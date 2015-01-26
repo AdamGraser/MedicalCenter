@@ -31,6 +31,11 @@ namespace MedicalCenter.Models.Registrar
         #region Public properties
 
         /// <summary>
+        /// Przechowuje ID rekordu z tabeli M_DictionaryClinics, odpowiadającego poradni, do której należy dany lekarz.
+        /// </summary>
+        public int ClinicId { get; private set; }
+
+        /// <summary>
         /// Przechowuje nazwę poradni medycznej, w której przyjmuje wskazany lekarz.
         /// Jest to wartość z kolumny Name z tabeli M_DictionaryClinics.
         /// </summary>
@@ -68,6 +73,11 @@ namespace MedicalCenter.Models.Registrar
         /// </summary>
         public bool? State { get; private set; }
 
+        /// <summary>
+        /// Kolor odpowiadający stanowi danego lekarza (przyjmuje, max pacjentów, nie przyjmuje).
+        /// </summary>
+        public System.Windows.Media.SolidColorBrush Color;
+
         #endregion // Public properties
 
         #region Ctors
@@ -75,6 +85,7 @@ namespace MedicalCenter.Models.Registrar
         /// <summary>
         /// Konstruktor zapisujący w tworzonym obiekcie wartości podane w argumentach.
         /// </summary>
+        /// <param name="ClinicId">ID rekordu z tabeli M_DictionaryClinics.</param>
         /// <param name="ClinicName">Wartość z kolumny Name z tabeli M_DictionaryClinics.</param>
         /// <param name="DoctorId">ID rekordu z tabeli A_Workers.</param>
         /// <param name="DoctorLastName">Wartość z kolumny LastName z tabeli A_Workers.</param>
@@ -82,8 +93,9 @@ namespace MedicalCenter.Models.Registrar
         /// <param name="PatientsNumber">Liczba pacjentów zarejestrowana do wskazanego lekarza na podany dzień, w ramach danej poradni medycznej.</param>
         /// <param name="RoomNumber">Wartość z kolumny Number z tabeli A_DictionaryRoom.</param>
         /// <param name="State">Określa czy lekarz przyjmuje w danym dniu (!= null) i czy można jeszcze do niego zarejestrować nową wizytę (true).</param>
-        public DoctorsListItem(string ClinicName, int DoctorId, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber, bool? State)
+        public DoctorsListItem(int ClinicId, string ClinicName, int DoctorId, string DoctorLastName, string DoctorFirstName, int PatientsNumber, string RoomNumber, bool? State)
         {
+            this.ClinicId = ClinicId;
             this.ClinicName = ClinicName;
             this.DoctorId = DoctorId;
             this.doctorLastName = DoctorLastName;
@@ -91,6 +103,13 @@ namespace MedicalCenter.Models.Registrar
             this.PatientsNumber = PatientsNumber;
             this.RoomNumber = RoomNumber;
             this.State = State;
+
+            if (State == null)
+                this.Color = System.Windows.Media.Brushes.Gray;
+            else if (State == false)
+                this.Color = System.Windows.Media.Brushes.Black;
+            else
+                this.Color = System.Windows.Media.Brushes.CornflowerBlue;
         }
 
         #endregion // Ctors
