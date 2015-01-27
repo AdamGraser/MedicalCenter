@@ -117,7 +117,7 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public IEnumerable<M_Visit> SelectVisits(Func<M_Visit, bool> predicate)
         {
-            return db.M_Visits.Where(predicate);
+            return db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
         }
 
         #endregion // Select

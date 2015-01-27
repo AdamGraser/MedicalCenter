@@ -10,7 +10,7 @@ using MedicalCenter.Services;
 namespace MedicalCenter.GUI.Registrar
 {
     /// <summary>
-    /// Obsługa zdarzeń użytkownika dla widoku szczegółów pacjenta (działania na modelach i serwisach pod wpływem zdarzeń z widoku).
+    /// Obsługa zdarzeń użytkownika dla widoku listy lekarzy przy rejestracji wizyty.
     /// </summary>
     public class RegisterVisitPresenter
     {

@@ -7,10 +7,26 @@ using System.Threading.Tasks;
 namespace MedicalCenter.Models.Registrar
 {
     /// <summary>
-    /// Reprezentuje jedną pozycję z listy wizyt z danego dnia w widoku Poradnia - Lekarz rejestrowania wizyty przez rejestratorkę.
+    /// Reprezentuje jedną pozycję z listy wizyt z danego dnia u wskazanego lekarza (podczas rejestrowania wizyty).
     /// </summary>
     public class DailyVisitsListItem
     {
+        #region Private fields
+
+        /// <summary>
+        /// Przechowuje nazwisko pacjenta, dla którego ta wizyta została zarejestrowana.
+        /// Jest to wartość z kolumny LastName z tabeli M_Patients.
+        /// </summary>
+        string patientLastName;
+
+        /// <summary>
+        /// Przechowuje imię pacjenta, dla którego ta wizyta została zarejestrowana.
+        /// Jest to wartość z kolumny FirstName z tabeli M_Patients.
+        /// </summary>
+        string patientFirstName;
+
+        #endregion // Private fields
+
         // Public getters, private setters
         #region Public properties
 
@@ -21,16 +37,15 @@ namespace MedicalCenter.Models.Registrar
         public DateTime DateOfVisit { get; private set; }
 
         /// <summary>
-        /// Przechowuje nazwisko pacjenta, dla którego ta wizyta została zarejestrowana.
-        /// Jest to wartość z kolumny LastName z tabeli M_Patients.
+        /// Zwraca nazwisko i imię pacjenta, oddzielone spacją.
         /// </summary>
-        public string PatientLastName { get; private set; }
-
-        /// <summary>
-        /// Przechowuje imię pacjenta, dla którego ta wizyta została zarejestrowana.
-        /// Jest to wartość z kolumny FirstName z tabeli M_Patients.
-        /// </summary>
-        public string PatientFirstName { get; private set; }
+        public string PatientName
+        {
+            get
+            {
+                return patientLastName + " " + patientFirstName;
+            }
+        }
 
         /// <summary>
         /// Przechowuje stan wizyty.
@@ -55,8 +70,8 @@ namespace MedicalCenter.Models.Registrar
         public DailyVisitsListItem(DateTime DateOfVisit)
         {
             this.DateOfVisit = DateOfVisit;
-            this.PatientFirstName = string.Empty;
-            this.PatientLastName = string.Empty;
+            this.patientFirstName = string.Empty;
+            this.patientLastName = string.Empty;
             this.State = 0;
             this.IsEmergency = false;
         }
@@ -72,8 +87,8 @@ namespace MedicalCenter.Models.Registrar
         public DailyVisitsListItem(DateTime DateOfVisit, string PatientLastName, string PatientFirstName, byte State, bool IsEmergency)
         {
             this.DateOfVisit = DateOfVisit;
-            this.PatientLastName = PatientLastName;
-            this.PatientFirstName = PatientFirstName;
+            this.patientLastName = PatientLastName;
+            this.patientFirstName = PatientFirstName;
             this.State = State;
             this.IsEmergency = IsEmergency;
         }

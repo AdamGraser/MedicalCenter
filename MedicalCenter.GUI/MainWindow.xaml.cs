@@ -48,6 +48,11 @@ namespace MedicalCenter.GUI
         /// </summary>
         public Registrar.RegisterVisitView RegistrarRegisterVisitView;
 
+        /// <summary>
+        /// Rejestratorka - rejestrowanie wizyty - lista wizyt w danym dniu dla wybranego lekarza.
+        /// </summary>
+        public Registrar.RegisterVisitDetailsView RegistrarRegisterVisitDetailsView;
+
         #endregion // Public properties
 
         #region Ctors
