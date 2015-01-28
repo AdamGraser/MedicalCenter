@@ -68,7 +68,7 @@ namespace MedicalCenter.GUI.Registrar
                 maxVisitsCount = userBusinessService.GetVisitsPerDay(w.Id, view.TheDate.SelectedDate.Value);
 
                 // sprawdzenie, czy dany lekarz przyjmuje w danym dniu i czy ma jeszcze wolne godziny do przyjęcia pacjentów
-                if(maxVisitsCount == 0)
+                if(maxVisitsCount == 0 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
                     state = null;
                 else if(visitsCount == maxVisitsCount)
                     state = false;

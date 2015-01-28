@@ -77,6 +77,22 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
+        /// Zwraca wartość określającą czy wskazany pracownik jest/ma być nieobecny w danym dniu.
+        /// </summary>
+        /// <param name="workerId">ID pracownika, którego nieobecność ma zostać sprawdzona.</param>
+        /// <param name="date">Dzień, na który ma przypadać rzekoma nieobecność pracownika.</param>
+        /// <returns>true jeśli pracownik jest/ma być nieobecny w danym dniu, w przeciwnym razie false</returns>
+        public bool IsWorkerAbsent(int workerId, DateTime date)
+        {
+            A_Absence absence = userService.SelectAbsence(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
+
+            if (absence == null)
+                return false;
+            else
+                return true;
+        }
+
+        /// <summary>
         /// Pobiera z bazy danych ID stanowiska określonego podanym kodem.
         /// </summary>
         /// <param name="code">Kod stanowiska, którego klucz ma zostać pobrany.</param>

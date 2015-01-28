@@ -120,7 +120,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void TheDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // pobranie listy wizyt dla danego lekarza we wskazanym dniu
+            registerVisitDetailsPresenter.GetVisitsList();
         }
 
         /// <summary>

@@ -88,8 +88,9 @@ namespace MedicalCenter.GUI.Registrar
             // zapisanie domyślnego ID pacjenta
             PatientId = 0;
 
-            // ustawienie startowej daty na dziś
+            // ustawienie startowej i minimalnej daty na dziś
             TheDate.SelectedDate = DateTime.Today;
+            TheDate.DisplayDateStart = DateTime.Today;
 
             // utworzenie listy lekarzy (poradnia, lekarz, liczba pacjentów w wybranym dniu, nr gabinetu)
             SourceDoctorsList = new List<DoctorsListItem>();
@@ -179,6 +180,12 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void TheDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            // kontrola zakresu - przy rejestrowaniu wizyty rejestratorka ma widzieć dni od dziś w przód
+            if (TheDate.SelectedDate == null)
+                TheDate.SelectedDate = DateTime.Today;
+            else if (TheDate.SelectedDate < DateTime.Today)
+                TheDate.SelectedDate = DateTime.Today;
+
             // wczytanie na nowo listy lekarzy dla nowo wybranego dnia
             SourceDoctorsList = new List<DoctorsListItem>();
             DoctorsList = new List<DoctorsListItem>();

@@ -17,6 +17,11 @@ namespace MedicalCenter.GUI.Registrar
         #region Private fields
 
         /// <summary>
+        /// Logika biznesowa w zakresie medycznej działalności placówki.
+        /// </summary>
+        MedicalBusinessService medicalBusinessService;
+
+        /// <summary>
         /// Widok listy wizyt w danym dniu (przy rejestracji wizyty) zarządzany przez tego prezentera.
         /// </summary>
         RegisterVisitDetailsView view;
@@ -38,9 +43,24 @@ namespace MedicalCenter.GUI.Registrar
 
         #region Public methods
 
+        /// <summary>
+        /// Pobiera i przekazuje do widoku listę wizyt z danego dnia dla wybranego lekarza.
+        /// Jeśli liczba wizyt osiągnęła bądź przekroczyła maksimum, uaktywniany jest checkbox "Nagły przypadek".
+        /// </summary>
         public void GetVisitsList()
         {
+            // pobranie listy wizyt
+            view.DailyVisits = medicalBusinessService.GetTodaysVisits(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
 
+            // jeśli jest null, to lekarz nie przyjmuje w danym dniu (tworzenie nowej listy, bo null'a się nie poda jako ItemsSource)
+            if (view.DailyVisits == null)
+                view.DailyVisits = new List<DailyVisitsListItem>();
+
+            // sprawdzenie liczby wizyt -> aktywacja lub dezaktywacja checkbox'a
+            if (view.DailyVisits.Count >= medicalBusinessService.TodaysVisitsCount(view.VisitData.DoctorId, view.VisitData.DateOfVisit))
+                view.IsEmergency.IsEnabled = true;
+            else
+                view.IsEmergency.IsEnabled = false;
         }
 
         #endregion // Public methods

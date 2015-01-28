@@ -126,6 +126,19 @@ namespace MedicalCenter.DBServices
             return db.A_Schedules.FirstOrDefault(predicate);
         }
 
+        /// <summary>
+        /// Pobiera z bazy danych informację o nieobecności, spełniającą podane kryteria.
+        /// </summary>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <returns>
+        /// Obiekt reprezentujący rekord z tabeli A_Absence,
+        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono nieobecności odpowiadającej podanym warunkom.
+        /// </returns>
+        public A_Absence SelectAbsence(System.Linq.Expressions.Expression<Func<A_Absence, bool>> predicate)
+        {
+            return db.A_Absences.FirstOrDefault(predicate);
+        }
+
         #endregion // Select
 
         #endregion // Public methods
