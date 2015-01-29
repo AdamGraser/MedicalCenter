@@ -41,6 +41,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="view">Widok listy lekarzy (przy rejestracji wizyty) zarządzany przez tego prezentera.</param>
         public RegisterVisitPresenter(RegisterVisitView view)
         {
+            medicalBusinessService = new MedicalBusinessService();
+            userBusinessService = new UserBusinessService();
             this.view = view;
         }
 
@@ -97,30 +99,34 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void FilterDoctorsList()
         {
-            // jeśli wybrano poradnię w filtrze
-            if (view.FilterClinicName.SelectedIndex > 0)
+            // jeśli kontrolki filtrów już istnieją
+            if (view.FilterClinicName != null && view.FilterDoctorName != null)
             {
-                // jeśli wpisano również co najmniej 3 znaki w filtrze nazwiska
-                if (view.FilterDoctorName.Text.Length > 2)
+                // jeśli wybrano poradnię w filtrze
+                if (view.FilterClinicName.SelectedIndex > 0)
                 {
-                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
-                                                                                                && x.DoctorName.StartsWith(view.FilterDoctorName.Text)));
+                    // jeśli wpisano również co najmniej 3 znaki w filtrze nazwiska
+                    if (view.FilterDoctorName.Text.Length > 2)
+                    {
+                        view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
+                                                                                                    && x.DoctorName.StartsWith(view.FilterDoctorName.Text)));
+                    }
+                    // filtrowanie tylko po poradni
+                    else
+                    {
+                        view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)));
+                    }
                 }
-                // filtrowanie tylko po poradni
+                // filtrowanie tylko po nazwiskach
+                else if (view.FilterDoctorName.Text.Length > 2)
+                {
+                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.DoctorName.StartsWith(view.FilterDoctorName.Text)));
+                }
+                // brak filtrowania
                 else
                 {
-                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)));
+                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList);
                 }
-            }
-            // filtrowanie tylko po nazwiskach
-            else if (view.FilterDoctorName.Text.Length > 2)
-            {
-                view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.DoctorName.StartsWith(view.FilterDoctorName.Text)));
-            }
-            // brak filtrowania
-            else
-            {
-                view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList);
             }
         }
 

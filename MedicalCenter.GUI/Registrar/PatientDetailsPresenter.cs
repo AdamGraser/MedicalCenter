@@ -221,7 +221,7 @@ namespace MedicalCenter.GUI.Registrar
             // jeśli istnieje potrzeba, użytkownik pytany jest o potwierdzenie chęci powrotu do menu głównego bez zapisywania wprowadzonych zmian;
             // tylko jeśli użytkownik kliknął przycisk "Tak", należy wyczyścić wszystkie pola i wrócić do menu głównego
             if (question)
-                dialogResult = System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do menu głównego? Wszelkie zmiany nie zostaną zapisane.",
+                dialogResult = System.Windows.Forms.MessageBox.Show("Czy na pewno chcesz wrócić do poprzedniej strony? Wszelkie zmiany nie zostaną zapisane.",
                                                      "Pytanie",
                                                      System.Windows.Forms.MessageBoxButtons.YesNo,
                                                      System.Windows.Forms.MessageBoxIcon.Question,
@@ -229,14 +229,56 @@ namespace MedicalCenter.GUI.Registrar
 
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
+                // pobranie z historii widoków ostatniej pozycji
                 UserControl last = view.ParentWindow.History.Pop();
+
+                // sprawdzanie który z 3 możliwych widoków był ostatnio wyświetlany
                 MainMenuView mainMenu = last as MainMenuView;
 
+                // jeśli null, to znaczy, że to nie był ten widok
                 if (mainMenu == null)
                 {
                     RegisterVisitView registerVisit = last as RegisterVisitView;
 
-                    // TODO: if(registerVisit == null) { kolejne zagłębienie} else { przekazanie ID pacjenta do tego widoku, ustawienie go jako treści okna głównego }
+                    if (registerVisit == null)
+                    {
+                        RegisterVisitDetailsView registerVisitDetails = last as RegisterVisitDetailsView;
+
+                        // jeśli nie był to żaden z 3 możliwych widoków, to oznacza wystąpienie błędu
+                        if (registerVisitDetails == null)
+                        {
+                            System.Windows.Forms.MessageBox.Show("Wystąpił nieoczekiwany błąd. Skontaktuj się z administratorem systemu.",
+                                                                 "Nieoczekiwany błąd",
+                                                                 System.Windows.Forms.MessageBoxButtons.OK,
+                                                                 System.Windows.Forms.MessageBoxIcon.Error);
+
+                            // wyczyszczenie historii widoków
+                            view.ParentWindow.History.Clear();
+
+                            // usunięcie referencji do widoków rejestracji wizyty
+                            view.ParentWindow.RegistrarRegisterVisitView = null;
+                            view.ParentWindow.RegistrarRegisterVisitDetailsView = null;
+
+                            // powrót do menu głównego
+                            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
+                        }
+                        else
+                        {
+                            // przekazanie ID pacjenta do widoku rejestrowania wizyty
+                            registerVisitDetails.VisitData.PatientId = view.PatientData.Id;
+
+                            // zmiana treści okna głównego na widok listy wizyt na dany dzień dla wybranego lekarza
+                            view.ParentWindow.ContentArea.Content = registerVisitDetails;
+                        }
+                    }
+                    else
+                    {
+                        // przekazanie ID pacjenta do widoku rejestrowania wizyty
+                        registerVisit.PatientId = view.PatientData.Id;
+
+                        // zmiana treści okna głównego na widok listy lekarzy
+                        view.ParentWindow.ContentArea.Content = registerVisit;
+                    }
                 }
                 else
                     view.ParentWindow.ContentArea.Content = mainMenu;

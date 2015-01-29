@@ -42,10 +42,10 @@
             <DataGrid.Columns>
                 <DataGridTemplateColumn IsReadOnly="True" Width="4*">
                     <DataGridTemplateColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
+                        <ItemContainerTemplate x:Name="ClinicsHeader">
                             <StackPanel Margin="15,0,15,0">
                                 <Label Content="Poradnia" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
-                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Path=/ClinicsList/Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1" SelectionChanged="FilterClinicName_SelectionChanged" />
+                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Path=/ClinicsList/Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
@@ -61,7 +61,7 @@
                         <ItemContainerTemplate>
                             <StackPanel Margin="15,0,15,0">
                                 <Label Content="Lekarz" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
-                                <TextBox Name="FilterDoctorName" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" />
+                                <TextBox Name="FilterDoctorName" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" Loaded="FilterDoctorName_Loaded" />
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>

@@ -36,6 +36,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="view">Widok listy wizyt w danym dniu (przy rejestracji wizyty) zarządzany przez tego prezentera.</param>
         public RegisterVisitDetailsPresenter(RegisterVisitDetailsView view)
         {
+            medicalBusinessService = new MedicalBusinessService();
             this.view = view;
         }
 

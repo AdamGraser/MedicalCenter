@@ -104,14 +104,6 @@ namespace MedicalCenter.GUI.Registrar
 
             // ustawienie kontekstu danych tabeli, aby móc z nią powiązać listy lekarzy i poradni
             DoctorsListTable.DataContext = this;
-
-            // zapisanie referencji do filtru poradni
-            StackPanel header = DoctorsListTable.Columns[0].Header as StackPanel;
-            FilterClinicName = header.Children.OfType<ComboBox>().First(x => x.Name == "FilterClinicName");
-
-            // zapisanie referencji do filtru lekarzy
-            header = DoctorsListTable.Columns[1].Header as StackPanel;
-            FilterDoctorName = header.Children.OfType<TextBox>().First(x => x.Name == "FilterDoctorName");
         }
 
         #endregion // Ctors
@@ -150,6 +142,17 @@ namespace MedicalCenter.GUI.Registrar
             // aktywacja/dezaktywacja przycisków pod tabelą
             registerVisitPresenter.DoctorSelected();
         }
+
+        /// <summary>
+        /// Obsługa zdarzenia załadowania pola tekstowego filtru lekarzy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterDoctorName_Loaded(object sender, RoutedEventArgs e)
+        {
+            // zapisanie referencji do tego pola tekstowego
+            FilterDoctorName = sender as TextBox;
+        }
         
         /// <summary>
         /// Obsługa zdarzenia zmiany wyboru w filtrze poradni.
@@ -160,6 +163,17 @@ namespace MedicalCenter.GUI.Registrar
         {
             // filtrowanie listy lekarzy
             registerVisitPresenter.FilterDoctorsList();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia załadowania listy rozwijanej filtru poradni medycznych.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterClinicName_Loaded(object sender, RoutedEventArgs e)
+        {
+            // zapisanie referencji do tej listy rozwijanej
+            FilterClinicName = sender as ComboBox;
         }
 
         /// <summary>
