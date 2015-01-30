@@ -159,7 +159,20 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void Next()
         {
+            // jeśli widok listy wizyt na dany dzień nie był dotychczas wyświetlany, musi zostać najpierw utworzony
+            if (view.ParentWindow.RegistrarRegisterVisitDetailsView == null)
+                view.ParentWindow.RegistrarRegisterVisitDetailsView = new RegisterVisitDetailsView(view.ParentWindow);
 
+            // przekazanie do następnego widoku daty wizyty, ID lekarza i ID pacjenta
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.PatientId = view.PatientId;
+
+            // zapisanie bieżącego widoku w historii widoków
+            view.ParentWindow.History.Push(view);
+
+            // zmiana treści okna głównego na widok listy wizyt na dany dzień u wybranego lekarza
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarRegisterVisitDetailsView;
         }
 
         /// <summary>
@@ -177,7 +190,7 @@ namespace MedicalCenter.GUI.Registrar
             // włączenie trybu edycji formularza na ekranie ze szczegółami pacjenta
             view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(true);
 
-            // zapisanie w historii referencji do widoku menu głównego
+            // zapisanie w historii referencji do tego widoku
             view.ParentWindow.History.Push(view);
         }
 

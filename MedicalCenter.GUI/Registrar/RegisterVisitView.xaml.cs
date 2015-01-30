@@ -227,7 +227,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-
+            // przejście do następnego ekranu rejestracji wizyty
+            registerVisitPresenter.Next();
         }
 
         #endregion // Events handlers

@@ -64,6 +64,25 @@ namespace MedicalCenter.GUI.Registrar
                 view.IsEmergency.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Dodaj pacjenta" przy liście wizyt (rejestracja wizyty).
+        /// </summary>
+        public void AddPatient()
+        {
+            // jeśli widok szczegółów pacjenta nie był dotychczas używany, należy go utworzyć
+            if (view.ParentWindow.RegistrarPatientDetailsView == null)
+                view.ParentWindow.RegistrarPatientDetailsView = new PatientDetailsView(view.ParentWindow);
+
+            // zmiana zawartości okna głównego z menu na szczegóły pacjenta
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
+
+            // włączenie trybu edycji formularza na ekranie ze szczegółami pacjenta
+            view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(true);
+
+            // zapisanie w historii referencji do tego widoku
+            view.ParentWindow.History.Push(view);
+        }
+
         #endregion // Public methods
     }
 }

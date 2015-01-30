@@ -100,7 +100,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void AddPatient_Click(object sender, RoutedEventArgs e)
         {
-
+            // przejście do formularza dodawania nowego pacjenta
+            registerVisitDetailsPresenter.AddPatient();
         }
 
         /// <summary>
