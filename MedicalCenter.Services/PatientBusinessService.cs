@@ -71,6 +71,18 @@ namespace MedicalCenter.Services
             return retval;
         }
 
+        /// <summary>
+        /// Pobiera z bazy dane o pacjencie i zwraca jego nazwisko i imię.
+        /// </summary>
+        /// <param name="patientId">ID pacjenta.</param>
+        /// <returns>Nazwisko i imię wskazanego pacjenta, oddzielone spacją.</returns>
+        public string GetPatientName(int patientId)
+        {
+            M_Patient patient = patientService.SelectPatient(x => x.Id == patientId);
+
+            return patient.LastName + " " + patient.FirstName;
+        }
+
         #endregion // Public methods
     }
 }

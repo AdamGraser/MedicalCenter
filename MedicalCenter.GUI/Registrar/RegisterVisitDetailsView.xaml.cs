@@ -80,6 +80,9 @@ namespace MedicalCenter.GUI.Registrar
             // utworzenie prezentera
             registerVisitDetailsPresenter = new RegisterVisitDetailsPresenter(this);
 
+            // ustawienie minimalnej daty do wybrania na dzisiejszą
+            TheDate.DisplayDateStart = DateTime.Today;
+
             // ustawienie kontekstu danych na potrzeby podpięcia danych do elementów interfejsu
             DataContext = this;
 
@@ -111,7 +114,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-
+            // powrót do widoku listy lekarzy
+            registerVisitDetailsPresenter.Back();
         }
 
         /// <summary>
@@ -121,6 +125,10 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void TheDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            // uniemożliwienie niewybrania daty - zmiana na domyślną (dzisiejszą)
+            if (TheDate.SelectedDate == null)
+                TheDate.SelectedDate = DateTime.Today;
+            
             // pobranie listy wizyt dla danego lekarza we wskazanym dniu
             registerVisitDetailsPresenter.GetVisitsList();
         }

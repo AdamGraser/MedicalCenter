@@ -83,6 +83,33 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.History.Push(view);
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku listy wizyt na dany dzień przy rejestracji wizyty.
+        /// Czyści zaznaczenie i zmienia zawartość okna głównego aplikacji na menu główne.
+        /// </summary>
+        public void Back()
+        {
+            // wyczyszczenie zaznaczenia na liście
+            view.DailyVisitsList.SelectedIndex = -1;
+
+            // czyszczenie listy
+            view.DailyVisits.Clear();
+
+            // czyszczenie i dezaktywacja pola "Nagły przypadek"
+            view.IsEmergency.IsChecked = false;
+            view.IsEmergency.IsEnabled = false;
+
+            // przywracanie domyślnej daty
+            view.TheDate.SelectedDate = DateTime.Today;
+
+            // wyczyszczenie ID pacjenta i ID lekarza
+            view.VisitData.PatientId = 0;
+            view.VisitData.DoctorId = 0;
+
+            // przywrócenie widoku listy lekarzy
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.History.Pop();
+        }
+
         #endregion // Public methods
     }
 }

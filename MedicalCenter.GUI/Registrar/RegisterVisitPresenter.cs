@@ -27,6 +27,11 @@ namespace MedicalCenter.GUI.Registrar
         UserBusinessService userBusinessService;
 
         /// <summary>
+        /// Logika biznesowa w zakresie pacjentów.
+        /// </summary>
+        PatientBusinessService patientBusinessService;
+
+        /// <summary>
         /// Widok listy lekarzy (przy rejestracji wizyty) zarządzany przez tego prezentera.
         /// </summary>
         RegisterVisitView view;
@@ -43,6 +48,7 @@ namespace MedicalCenter.GUI.Registrar
         {
             medicalBusinessService = new MedicalBusinessService();
             userBusinessService = new UserBusinessService();
+            patientBusinessService = new PatientBusinessService();
             this.view = view;
         }
 
@@ -143,6 +149,10 @@ namespace MedicalCenter.GUI.Registrar
             // wyczyszczenie zaznaczenia w tabeli
             view.DoctorsListTable.SelectedIndex = -1;
 
+            // czyszczenie tabeli
+            view.SourceDoctorsList.Clear();
+            view.DoctorsList.Clear();
+
             // wyczyszczenie ID pacjenta
             view.PatientId = 0;
 
@@ -167,6 +177,10 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.PatientId = view.PatientId;
+
+            // jeśli wybrano pacjenta, do następnego widoku przekazywane jest także jego imię i nazwisko
+            if (view.PatientId > 0)
+                view.ParentWindow.RegistrarRegisterVisitDetailsView.PatientName = patientBusinessService.GetPatientName(view.PatientId);
 
             // zapisanie bieżącego widoku w historii widoków
             view.ParentWindow.History.Push(view);
