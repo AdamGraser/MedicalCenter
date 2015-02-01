@@ -128,6 +128,8 @@ namespace MedicalCenter.GUI.Registrar
             // uniemożliwienie niewybrania daty - zmiana na domyślną (dzisiejszą)
             if (TheDate.SelectedDate == null)
                 TheDate.SelectedDate = DateTime.Today;
+            else if (TheDate.SelectedDate < DateTime.Today)
+                TheDate.SelectedDate = DateTime.Today;
             
             // pobranie listy wizyt dla danego lekarza we wskazanym dniu
             registerVisitDetailsPresenter.GetVisitsList();
@@ -161,6 +163,28 @@ namespace MedicalCenter.GUI.Registrar
         private void DailyVisitsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "&lt;" przy polu datowym.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TheDateBackwards_Click(object sender, RoutedEventArgs e)
+        {
+            // zmiana daty na wcześniejszą o co najmniej 1 dzień
+            registerVisitDetailsPresenter.ChangeDate(-1.0);
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "&gt;" przy polu datowym.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TheDateForward_Click(object sender, RoutedEventArgs e)
+        {
+            // zmiana daty na późniejszą o co najmniej 1 dzień
+            registerVisitDetailsPresenter.ChangeDate(1.0);
         }
 
         #endregion // Events handlers

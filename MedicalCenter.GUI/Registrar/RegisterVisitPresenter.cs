@@ -173,10 +173,11 @@ namespace MedicalCenter.GUI.Registrar
             if (view.ParentWindow.RegistrarRegisterVisitDetailsView == null)
                 view.ParentWindow.RegistrarRegisterVisitDetailsView = new RegisterVisitDetailsView(view.ParentWindow);
 
-            // przekazanie do następnego widoku daty wizyty, ID lekarza i ID pacjenta
+            // przekazanie do następnego widoku daty wizyty, ID pacjenta, ID oraz imię i nazwisko lekarza
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
-            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.PatientId = view.PatientId;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.DoctorName = userBusinessService.GetWorkerName(view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId);
 
             // jeśli wybrano pacjenta, do następnego widoku przekazywane jest także jego imię i nazwisko
             if (view.PatientId > 0)

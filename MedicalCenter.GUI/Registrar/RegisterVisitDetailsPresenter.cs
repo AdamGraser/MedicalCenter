@@ -22,6 +22,11 @@ namespace MedicalCenter.GUI.Registrar
         MedicalBusinessService medicalBusinessService;
 
         /// <summary>
+        /// Logika biznesowa w zakresie użytkowników systemu/pracowników.
+        /// </summary>
+        UserBusinessService userBusinessService;
+
+        /// <summary>
         /// Widok listy wizyt w danym dniu (przy rejestracji wizyty) zarządzany przez tego prezentera.
         /// </summary>
         RegisterVisitDetailsView view;
@@ -37,12 +42,15 @@ namespace MedicalCenter.GUI.Registrar
         public RegisterVisitDetailsPresenter(RegisterVisitDetailsView view)
         {
             medicalBusinessService = new MedicalBusinessService();
+            userBusinessService = new UserBusinessService();
             this.view = view;
         }
 
         #endregion // Ctors
 
         #region Public methods
+
+        #region Generic methods
 
         /// <summary>
         /// Pobiera i przekazuje do widoku listę wizyt z danego dnia dla wybranego lekarza.
@@ -63,6 +71,10 @@ namespace MedicalCenter.GUI.Registrar
             else
                 view.IsEmergency.IsEnabled = false;
         }
+
+        #endregion // Generic methods
+
+        #region Detailed methods
 
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Dodaj pacjenta" przy liście wizyt (rejestracja wizyty).
@@ -102,13 +114,56 @@ namespace MedicalCenter.GUI.Registrar
             // przywracanie domyślnej daty
             view.TheDate.SelectedDate = DateTime.Today;
 
-            // wyczyszczenie ID pacjenta i ID lekarza
+            // wyczyszczenie ID, nazwiska i imienia pacjenta oraz ID, nazwiska i imienia lekarza
             view.VisitData.PatientId = 0;
+            view.PatientName = string.Empty;
             view.VisitData.DoctorId = 0;
+            view.DoctorName = string.Empty;
 
             // przywrócenie widoku listy lekarzy
             view.ParentWindow.ContentArea.Content = view.ParentWindow.History.Pop();
         }
+
+        /// <summary>
+        /// Zmienia wybraną datę wizyty na inny, najbliższy dzień, w którym wybrany lekarz przyjmuje pacjentów.
+        /// Wynikowa data nie będzie wcześniejsza niż dzisiejsza.
+        /// </summary>
+        /// <param name="change">Minimalna ilość dni, o jaką ma zostać zmieniona data wizyty.</param>
+        public void ChangeDate(double change)
+        {
+            // zmiana o 0 to nie zmiana
+            if(change != 0.0)
+            {
+                // wykonanie pierwszej zmiany
+                DateTime tempDate = view.VisitData.DateOfVisit.AddDays(change);
+
+                // data nie może być wcześniejsza niż dzisiejsza
+                if (tempDate < DateTime.Today)
+                    tempDate = DateTime.Today;
+                else
+                {
+                    change = (change < 0.0) ? -1.0 : 1.0;
+
+                    // przesuwanie daty o 1 dzień tak długo, aż będzie to dzień, w którym wybrany lekarz przyjmuje pacjentów
+                    while (!userBusinessService.IsWorking(view.VisitData.DoctorId, tempDate))
+                    {
+                        tempDate = tempDate.AddDays(change);
+
+                        // jeśli wcześniejszy dzień przyjęć pacjentów u danego lekarza już miał miejsce, żadna zmiana nie zostanie dokonana
+                        if (tempDate < DateTime.Today)
+                        {
+                            tempDate = view.VisitData.DateOfVisit;
+                            break;
+                        }
+                    }
+
+                    // dokonanie zmiany daty wizyty
+                    view.VisitData.DateOfVisit = tempDate;
+                }
+            }
+        }
+
+        #endregion // Detailed methods
 
         #endregion // Public methods
     }

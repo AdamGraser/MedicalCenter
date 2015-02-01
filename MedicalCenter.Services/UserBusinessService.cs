@@ -77,11 +77,11 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
-        /// Zwraca wartość określającą czy wskazany pracownik jest/ma być nieobecny w danym dniu.
+        /// Zwraca wartość określającą czy wskazany pracownik jest nieobecny w danym dniu.
         /// </summary>
         /// <param name="workerId">ID pracownika, którego nieobecność ma zostać sprawdzona.</param>
         /// <param name="date">Dzień, na który ma przypadać rzekoma nieobecność pracownika.</param>
-        /// <returns>true jeśli pracownik jest/ma być nieobecny w danym dniu, w przeciwnym razie false</returns>
+        /// <returns>true jeśli pracownik jest nieobecny w danym dniu, w przeciwnym razie false</returns>
         public bool IsWorkerAbsent(int workerId, DateTime date)
         {
             A_Absence absence = userService.SelectAbsence(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
@@ -90,6 +90,54 @@ namespace MedicalCenter.Services
                 return false;
             else
                 return true;
+        }
+
+        /// <summary>
+        /// Zwraca wartość określającą czy wskazany pracownik pracuje w danym dniu.
+        /// </summary>
+        /// <param name="workerId">ID pracownika, którego grafik ma zostać sprawdzony.</param>
+        /// <param name="date">Dzień, pod kątem którego grafik ma zostać sprawdzony.</param>
+        /// <returns>true jeśli pracownik pracuje w danym dniu, w przeciwnym razie false</returns>
+        public bool IsWorking(int workerId, DateTime date)
+        {
+            bool retval = false;
+
+            A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == workerId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
+
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    if (schedule.D1From != null && schedule.D1To != null)
+                        retval = true;
+                    break;
+
+                case DayOfWeek.Tuesday:
+                    if (schedule.D2From != null && schedule.D2To != null)
+                        retval = true;
+                    break;
+
+                case DayOfWeek.Wednesday:
+                    if (schedule.D3From != null && schedule.D3To != null)
+                        retval = true;
+                    break;
+
+                case DayOfWeek.Thursday:
+                    if (schedule.D4From != null && schedule.D4To != null)
+                        retval = true;
+                    break;
+
+                case DayOfWeek.Friday:
+                    if (schedule.D5From != null && schedule.D5To != null)
+                        retval = true;
+                    break;
+
+                case DayOfWeek.Saturday:
+                    if (schedule.D6From != null && schedule.D6To != null)
+                        retval = true;
+                    break;
+            }
+
+            return retval;
         }
 
         /// <summary>
@@ -201,6 +249,21 @@ namespace MedicalCenter.Services
             }
 
             return visitsPerDay;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych informacje o wybranym pracowniku, zwraca jego nazwisko i imię.
+        /// </summary>
+        /// <param name="workerId">ID pracownika, którego dane mają zostać pobrane.</param>
+        /// <returns>Oddzielone spacją nazwisko i imię wskazanego pracownika lub null, jeśli nie znaleziono pracownika o podanym ID.</returns>
+        public string GetWorkerName(int workerId)
+        {
+            A_Worker worker = userService.SelectWorker(x => x.Id == workerId);
+
+            if (worker == null)
+                return null;
+            else
+                return worker.LastName + " " + worker.FirstName;
         }
 
         #endregion // Public methods
