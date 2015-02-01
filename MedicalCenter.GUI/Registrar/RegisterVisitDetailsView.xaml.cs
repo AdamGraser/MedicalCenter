@@ -162,7 +162,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void DailyVisitsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // uwzględnienie zmiany zaznaczenia
+            registerVisitDetailsPresenter.HourSelected();
         }
 
         /// <summary>

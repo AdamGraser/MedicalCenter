@@ -37,13 +37,16 @@ namespace MedicalCenter.Models.Registrar
         public DateTime DateOfVisit { get; private set; }
 
         /// <summary>
-        /// Zwraca nazwisko i imię pacjenta, oddzielone spacją.
+        /// Zwraca nazwisko i imię pacjenta, oddzielone spacją lub pusty string, jeśli brak nazwiska.
         /// </summary>
         public string PatientName
         {
             get
             {
-                return patientLastName + " " + patientFirstName;
+                if (patientLastName != string.Empty)
+                    return patientLastName + " " + patientFirstName;
+                else
+                    return string.Empty;
             }
         }
 

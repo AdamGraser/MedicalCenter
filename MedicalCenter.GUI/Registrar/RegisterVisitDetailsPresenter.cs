@@ -163,6 +163,33 @@ namespace MedicalCenter.GUI.Registrar
             }
         }
 
+        /// <summary>
+        /// Sprawdza jakiego rodzaju pozycja została zaznaczona na liście wizyt i w razie potrzeby czyści to zaznaczenie lub aktywuje przycisk "Zarejestruj".
+        /// </summary>
+        public void HourSelected()
+        {
+            // jeśli wybrano z listy wolną godzinę
+            if (view.DailyVisitsList.SelectedIndex > -1)
+            {
+                if (view.DailyVisits[view.DailyVisitsList.SelectedIndex].PatientName == string.Empty)
+                {
+                    // oraz wybrano pacjenta, to przycisk "Zarejestruj" jest aktywowany
+                    if (view.VisitData.PatientId > 0)
+                        view.Register.IsEnabled = true;
+                    // w przeciwnym razie przycisk ten jest dezaktywowany
+                    else
+                        view.Register.IsEnabled = false;
+                }
+                else
+                {
+                    view.Register.IsEnabled = false;
+                    
+                    // jeśli wybrano zajętą godzinę, zaznaczenie zostaje wyczyszczone
+                    view.DailyVisitsList.SelectedIndex = -1;
+                }
+            }
+        }
+
         #endregion // Detailed methods
 
         #endregion // Public methods
