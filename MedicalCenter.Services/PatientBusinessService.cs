@@ -83,6 +83,27 @@ namespace MedicalCenter.Services
             return patient.LastName + " " + patient.FirstName;
         }
 
+        /// <summary>
+        /// Pobiera z bazy listę wszystkich pacjentów.
+        /// </summary>
+        /// <returns>Lista wszystkich pacjentów.</returns>
+        public List<Patient> GetPatients()
+        {
+            // pobranie kolekcji wszystkich rekordów z tabeli M_Patients
+            IEnumerable<M_Patient> entities = patientService.SelectPatients();
+
+            List<Patient> patients = new List<Patient>();
+
+            // konwersja do listy obiektów Patient
+            foreach (M_Patient e in entities)
+            {
+                patients.Add(new Patient(e.Id, e.LastName, e.FirstName, e.SecondName, e.BirthDate, e.Gender, e.Pesel,
+                                         e.Street, e.BuildingNumber, e.Apartment, e.PostalCode, e.City, e.Post, e.IsInsured));
+            }
+
+            return patients;
+        }
+
         #endregion // Public methods
     }
 }

@@ -67,6 +67,10 @@
     <Compile Include="Registrar\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Registrar\PatientsList.xaml.cs">
+      <DependentUpon>PatientsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar\PatientsListPresenter.cs" />
     <Compile Include="Registrar\RegisterVisitDetailsPresenter.cs" />
     <Compile Include="Registrar\RegisterVisitDetailsView.xaml.cs">
       <DependentUpon>RegisterVisitDetailsView.xaml</DependentUpon>
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Registrar\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Registrar\PatientsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

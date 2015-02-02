@@ -51,6 +51,15 @@ namespace MedicalCenter.DBServices
             return db.M_Patients.FirstOrDefault(predicate);
         }
 
+        /// <summary>
+        /// Pobiera z bazy zbiór wszystkich pacjentów.
+        /// </summary>
+        /// <returns>Wszystkie rekordy z tabeli M_Patients, przedstawione jako kolekcja obiektów M_Patient.</returns>
+        public IEnumerable<M_Patient> SelectPatients()
+        {
+            return db.M_Patients.AsEnumerable();
+        }
+
         #endregion // Select
 
         #region Insert
