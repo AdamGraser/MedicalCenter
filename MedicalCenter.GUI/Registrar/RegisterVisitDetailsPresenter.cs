@@ -27,6 +27,11 @@ namespace MedicalCenter.GUI.Registrar
         UserBusinessService userBusinessService;
 
         /// <summary>
+        /// Logika biznesowa w zakresie pacjentów.
+        /// </summary>
+        PatientBusinessService patientBusinessService;
+
+        /// <summary>
         /// Widok listy wizyt w danym dniu (przy rejestracji wizyty) zarządzany przez tego prezentera.
         /// </summary>
         RegisterVisitDetailsView view;
@@ -70,6 +75,15 @@ namespace MedicalCenter.GUI.Registrar
                 view.IsEmergency.IsEnabled = true;
             else
                 view.IsEmergency.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Wypełnia listę pacjentów.
+        /// </summary>
+        public void GetPatientsList()
+        {
+            view.PatientsList.SourcePatients = patientBusinessService.GetPatients();
+            view.PatientsList.Patients = new List<Patient>(view.PatientsList.SourcePatients);
         }
 
         #endregion // Generic methods
@@ -188,6 +202,54 @@ namespace MedicalCenter.GUI.Registrar
                     view.DailyVisitsList.SelectedIndex = -1;
                 }
             }
+        }
+
+        /// <summary>
+        /// Filtruje listę pacjentów.
+        /// </summary>
+        public void FilterPatientName()
+        {
+            // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
+            if (view.PatientsList.FilterPatientName.Text.Length > 2)
+                // pacjenci sortowani są najpierw wg. nazwisk, a następnie wg. imion (pierwszych)
+                view.PatientsList.Patients = new List<Patient>(view.PatientsList.SourcePatients.Where(x => x.LastName.StartsWith(view.PatientsList.FilterPatientName.Text) ||
+                                                        view.PatientsList.FilterPatientName.Text.StartsWith(x.LastName)).OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+            // jeśli wpisano mniej niż 3 znaki, wyświetlana jest pełna lista pacjentów
+            else
+                view.PatientsList.Patients = view.PatientsList.SourcePatients;
+        }
+
+        /// <summary>
+        /// Aktywuje/dezaktywuje przyciski "Szczegóły" i "Wybierz" w zależności od zaznaczenia pacjenta bądź jego braku.
+        /// </summary>
+        public void PatientSelected()
+        {
+            // wybranie pacjenta -> aktywacja przycisków
+            if (view.PatientsList.PatientsList.SelectedIndex > -1)
+            {
+                view.PatientsList.Details.IsEnabled = true;
+                view.PatientsList.Choose.IsEnabled = true;
+            }
+            else
+            {
+                view.PatientsList.Details.IsEnabled = false;
+                view.PatientsList.Choose.IsEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Obsługa kliknięcia przycisku "Powrót" pod listą pacjentów.
+        /// </summary>
+        public void BackPatientsList()
+        {
+            // ukrycie widoku listy pacjentów
+            view.PatientsList.Visibility = System.Windows.Visibility.Collapsed;
+
+            // wyczyszczenie filtra
+            view.PatientsList.FilterPatientName.Clear();
+
+            // wyczyszczenie zaznaczenia na liście pacjentów
+            view.PatientsList.PatientsList.SelectedIndex = -1;
         }
 
         #endregion // Detailed methods

@@ -58,6 +58,11 @@ namespace MedicalCenter.GUI.Registrar
         public string Hours;
 
         /// <summary>
+        /// Lista pacjentów, wyświetlana po kliknięciu przycisku "Wybierz pacjenta".
+        /// </summary>
+        public PatientsList PatientsList;
+
+        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow;
@@ -90,6 +95,9 @@ namespace MedicalCenter.GUI.Registrar
             VisitData = new Visit();
             DailyVisits = new List<DailyVisitsListItem>();
             DoctorName = string.Empty;
+
+            // utworzenie listy pacjentów (domyślnie ukryta)
+            PatientsList = new PatientsList(registerVisitDetailsPresenter);
         }
 
         #endregion // Ctors
