@@ -118,7 +118,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Details_Click(object sender, RoutedEventArgs e)
         {
-
+            // wyświetlenie szczegółów wybranego pacjenta
+            registerVisitDetailsPresenter.PatientDetails();
         }
 
         /// <summary>

@@ -252,6 +252,28 @@ namespace MedicalCenter.GUI.Registrar
             view.PatientsList.PatientsList.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Wyświetla szczegóły pacjenta (obsługa kliknięcia przycisku "Szczegóły" pod listą pacjentów).
+        /// </summary>
+        public void PatientDetails()
+        {
+            // dodanie tego widoku do historii
+            view.ParentWindow.History.Push(view);
+
+            // jeśli widok szczegółów pacjenta nie był dotychczas używany, należy go utworzyć
+            if (view.ParentWindow.RegistrarPatientDetailsView == null)
+                view.ParentWindow.RegistrarPatientDetailsView = new PatientDetailsView(view.ParentWindow);
+            
+            // zmiana treści okna głównego na widok szczegółów pacjenta
+            view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
+
+            // ustawienie trybu podglądu danych pacjenta
+            view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(false);
+
+            // przekazanie danych pacjenta do nowego widoku
+            view.ParentWindow.RegistrarPatientDetailsView.PatientData = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex];
+        }
+
         #endregion // Detailed methods
 
         #endregion // Public methods
