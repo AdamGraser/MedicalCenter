@@ -274,6 +274,68 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.RegistrarPatientDetailsView.PatientData = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex];
         }
 
+        /// <summary>
+        /// Przekazanie ID wybranego pacjenta do głównego widoku i schowanie widoku listy pacjentów (obsługa kliknięcia przycisku "Wybierz" pod listą pacjentów).
+        /// </summary>
+        public void ChoosePatient()
+        {
+            // przekazanie ID oraz nazwiska i imienia wybranego pacjenta
+            view.VisitData.PatientId = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].Id;
+            view.PatientName = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].LastName + " "
+                             + view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].FirstName;
+            
+            // schowanie listy pacjentów
+            BackPatientsList();
+
+            // ew. aktywacja przycisku "Zarejestruj"
+            if(view.DailyVisitsList.SelectedIndex > -1)
+                view.Register.IsEnabled = true;
+            else
+                view.Register.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
+        /// </summary>
+        public void SelectPatient()
+        {
+            // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
+            if (view.VisitData.PatientId > 0)
+                view.PatientsList.PatientsList.SelectedIndex = view.PatientsList.Patients.IndexOf(view.PatientsList.Patients.Find(x => x.Id == view.VisitData.PatientId));
+
+            // pokazanie listy pacjentów
+            view.PatientsList.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Rejestruje nową wizytę i powraca do menu głównego.
+        /// </summary>
+        public void RegisterVisit()
+        {
+            // zapis informacji o wizycie do bazy danych
+            bool? saved = medicalBusinessService.RegisterVisit(view.VisitData);
+
+            // wystąpił błąd
+            if (saved != true)
+                System.Windows.Forms.MessageBox.Show("Wystąpił błąd podczas próby zapisu informacji o wizycie w bazie danych.",
+                                                     "Błąd zapisu!",
+                                                     System.Windows.Forms.MessageBoxButtons.OK,
+                                                     System.Windows.Forms.MessageBoxIcon.Error);
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Wizyta została pomyślnie zarejestrowana.",
+                                                     "Pomyślny zapis",
+                                                     System.Windows.Forms.MessageBoxButtons.OK,
+                                                     System.Windows.Forms.MessageBoxIcon.Information);
+
+                // powrót do menu głównego
+                Back();
+
+                RegisterVisitView registerVisitView = view.ParentWindow.History.Pop() as RegisterVisitView;
+                registerVisitView.ViewBack();
+            }
+        }
+
         #endregion // Detailed methods
 
         #endregion // Public methods

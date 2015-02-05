@@ -200,6 +200,28 @@ namespace MedicalCenter.Services
             return todaysVisits;
         }
 
+        /// <summary>
+        /// Zapisuje w bazie danych nową wizytę
+        /// </summary>
+        /// <param name="visit">Informacje do zapisania.</param>
+        /// <returns>true jeśli zapisano pomyślnie, null jeśli podane informacje nie przeszły walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        public bool? RegisterVisit(Visit visit)
+        {
+            bool? retval = true;
+
+            // stworzenie nowej encji, przepisanie wartości
+            M_Visit entity = new M_Visit();
+            entity.DateOfVisit = visit.DateOfVisit;
+            entity.DoctorId = visit.DoctorId;
+            entity.IsEmergency = visit.IsEmergency;
+            entity.PatientId = visit.PatientId;
+
+            // próba wstawienia nowego rekordu do tabeli
+            retval = medicalService.InsertVisit(entity);
+
+            return retval;
+        }
+
         #endregion // Public methods
     }
 }

@@ -108,6 +108,19 @@ namespace MedicalCenter.GUI.Registrar
 
         #endregion // Ctors
 
+        #region Public methods
+
+        /// <summary>
+        /// Przywraca widok do stanu domyślnego, zmienia treść okna głównego na menu główne.
+        /// </summary>
+        public void ViewBack()
+        {
+            // powrót do menu głównego
+            registerVisitPresenter.Back();
+        }
+
+        #endregion // Public methods
+
         #region Events handlers
 
         /// <summary>

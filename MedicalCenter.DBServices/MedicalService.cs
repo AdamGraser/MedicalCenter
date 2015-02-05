@@ -122,6 +122,162 @@ namespace MedicalCenter.DBServices
 
         #endregion // Select
 
+        #region Insert
+
+        /// <summary>
+        /// Zapisuje w bazie danych nowy rekord dla wizyty, wpisując do niego podane informacje.
+        /// </summary>
+        /// <param name="newVisit">Informacje o nowej wizycie.</param>
+        /// <returns>true jeśli wstawiono pomyślnie, null jeśli podana encja nie przeszła walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        public bool? InsertVisit(M_Visit newVisit)
+        {
+            bool? retval = true;
+
+            // dodanie nowej encji do lokalnego zbioru
+            db.M_Visits.Add(newVisit);
+
+            // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
+            int rowsAffected = 0;
+
+            try
+            {
+                // synchronizacja zbioru danych z bazą danych
+                rowsAffected = db.SaveChanges();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
+            {
+                System.Console.WriteLine(concurrencyException.Message);
+
+                // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
+                if (rowsAffected == 0)
+                {
+                    try
+                    {
+                        rowsAffected = db.SaveChanges();
+                    }
+                    catch (Exception exception)
+                    {
+                        System.Console.WriteLine(exception.Message);
+
+                        // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
+                        retval = false;
+                    }
+                }
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+            {
+                System.Console.WriteLine(validationException.Message);
+
+                // podana encja nie przeszła walidacji
+                retval = null;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+
+                // inny błąd
+                retval = false;
+            }
+
+            return retval;
+        }
+
+        #endregion // Insert
+
+        #region Update
+
+        /// <summary>
+        /// Aktualizuje w bazie danych rekord o wskazanej wizycie.
+        /// </summary>
+        /// <param name="visit">Zaktualizowane informacje o wizycie.</param>
+        /// <returns>true jeśli zaktualizowano pomyślnie, null jeśli podana encja nie przeszła walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        public bool? UpdateVisit(M_Visit visit)
+        {
+            bool? retval = true;
+
+            // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
+            int rowsAffected = 0;
+
+            // referencja do encji, która ma zostać zmieniona
+            M_Visit record = null;
+
+            try
+            {
+                // szukanie encji o podanym ID
+                record = db.M_Visits.Find(new int[] { visit.Id });
+            }
+            catch (InvalidOperationException ioe)
+            {
+                System.Console.WriteLine(ioe.Message);
+
+                retval = false;
+            }
+
+            // jeśli znaleziono encję o podanym ID, następuje aktualizacja jej właściwości
+            if (record != null)
+            {
+                if (retval == true)
+                {
+                    record.DateOfVisit = visit.DateOfVisit;
+                    record.Description = visit.Description;
+                    record.Diagnosis   = visit.Diagnosis;
+                    record.DoctorId    = visit.DoctorId;
+                    record.Ended       = visit.Ended;
+                    record.IsEmergency = visit.IsEmergency;
+                    record.LastEdit    = visit.LastEdit;
+                    record.Started     = visit.Started;
+                    record.State       = visit.State;
+
+                    try
+                    {
+                        // synchronizacja zbioru danych z bazą danych
+                        rowsAffected = db.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
+                    {
+                        System.Console.WriteLine(concurrencyException.Message);
+
+                        // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
+                        if (rowsAffected == 0)
+                        {
+                            try
+                            {
+                                rowsAffected = db.SaveChanges();
+                            }
+                            catch (Exception exception)
+                            {
+                                System.Console.WriteLine(exception.Message);
+
+                                // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
+                                retval = false;
+                            }
+                        }
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+                    {
+                        System.Console.WriteLine(validationException.Message);
+
+                        // podana encja nie przeszła walidacji
+                        retval = null;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+
+                        // inny błąd
+                        retval = false;
+                    }
+                }
+            }
+            // jeśli nie znaleziono encji o podanym ID, zgłaszane jest to jako błąd
+            else
+                retval = false;
+
+            return retval;
+        }
+
+        #endregion // Update
+
         #endregion // Public methods
     }
 }

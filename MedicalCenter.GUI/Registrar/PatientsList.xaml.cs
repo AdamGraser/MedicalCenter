@@ -129,7 +129,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Choose_Click(object sender, RoutedEventArgs e)
         {
-
+            // przekazanie ID wybranego pacjenta do widoku głównego, ukrycie listy pacjentów
+            registerVisitDetailsPresenter.ChoosePatient();
         }
 
         #endregion // Events handlers

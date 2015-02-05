@@ -150,7 +150,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void ChoosePatient_Click(object sender, RoutedEventArgs e)
         {
-
+            // wyświetlenie listy pacjentów i ew. zaznaczenie na niej wybranego dotychczas pacjenta
+            registerVisitDetailsPresenter.SelectPatient();
         }
 
         /// <summary>
@@ -160,7 +161,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-
+            // zarejestrowanie wizyty, powrót do menu głównego
+            registerVisitDetailsPresenter.RegisterVisit();
         }
 
         /// <summary>
