@@ -75,7 +75,7 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public IEnumerable<A_Worker> SelectWorkers(Func<A_Worker, bool> predicate)
         {
-            return db.A_Workers.Where(predicate);
+            return db.A_Workers.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
         }
 
         /// <summary>

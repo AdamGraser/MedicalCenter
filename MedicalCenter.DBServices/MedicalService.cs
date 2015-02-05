@@ -72,7 +72,7 @@ namespace MedicalCenter.DBServices
         public List<M_DictionaryClinic> SelectClinics()
         {
             // wrzucenie całej zawartości tabeli do listy
-            List<M_DictionaryClinic> list = db.M_DictionaryClinics.ToList();
+            List<M_DictionaryClinic> list = new List<M_DictionaryClinic>(db.M_DictionaryClinics.AsEnumerable().OrderBy(x => x.Name));
 
             int i = 0;
             int temp = 0;

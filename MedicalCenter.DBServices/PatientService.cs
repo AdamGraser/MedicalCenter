@@ -57,7 +57,7 @@ namespace MedicalCenter.DBServices
         /// <returns>Wszystkie rekordy z tabeli M_Patients, przedstawione jako kolekcja obiektów M_Patient.</returns>
         public IEnumerable<M_Patient> SelectPatients()
         {
-            return db.M_Patients.AsEnumerable();
+            return db.M_Patients.AsEnumerable().OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
         }
 
         #endregion // Select
