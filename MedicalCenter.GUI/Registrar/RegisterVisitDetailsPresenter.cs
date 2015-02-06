@@ -83,7 +83,7 @@ namespace MedicalCenter.GUI.Registrar
         public void GetPatientsList()
         {
             view.PatientsList.SourcePatients = patientBusinessService.GetPatients();
-            view.PatientsList.Patients = new List<Patient>(view.PatientsList.SourcePatients);
+            view.PatientsList.Patients = view.PatientsList.SourcePatients;
         }
 
         #endregion // Generic methods

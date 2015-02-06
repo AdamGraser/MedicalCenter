@@ -53,10 +53,10 @@ namespace MedicalCenter.Models.Registrar
                     return null;
                 }
             }
-            set
-            {
-                for(int i = 0; i < index; ++i);
-            }
+            //set
+            //{
+            //    for(int i = 0; i < index; ++i);
+            //}
         }
 
         /// <summary>

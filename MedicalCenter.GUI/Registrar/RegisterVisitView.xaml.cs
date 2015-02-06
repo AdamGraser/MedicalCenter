@@ -35,37 +35,37 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Przechowuje ID pacjenta, dla którego ma zostać zarejestrowana wizyta (0 jeśli jeszcze nie wybrano).
         /// </summary>
-        public int PatientId;
+        public int PatientId { get; set; }
 
         /// <summary>
         /// Lista obiektów zawierających nazwę poradni, nazwisko i imię lekarza, nr gabinetu oraz liczbę pacjentów, których lekarz przyjąć ma w danym dniu.
         /// </summary>
-        public List<DoctorsListItem> SourceDoctorsList;
+        public List<DoctorsListItem> SourceDoctorsList { get; private set; }
 
         /// <summary>
         /// Źródło danych dla tabeli w widoku - zmodyfikowana przez filtry (najczęściej okrojona) wersja listy SourceDoctorsList.
         /// </summary>
-        public List<DoctorsListItem> DoctorsList;
+        public List<DoctorsListItem> DoctorsList { get; set; }
 
         /// <summary>
         /// Lista nazw poradni i ID odpowiadających im rekordów z tabeli M_DictionaryClinics.
         /// </summary>
-        public Dictionary<int, string> ClinicsList;
+        public Dictionary<int, string> ClinicsList { get; private set; }
 
         /// <summary>
         /// Filtr poradni.
         /// </summary>
-        public ComboBox FilterClinicName;
+        public ComboBox FilterClinicName { get; private set; }
 
         /// <summary>
         /// Filtr lekarzy.
         /// </summary>
-        public TextBox FilterDoctorName;
+        public TextBox FilterDoctorName { get; private set; }
 
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
-        public MainWindow ParentWindow;
+        public MainWindow ParentWindow { get; private set; }
 
         #endregion // Public properties
 

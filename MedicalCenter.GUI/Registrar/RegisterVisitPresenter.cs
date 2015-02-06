@@ -133,7 +133,7 @@ namespace MedicalCenter.GUI.Registrar
                 // brak filtrowania
                 else
                 {
-                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList);
+                    view.DoctorsList = view.SourceDoctorsList;
                 }
             }
         }

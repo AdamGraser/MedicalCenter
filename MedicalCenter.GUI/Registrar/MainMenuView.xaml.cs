@@ -34,7 +34,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
-        public MainWindow ParentWindow;
+        public MainWindow ParentWindow { get; private set; }
 
         #endregion // Public properties
 

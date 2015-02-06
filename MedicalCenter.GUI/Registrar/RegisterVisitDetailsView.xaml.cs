@@ -35,37 +35,37 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Przechowuje następujące informacje o rejestrowanej wizycie: ID pacjenta, ID lekarza, datę wizyty i flagę nagłego przypadku.
         /// </summary>
-        public Visit VisitData;
+        public Visit VisitData { get; private set; }
 
         /// <summary>
         /// Lista wizyt z wybranego dnia u wskazanego lekarza.
         /// </summary>
-        public List<DailyVisitsListItem> DailyVisits;
+        public List<DailyVisitsListItem> DailyVisits { get; set; }
 
         /// <summary>
         /// Przechowuje nazwisko i imię (jeden string, oddzielone spacją) lekarza, do którego ma zostać zarejestrowana wizyta.
         /// </summary>
-        public string DoctorName;
+        public string DoctorName { get; set; }
 
         /// <summary>
         /// Przechowuje nazwisko i imię (jeden string, oddzielone spacją) pacjenta, dla którego ma zostać zarejestrowana wizyta.
         /// </summary>
-        public string PatientName;
+        public string PatientName { get; set; }
 
         /// <summary>
         /// Przechowuje tekstowy zapis godzin pracy wybranego lekarza w danym dniu.
         /// </summary>
-        public string Hours;
+        public string Hours { get; set; }
 
         /// <summary>
         /// Lista pacjentów, wyświetlana po kliknięciu przycisku "Wybierz pacjenta".
         /// </summary>
-        public PatientsList PatientsList;
+        public PatientsList PatientsList { get; private set; }
 
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
-        public MainWindow ParentWindow;
+        public MainWindow ParentWindow { get; private set; }
 
         #endregion // Public properties
 

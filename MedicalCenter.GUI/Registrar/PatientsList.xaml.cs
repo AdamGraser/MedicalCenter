@@ -35,12 +35,12 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Źródło elementów wyświetlanych na liście pacjentów.
         /// </summary>
-        public List<Patient> Patients;
+        public List<Patient> Patients { get; set; }
 
         /// <summary>
         /// Lista pacjentów.
         /// </summary>
-        public List<Patient> SourcePatients;
+        public List<Patient> SourcePatients { get; set; }
 
         #endregion // Public properties
 
