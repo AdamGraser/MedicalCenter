@@ -178,6 +178,26 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Obsługa zmiany daty wizyty.
+        /// Kontrola zakresu wybranej daty, wyświetlenie godzin przyjmowania lekarza w wybranym dniu i pobranie listy wizyt na wybrany dzień.
+        /// </summary>
+        public void TheDateChanged()
+        {
+            // uniemożliwienie niewybrania daty - zmiana na domyślną (dzisiejszą)
+            if (view.TheDate.SelectedDate == null)
+                view.TheDate.SelectedDate = DateTime.Today;
+            // kontrola zakresu daty - nie może być wcześniejsza niż dzisiejsza
+            else if (view.TheDate.SelectedDate < DateTime.Today)
+                view.TheDate.SelectedDate = DateTime.Today;
+
+            // pobranie z bazy danych godzin przyjęć lekarza w wybranym dniu
+            view.Hours = userBusinessService.GetWorkingHours(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
+
+            // pobranie listy wizyt dla danego lekarza we wskazanym dniu
+            GetVisitsList();
+        }
+
+        /// <summary>
         /// Sprawdza jakiego rodzaju pozycja została zaznaczona na liście wizyt i w razie potrzeby czyści to zaznaczenie lub aktywuje przycisk "Zarejestruj".
         /// </summary>
         public void HourSelected()

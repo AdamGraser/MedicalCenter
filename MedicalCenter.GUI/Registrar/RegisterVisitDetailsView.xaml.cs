@@ -133,14 +133,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void TheDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            // uniemożliwienie niewybrania daty - zmiana na domyślną (dzisiejszą)
-            if (TheDate.SelectedDate == null)
-                TheDate.SelectedDate = DateTime.Today;
-            else if (TheDate.SelectedDate < DateTime.Today)
-                TheDate.SelectedDate = DateTime.Today;
-            
-            // pobranie listy wizyt dla danego lekarza we wskazanym dniu
-            registerVisitDetailsPresenter.GetVisitsList();
+            // kontrola zakresu wybranej daty, wyświetlenie godzin przyjmowania lekarza w wybranym dniu i pobranie listy wizyt na wybrany dzień
+            registerVisitDetailsPresenter.TheDateChanged();
         }
 
         /// <summary>

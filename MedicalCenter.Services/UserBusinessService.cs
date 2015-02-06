@@ -77,6 +77,21 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
+        /// Pobiera z bazy danych informacje o wybranym pracowniku, zwraca jego nazwisko i imię.
+        /// </summary>
+        /// <param name="workerId">ID pracownika, którego dane mają zostać pobrane.</param>
+        /// <returns>Oddzielone spacją nazwisko i imię wskazanego pracownika lub null, jeśli nie znaleziono pracownika o podanym ID.</returns>
+        public string GetWorkerName(int workerId)
+        {
+            A_Worker worker = userService.SelectWorker(x => x.Id == workerId);
+
+            if (worker == null)
+                return null;
+            else
+                return worker.LastName + " " + worker.FirstName;
+        }
+
+        /// <summary>
         /// Zwraca wartość określającą czy wskazany pracownik jest nieobecny w danym dniu.
         /// </summary>
         /// <param name="workerId">ID pracownika, którego nieobecność ma zostać sprawdzona.</param>
@@ -84,8 +99,11 @@ namespace MedicalCenter.Services
         /// <returns>true jeśli pracownik jest nieobecny w danym dniu, w przeciwnym razie false</returns>
         public bool IsWorkerAbsent(int workerId, DateTime date)
         {
+            // szukanie nieobecności wskazanego pracownika, która zaczęła się najpóźniej we wskazanym dniu
+            // i nie ma określonej daty zakończenia lub kończy się nie wcześniej niż we wskazanym dniu
             A_Absence absence = userService.SelectAbsence(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
 
+            // jeśli nie znaleziono takiej nieobecności wskazanego pracownika, to jest on obecny
             if (absence == null)
                 return false;
             else
@@ -102,8 +120,11 @@ namespace MedicalCenter.Services
         {
             bool retval = false;
 
+            // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
+            // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
             A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == workerId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
 
+            // sprawdzanie, czy pracownik ma określone godziny pracy na wskazany dzień tygodnia
             switch (date.DayOfWeek)
             {
                 case DayOfWeek.Monday:
@@ -141,63 +162,6 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
-        /// Pobiera z bazy danych ID stanowiska określonego podanym kodem.
-        /// </summary>
-        /// <param name="code">Kod stanowiska, którego klucz ma zostać pobrany.</param>
-        /// <returns>ID stanowiska lub 0, jeśli nie znaleziono stanowiska o podanym kodzie.</returns>
-        public int GetJobTitleId(string code)
-        {
-            A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Code.StartsWith(code));
-
-            if (job != null)
-                return job.Id;
-            else
-                return 0;
-        }
-
-        /// <summary>
-        /// Pobiera z bazy danych listę pracowników na tym samym stanowisku.
-        /// </summary>
-        /// <param name="jobTitleId">ID stanowiska</param>
-        /// <returns>Lista pracowników o tym samym stanowisku.</returns>
-        public List<A_Worker> GetSameWorkers(int jobTitleId)
-        {
-            return new List<A_Worker>(userService.SelectWorkers(x => x.JobTitle == jobTitleId));
-        }
-
-        /// <summary>
-        /// Pobiera z bazy numer gabinetu, w którym przyjmuje/przyjmował dany lekarz we wskazanym dniu.
-        /// </summary>
-        /// <param name="workerId">ID lekarza, którego gabinet ma zostać znaleziony.</param>
-        /// <param name="date">Data, dla której obowiązywać ma przypisanie wskazanego lekarza do poszukiwanego gabinetu.</param>
-        /// <returns>Numer gabinetu lub null, jeśli nie znaleziono.</returns>
-        public string GetRoomNumber(int workerId, DateTime date)
-        {
-            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
-
-            if (entity != null)
-                return entity.Number;
-            else
-                return null;
-        }
-
-        /// <summary>
-        /// Pobiera z bazy ID poradni, w ramach której przyjmuje/przyjmował dany lekarz we wskazanym dniu.
-        /// </summary>
-        /// <param name="workerId">ID lekarza, dla którego poradnia ma zostać znaleziona.</param>
-        /// <param name="date">Data, dla której obowiązywać ma przynależność wskazanego lekarza do poszukiwanej poradni.</param>
-        /// <returns>ID poradni lub 0, jeśli nie znaleziono.</returns>
-        public int GetClinicId(int workerId, DateTime date)
-        {
-            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
-
-            if (entity != null)
-                return entity.ClinicId;
-            else
-                return 0;
-        }
-
-        /// <summary>
         /// Pobiera z bazy wybrany grafik wskazanego lekarza, a następnie oblicza ilu maksymalnie pacjentów może przyjąć w podanym dniu tygodnia ten lekarz.
         /// </summary>
         /// <param name="doctorId">ID lekarza, którego grafik ma zostać rozpatrzony.</param>
@@ -208,6 +172,8 @@ namespace MedicalCenter.Services
         /// </returns>
         public int GetVisitsPerDay(int doctorId, DateTime date)
         {
+            // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
+            // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
             A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
 
             int visitsPerDay = 0;
@@ -217,7 +183,7 @@ namespace MedicalCenter.Services
                 switch (date.DayOfWeek)
                 {
                     case DayOfWeek.Monday:
-                        if(schedule.D1From != null && schedule.D1To != null)
+                        if (schedule.D1From != null && schedule.D1To != null)
                             visitsPerDay = (int)(schedule.D1To.Value.Subtract(schedule.D1From.Value).TotalMinutes / 20.0);
                         break;
 
@@ -252,18 +218,117 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
-        /// Pobiera z bazy danych informacje o wybranym pracowniku, zwraca jego nazwisko i imię.
+        /// Pobiera z bazy danych godziny pracy wskazanego pracownika w danym dniu.
         /// </summary>
-        /// <param name="workerId">ID pracownika, którego dane mają zostać pobrane.</param>
-        /// <returns>Oddzielone spacją nazwisko i imię wskazanego pracownika lub null, jeśli nie znaleziono pracownika o podanym ID.</returns>
-        public string GetWorkerName(int workerId)
+        /// <param name="workerId">ID pracownika, którego godziny pracy mają zostać pobrane.</param>
+        /// <param name="date">Dzień, z którego godziny pracy pracownika mają zostać pobrane.</param>
+        /// <returns>
+        /// Napis zawierający godziny pracy wybranego pracownika w danym dniu, w formacie {godzina od} - {godzina do}
+        /// lub null jeśli nie znaleziono grafika dla wskazanego pracownika i/lub objemującego podaną datę.
+        /// </returns>
+        public string GetWorkingHours(int workerId, DateTime date)
         {
-            A_Worker worker = userService.SelectWorker(x => x.Id == workerId);
+            // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
+            // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
+            A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == workerId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
 
-            if (worker == null)
-                return null;
+            string workingHours = null;
+
+            if (schedule != null)
+            {
+                switch (date.DayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        if (schedule.D1From != null && schedule.D1To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+
+                    case DayOfWeek.Tuesday:
+                        if (schedule.D2From != null && schedule.D2To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+
+                    case DayOfWeek.Wednesday:
+                        if (schedule.D3From != null && schedule.D3To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+
+                    case DayOfWeek.Thursday:
+                        if (schedule.D4From != null && schedule.D4To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+
+                    case DayOfWeek.Friday:
+                        if (schedule.D5From != null && schedule.D5To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+
+                    case DayOfWeek.Saturday:
+                        if (schedule.D6From != null && schedule.D6To != null)
+                            workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                        break;
+                }
+            }
+
+            return workingHours;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy numer pomieszczenia, do którego przypisany jest/był dany pracownik we wskazanym dniu.
+        /// </summary>
+        /// <param name="workerId">ID pracownika, którego gabinet ma zostać znaleziony.</param>
+        /// <param name="date">Data, dla której obowiązywać ma przypisanie wskazanego pracownika do poszukiwanego pomieszczenia.</param>
+        /// <returns>Numer gabinetu lub null, jeśli nie znaleziono.</returns>
+        public string GetRoomNumber(int workerId, DateTime date)
+        {
+            // szukanie gabinetu, do którego wskazany pracownik jest/był przypisany w wybranym dniu
+            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
+
+            if (entity != null)
+                return entity.Number;
             else
-                return worker.LastName + " " + worker.FirstName;
+                return null;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy ID poradni, w ramach której przyjmuje/przyjmował dany lekarz we wskazanym dniu.
+        /// </summary>
+        /// <param name="doctorId">ID lekarza, dla którego poradnia ma zostać znaleziona.</param>
+        /// <param name="date">Data, dla której obowiązywać ma przynależność wskazanego lekarza do poszukiwanej poradni.</param>
+        /// <returns>ID poradni lub 0, jeśli nie znaleziono.</returns>
+        public int GetClinicId(int doctorId, DateTime date)
+        {
+            A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == doctorId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
+
+            if (entity != null)
+                return entity.ClinicId;
+            else
+                return 0;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych ID stanowiska określonego podanym kodem.
+        /// </summary>
+        /// <param name="code">Kod stanowiska, którego klucz ma zostać pobrany.</param>
+        /// <returns>ID stanowiska lub 0, jeśli nie znaleziono stanowiska o podanym kodzie.</returns>
+        public int GetJobTitleId(string code)
+        {
+            A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Code.StartsWith(code));
+
+            if (job != null)
+                return job.Id;
+            else
+                return 0;
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych listę pracowników na tym samym stanowisku.
+        /// </summary>
+        /// <param name="jobTitleId">ID stanowiska</param>
+        /// <returns>Lista pracowników o tym samym stanowisku.</returns>
+        public List<A_Worker> GetSameWorkers(int jobTitleId)
+        {
+            return new List<A_Worker>(userService.SelectWorkers(x => x.JobTitle == jobTitleId));
         }
 
         #endregion // Public methods
