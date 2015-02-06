@@ -350,9 +350,7 @@ namespace MedicalCenter.GUI.Registrar
 
                 // powrót do menu głównego
                 Back();
-
-                RegisterVisitView registerVisitView = view.ParentWindow.History.Pop() as RegisterVisitView;
-                registerVisitView.ViewBack();
+                view.ParentWindow.RegistrarRegisterVisitView.ViewBack();
             }
         }
 
