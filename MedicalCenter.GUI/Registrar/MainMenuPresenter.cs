@@ -74,7 +74,7 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarPatientDetailsView;
 
             // włączenie trybu edycji formularza na ekranie ze szczegółami pacjenta
-            view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(true);
+            view.ParentWindow.RegistrarPatientDetailsView.EnableEditing();
 
             // zapisanie w historii referencji do widoku menu głównego
             view.ParentWindow.History.Push(view);

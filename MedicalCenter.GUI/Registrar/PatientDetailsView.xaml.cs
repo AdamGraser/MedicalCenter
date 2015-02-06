@@ -42,11 +42,6 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public MainWindow ParentWindow;
 
-        /// <summary>
-        /// Określa, czy formularz jest w trybie edycji (true) czy w trybie podglądu (false).
-        /// </summary>
-        public bool EditMode;
-
         #endregion // Public properties
 
         #region Ctors
@@ -77,7 +72,15 @@ namespace MedicalCenter.GUI.Registrar
         #region Public methods
 
         /// <summary>
-        /// Włącza lub wyłącza tryb edycji formularza.
+        /// Włącza tryb edycji formularza na potrzeby dodania nowego pacjenta do bazy danych.
+        /// </summary>
+        public void EnableEditing()
+        {
+            patientDetailsPresenter.EnableEditing();
+        }
+
+        /// <summary>
+        /// Włącza lub wyłącza tryb edycji formularza na potrzeby podglądu/edycji danych istniejącego w bazie danych pacjenta.
         /// </summary>
         /// <param name="editMode">Określa czy formularz ma być w trybie edycji (true) czy podglądu (false).</param>
         public void EnableEditing(bool editMode)

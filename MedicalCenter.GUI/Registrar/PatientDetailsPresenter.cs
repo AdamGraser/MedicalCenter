@@ -32,6 +32,11 @@ namespace MedicalCenter.GUI.Registrar
         bool validationErrors;
 
         /// <summary>
+        /// Określa, czy formularz jest w trybie edycji (true) czy w trybie podglądu (false).
+        /// </summary>
+        bool editMode;
+
+        /// <summary>
         /// Instancja struktury Thickness, definiująca grubość linii o wartości 1.0, używana przy obramowaniach elementów formularza.
         /// </summary>
         System.Windows.Thickness thickness1;
@@ -356,27 +361,38 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
-        /// Włącza lub wyłącza tryb edycji formularza.
+        /// Włącza tryb edycji formularza na potrzeby dodania nowego pacjenta do bazy danych.
+        /// </summary>
+        public void EnableEditing()
+        {
+            EnableEditing(true);
+            view.ViewTitle.Text = "Dodaj pacjenta";
+        }
+
+        /// <summary>
+        /// Włącza lub wyłącza tryb edycji formularza na potrzeby podglądu/edycji danych istniejącego w bazie danych pacjenta.
         /// </summary>
         /// <param name="editMode">Określa czy formularz ma być w trybie edycji (true) czy podglądu (false).</param>
         public void EnableEditing(bool editMode)
         {
             // jeśli rzeczywiście nastąpić ma zmiana
-            if (editMode != view.EditMode)
+            if (editMode != this.editMode)
             {
                 // zapisanie nowego stanu formularza
-                view.EditMode = editMode;
+                this.editMode = editMode;
                 
                 // zmiana stanu elementów formularza do domyślnego dla trybu edycji
                 if (editMode)
                 {
                     view.Save.Content = "Zapisz";
                     view.Save.IsEnabled = IsFormCompleted;
+                    view.ViewTitle.Text = "Edycja pacjenta";
                 }
                 else
                 {
                     view.Save.Content = "Edytuj";
                     view.Save.IsEnabled = true;
+                    view.ViewTitle.Text = "Podgląd pacjenta";
                 }
 
                 view.LastName.IsEnabled = editMode;
