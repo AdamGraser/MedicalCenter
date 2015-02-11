@@ -135,7 +135,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Pesel_KeyDown(object sender, KeyEventArgs e)
         {
             // sprawdzenie czy wciśniety został dozwolony klawisz
-            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "NUM");
+            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, GroupsOfKeys.Numerics | GroupsOfKeys.Digits);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace MedicalCenter.GUI.Registrar
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // usuwanie z pola niedozwolonych znaków
-            patientDetailsPresenter.TextBoxChanged(e.Source as TextBox, "LAN");
+            patientDetailsPresenter.TextBoxChanged(e.Source as TextBox, GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space | GroupsOfCharacters.Digits);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace MedicalCenter.GUI.Registrar
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             // sprawdzenie czy wciśniety został dozwolony klawisz
-            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "LAN");
+            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, GroupsOfKeys.Digits | GroupsOfKeys.Numerics | GroupsOfKeys.Letters | GroupsOfKeys.Space);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace MedicalCenter.GUI.Registrar
         private void LetterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // usuwanie z pola niedozwolonych znaków
-            patientDetailsPresenter.TextBoxChanged(e.Source as TextBox, "LET");
+            patientDetailsPresenter.TextBoxChanged(e.Source as TextBox, GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace MedicalCenter.GUI.Registrar
         private void LetterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             // sprawdzenie czy wciśniety został dozwolony klawisz
-            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "LET");
+            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, GroupsOfKeys.Letters | GroupsOfKeys.Space);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace MedicalCenter.GUI.Registrar
         private void PostalCode_KeyDown(object sender, KeyEventArgs e)
         {
             // sprawdzenie czy wciśniety został dozwolony klawisz
-            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, "NUM");
+            e.Handled = !patientDetailsPresenter.KindOfKey(e.Key, GroupsOfKeys.Digits | GroupsOfKeys.Numerics);
         }
 
         /// <summary>

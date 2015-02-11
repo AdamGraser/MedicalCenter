@@ -114,31 +114,26 @@ namespace MedicalCenter.GUI.Registrar
         /// Niezależnie od wybranej grupy, zawsze sprawdzane jest, czy wskazany klawisz to delete, backspace, tab, return, escape lub enter.
         /// </summary>
         /// <param name="key">Klawisz do sprawdzenia.</param>
-        /// <param name="kindOfKey">
-        /// Rodzaj klawisza do sprawdzenia:
-        /// NUM - cyfra (również z klaw. numerycznej)
-        /// LET - litera lub spacja (sprawdza również alt i shift)
-        /// LAN - litera lub spacja lub cyfra
-        /// </param>
+        /// <param name="kindOfKey">Grupa (lub kombinacja grup) klawiszy do sprawdzenia.</param>
         /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false</returns>
-        /// <exception cref="ArgumentNullException">Drugi argument ma wartość null.</exception>
-        public bool KindOfKey(Key key, string kindOfKey)
+        /// <exception cref="ArgumentNullException">Pierwszy argument ma wartość null.</exception>
+        public bool KindOfKey(Key key, GroupsOfKeys kindOfKey)
         {
-            // rzucenie wyjątkiem, jeśli drugi argument jest null'em
-            if (kindOfKey == null)
-                throw new ArgumentNullException("kindOfKey", "Nazwa grupy klawiszy ma wartość null");
+            // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
+            if (key == null)
+                throw new ArgumentNullException("key", "Pierwszy argument ma wartość null");
             
             bool retval = false;
             
             // sprawdzenie czy klawisz jest cyfrą
-            if (!kindOfKey.Equals("LET") &&
+            if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
                 ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
                  (key >= Key.NumPad0 && key <= Key.NumPad9)))
             {
                 retval = true;
             }
             // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
-            if (!kindOfKey.Equals("NUM") &&
+            if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
                 ((key >= Key.A && key <= Key.Z) ||
                   key == Key.Space ||
                  Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
@@ -157,27 +152,20 @@ namespace MedicalCenter.GUI.Registrar
         /// Obsługiwane grupy znaków: cyfry, litery i spacja, obie grupy naraz.
         /// </summary>
         /// <param name="textBox">Pole tekstowe, z którego mają zostać usunięte nieprawidłowe znaki.</param>
-        /// <param name="charactersGroup">
-        /// Oznaczenie grupy prawidłowych znaków:
-        /// NUM - cyfry
-        /// LET - litery i spacja
-        /// LAN - cyfry, litery i spacja
-        /// </param>
-        /// <exception cref="ArgumentNullException">Jeden z argumentów ma wartość null.</exception>
-        public void TextBoxChanged(TextBox textBox, string charactersGroup)
+        /// <param name="charactersGroup">Grupa (lub kombinacja grup) prawidłowych znaków.</param>
+        /// <exception cref="ArgumentNullException">Pierwszy argument ma wartość null.</exception>
+        public void TextBoxChanged(TextBox textBox, GroupsOfCharacters charactersGroup)
         {
             bool change = false;
-            
-            // rzucenie wyjątkiem, jeśli któryś z argumentów jest null'em
+
+            // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
             if (textBox == null)
                 throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
-            if (charactersGroup == null)
-                throw new ArgumentNullException("charactersGroup", "Nazwa grupy znaków ma wartość null");
 
             // jeśli wybrana grupa to cyfry + ew. litery i spacja
-            if (!charactersGroup.Equals("LET"))
+            if ((charactersGroup & GroupsOfCharacters.Digits) != 0)
             {
-                bool both = (charactersGroup.Equals("LAN")) ? true : false;
+                bool both = ((charactersGroup & (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space)) != 0) ? true : false;
 
                 foreach (char c in textBox.Text)
                 {
@@ -192,7 +180,7 @@ namespace MedicalCenter.GUI.Registrar
                 }
             }
             // jeśli wybrana grupa to litery i spacja
-            else
+            else if(charactersGroup == (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space))
             {
                 foreach (char c in textBox.Text)
                 {
@@ -441,7 +429,7 @@ namespace MedicalCenter.GUI.Registrar
             }
 
             // usunięcie z pola nieprawidłowych znaków
-            TextBoxChanged(view.Pesel, "NUM");
+            TextBoxChanged(view.Pesel, GroupsOfCharacters.Digits);
         }
 
         /// <summary>
@@ -681,7 +669,7 @@ namespace MedicalCenter.GUI.Registrar
         public bool CityKeyDown(Key key)
         {
             // sprawdzenie, czy wskazany przycisk jest literą, spacją lub cyfrą
-            bool retval = KindOfKey(key, "LAN");
+            bool retval = KindOfKey(key, GroupsOfKeys.Letters | GroupsOfKeys.Space | GroupsOfKeys.Digits | GroupsOfKeys.Numerics);
 
             // jeśli żadne z powyższych:
             if (!retval)
@@ -701,7 +689,7 @@ namespace MedicalCenter.GUI.Registrar
         {
             if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{1,3}$"))
             {
-                TextBoxChanged(view.PostalCode, "NUM");
+                TextBoxChanged(view.PostalCode, GroupsOfCharacters.Digits);
 
                 // cyfr w polu może być maksymalnie 5
                 if (view.PostalCode.Text.Length == 6)
@@ -750,4 +738,77 @@ namespace MedicalCenter.GUI.Registrar
 
         #endregion // Public methods
     }
+
+    #region Enums
+
+    /// <summary>
+    /// Pole bitowe prezentujące grupy klawiszy.
+    /// </summary>
+    [Flags]
+    public enum GroupsOfKeys : byte
+    {
+        /// <summary>
+        /// Klawisze z cyframi (nad literami).
+        /// </summary>
+        Digits   = 0x01,
+
+        /// <summary>
+        /// Cyfry z klawiatury numerycznej.
+        /// </summary>
+        Numerics = 0x02,
+
+        /// <summary>
+        /// Klawisze z literami.
+        /// </summary>
+        Letters  = 0x04,
+
+        /// <summary>
+        /// Spacja.
+        /// </summary>
+        Space    = 0x08,
+
+        /// <summary>
+        /// Klawisze ze znakami specjalnymi.
+        /// </summary>
+        Special  = 0x16
+    };
+
+    /// <summary>
+    /// Pole bitowe prezentujące grupy znaków.
+    /// </summary>
+    [Flags]
+    public enum GroupsOfCharacters : byte
+    {
+        /// <summary>
+        /// Małe litery.
+        /// </summary>
+        SmallLetters = 0x01,
+
+        /// <summary>
+        /// Wielkie litery.
+        /// </summary>
+        BigLetters   = 0x02,
+
+        /// <summary>
+        /// Spacja.
+        /// </summary>
+        Space        = 0x04,
+
+        /// <summary>
+        /// Białe znaki (zawierają spację).
+        /// </summary>
+        Whitespace   = 0x08,
+
+        /// <summary>
+        /// Cyfry.
+        /// </summary>
+        Digits       = 0x16,
+
+        /// <summary>
+        /// Znaki specjalne.
+        /// </summary>
+        Special      = 0x32
+    };
+
+    #endregion // Enums
 }
