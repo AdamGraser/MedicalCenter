@@ -40,7 +40,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Lista obiektów zawierających nazwę poradni, nazwisko i imię lekarza, nr gabinetu oraz liczbę pacjentów, których lekarz przyjąć ma w danym dniu.
         /// </summary>
-        public List<DoctorsListItem> SourceDoctorsList { get; private set; }
+        public List<DoctorsListItem> SourceDoctorsList { get; set; }
 
         /// <summary>
         /// Źródło danych dla tabeli w widoku - zmodyfikowana przez filtry (najczęściej okrojona) wersja listy SourceDoctorsList.
@@ -94,7 +94,6 @@ namespace MedicalCenter.GUI.Registrar
 
             // utworzenie listy lekarzy (poradnia, lekarz, liczba pacjentów w wybranym dniu, nr gabinetu)
             SourceDoctorsList = new List<DoctorsListItem>();
-            DoctorsList = new List<DoctorsListItem>();
             registerVisitPresenter.GetDoctorsList();
 
             // utworzenie listy poradni medycznych
@@ -207,19 +206,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void TheDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            // kontrola zakresu - przy rejestrowaniu wizyty rejestratorka ma widzieć dni od dziś w przód
-            if (TheDate.SelectedDate == null)
-                TheDate.SelectedDate = DateTime.Today;
-            else if (TheDate.SelectedDate < DateTime.Today)
-                TheDate.SelectedDate = DateTime.Today;
-
-            // wczytanie na nowo listy lekarzy dla nowo wybranego dnia
-            SourceDoctorsList = new List<DoctorsListItem>();
-            DoctorsList = new List<DoctorsListItem>();
-            registerVisitPresenter.GetDoctorsList();
-
-            // uwzględnienie filtracji
-            registerVisitPresenter.FilterDoctorsList();
+            // kontrola zakresu daty, wczytanie nowej listy lekarzy z uwzględnieniem filtrów
+            registerVisitPresenter.TheDateChanged();
         }
 
         /// <summary>

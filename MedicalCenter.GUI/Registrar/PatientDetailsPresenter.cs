@@ -310,6 +310,19 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Zapisuje dane formularza w bazie danych lub włącza tryb edycji formularza.
+        /// </summary>
+        public void Save()
+        {
+            if (editMode)
+                // zapisanie zawartości formularza do bazy danych
+                SaveChanges();
+            else
+                // włączenie trybu edycji
+                EnableEditing(true);
+        }
+
+        /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Zapisz" w widoku szczegółów pacjenta.
         /// </summary>
         public void SaveChanges()

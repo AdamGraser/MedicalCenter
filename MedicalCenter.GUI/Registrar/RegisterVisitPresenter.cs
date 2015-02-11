@@ -86,10 +86,10 @@ namespace MedicalCenter.GUI.Registrar
                 // dodanie rekordu o lekarzu do listy
                 view.SourceDoctorsList.Add(new DoctorsListItem(clinicId, medicalBusinessService.GetClinicName(clinicId), w.Id, w.LastName, w.FirstName,
                                                                visitsCount, userBusinessService.GetRoomNumber(w.Id, view.TheDate.SelectedDate.Value), state));
-                
-                view.DoctorsList.Add(view.SourceDoctorsList[view.SourceDoctorsList.Count - 1]);
                                                                                 
             }
+
+            view.DoctorsList = view.SourceDoctorsList;
         }
 
         /// <summary>
@@ -230,6 +230,25 @@ namespace MedicalCenter.GUI.Registrar
                 view.ClosestFreeDate.IsEnabled = false;
                 view.Next.IsEnabled = false;
             }
+        }
+
+        /// <summary>
+        /// Kontroluje zakres wybranej daty, wczytuje listę lekarzy i filtruje ją.
+        /// </summary>
+        public void TheDateChanged()
+        {
+            // kontrola zakresu - przy rejestrowaniu wizyty rejestratorka ma widzieć dni od dziś w przód
+            if (view.TheDate.SelectedDate == null)
+                view.TheDate.SelectedDate = DateTime.Today;
+            else if (view.TheDate.SelectedDate < DateTime.Today)
+                view.TheDate.SelectedDate = DateTime.Today;
+
+            // wczytanie na nowo listy lekarzy dla nowo wybranego dnia
+            view.SourceDoctorsList = new List<DoctorsListItem>();
+            GetDoctorsList();
+
+            // uwzględnienie filtracji
+            FilterDoctorsList();
         }
 
         /// <summary>

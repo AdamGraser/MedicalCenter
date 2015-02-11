@@ -271,11 +271,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (EditMode)
-                // zapisanie zawartości formularza do bazy danych
-                patientDetailsPresenter.SaveChanges();
-            else
-                patientDetailsPresenter.EnableEditing(true);
+            // zapisanie danych formularza w bazie danych lub włączenie trybu edycji formularza
+            patientDetailsPresenter.Save();
         }
 
         #endregion // Events handlers
