@@ -49,9 +49,6 @@
     <Compile Include="A_Absence.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="A_Calendar.cs">
-      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="A_DictionaryJobTitle.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
@@ -59,6 +56,9 @@
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
     <Compile Include="A_DictionarySpecialization.cs">
+      <DependentUpon>MedicalCenterDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="A_Holiday.cs">
       <DependentUpon>MedicalCenterDB.tt</DependentUpon>
     </Compile>
     <Compile Include="A_Schedule.cs">
