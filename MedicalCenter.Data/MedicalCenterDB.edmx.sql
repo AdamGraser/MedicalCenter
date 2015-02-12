@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/22/2015 01:18:35
+-- Date Created: 02/12/2015 20:12:12
 -- Generated from EDMX file: C:\Users\Adam\Documents\GitHub\MedicalCenter\MedicalCenter.Data\MedicalCenterDB.edmx
 -- --------------------------------------------------
 
@@ -141,11 +141,9 @@ GO
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'A_Calendars'
-CREATE TABLE [dbo].[A_Calendars] (
+-- Creating table 'A_Holidays'
+CREATE TABLE [dbo].[A_Holidays] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [IsHoliday] bit  NOT NULL,
-    [Weekday] tinyint  NOT NULL,
     [Date] datetime  NOT NULL
 );
 GO
@@ -363,9 +361,9 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [Id] in table 'A_Calendars'
-ALTER TABLE [dbo].[A_Calendars]
-ADD CONSTRAINT [PK_A_Calendars]
+-- Creating primary key on [Id] in table 'A_Holidays'
+ALTER TABLE [dbo].[A_Holidays]
+ADD CONSTRAINT [PK_A_Holidays]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

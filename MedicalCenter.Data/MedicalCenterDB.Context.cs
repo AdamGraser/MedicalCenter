@@ -25,7 +25,7 @@ namespace MedicalCenter.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<A_Calendar> A_Calendars { get; set; }
+        public DbSet<A_Holiday> A_Holidays { get; set; }
         public DbSet<A_Absence> A_Absences { get; set; }
         public DbSet<A_User> A_Users { get; set; }
         public DbSet<A_Schedule> A_Schedules { get; set; }

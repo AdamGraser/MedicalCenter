@@ -12,16 +12,9 @@ namespace MedicalCenter.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class A_Calendar
+    public partial class A_Holiday
     {
-        public A_Calendar()
-        {
-            this.IsHoliday = false;
-        }
-    
         public int Id { get; private set; }
-        public bool IsHoliday { get; set; }
-        public byte Weekday { get; set; }
         public System.DateTime Date { get; set; }
     }
 }

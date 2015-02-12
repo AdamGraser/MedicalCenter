@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="MedicalCenter.Data.MedicalCenterDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="MedicalCenterDataMedicalCenterDBStoreContainer">
-    <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Calendars" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="A_Holidays" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Holidays" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="A_Absences" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Absences" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="A_Users" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.Store.A_Schedules" store:Type="Tables" Schema="dbo" />
@@ -108,13 +108,11 @@
       <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="A_Calendars">
+  <EntityType Name="A_Holidays">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IsHoliday" Type="bit" Nullable="false" DefaultValue="false" />
-    <Property Name="Weekday" Type="tinyint" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="A_Absences">
@@ -583,7 +581,7 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedicalCenter.Data.MedicalCenterDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="MedicalCenterDBContainer" annotation:LazyLoadingEnabled="true" cg:TypeAccess="Public">
-          <EntitySet Name="A_Calendars" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Calendar" />
+          <EntitySet Name="A_Holidays" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Holiday" />
           <EntitySet Name="A_Absences" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Absence" />
           <EntitySet Name="A_Users" EntityType="MedicalCenter.Data.MedicalCenterDB.A_User" />
           <EntitySet Name="A_Schedules" EntityType="MedicalCenter.Data.MedicalCenterDB.A_Schedule" />
@@ -685,23 +683,11 @@
             <End Role="M_MedicalTreatment" EntitySet="M_MedicalTreatments" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="A_Calendar" cg:TypeAccess="Public">
+        <EntityType Name="A_Holiday" cg:TypeAccess="Public">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
-          <Property Type="Boolean" Name="IsHoliday" Nullable="false" DefaultValue="False" >
-            <Documentation>
-              <LongDescription>1 = święto (holiday)</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="Byte" Name="Weekday" Nullable="false" >
-            <Documentation>
-              <LongDescription>1 = poniedziałek (monday)
-...
-7 = niedziela (sunday)</LongDescription>
-            </Documentation>
-          </Property>
           <Property Type="DateTime" Name="Date" Nullable="false" />
         </EntityType>
         <EntityType Name="A_Absence">
@@ -1259,12 +1245,10 @@ true = na kontrakcie z NFZ (with NFZ contract) [default]</LongDescription>
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MedicalCenterDataMedicalCenterDBStoreContainer" CdmEntityContainer="MedicalCenterDBContainer">
-    <EntitySetMapping Name="A_Calendars">
-      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Calendar)">
-        <MappingFragment StoreEntitySet="A_Calendars">
+    <EntitySetMapping Name="A_Holidays">
+      <EntityTypeMapping TypeName="IsTypeOf(MedicalCenter.Data.MedicalCenterDB.A_Holiday)">
+        <MappingFragment StoreEntitySet="A_Holidays">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
-          <ScalarProperty Name="Weekday" ColumnName="Weekday" />
           <ScalarProperty Name="Date" ColumnName="Date" />
         </MappingFragment>
       </EntityTypeMapping>
