@@ -11,6 +11,16 @@ namespace MedicalCenter.Models.LoggingIn
     /// </summary>
     public class User
     {
+        #region Private fields
+
+        /// <summary>
+        /// Przechowuje hash wprowadzonego w formularzu logowania hasła dostępu do konta użytkownika.
+        /// Jest to wartość z kolumny Password z tabeli A_Users.
+        /// </summary>
+        string password;
+
+        #endregion // Private fields
+
         #region Public properties
 
         /// <summary>
@@ -20,10 +30,23 @@ namespace MedicalCenter.Models.LoggingIn
         public string Login { get; set; }
 
         /// <summary>
-        /// Przechowuje hash wprowadzonego w formularzu logowania hasła dostępu do konta użytkownika.
-        /// Jest to wartość z kolumny Password z tabeli A_Users.
+        /// Akcesor dla prywatnego pola "password", przechowującego hash hasła dostępu do konta użytkownika.
+        /// Setter zapisuje w owym polu odpowiednio obliczony hash hasła.
         /// </summary>
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+
+            set
+            {
+                System.Security.Cryptography.HashAlgorithm sha = System.Security.Cryptography.HashAlgorithm.Create("SHA512");
+
+                password = System.Text.Encoding.ASCII.GetString(sha.ComputeHash(System.Text.Encoding.ASCII.GetBytes(value)));
+            }
+        }
 
         /// <summary>
         /// Przechowuje ID rekordu z tabeli A_Workers, reprezentującego osobę aktualnie zalogowaną.

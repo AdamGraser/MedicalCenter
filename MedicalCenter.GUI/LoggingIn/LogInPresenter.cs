@@ -49,6 +49,9 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         public void Logon()
         {
+            // zahashowanie hasła i zapisanie hashu w obiekcie danych użytkownika
+            view.UserData.Password = view.Password.Password;
+
             // sprawdzenie poprawności podanych poświadczeń
             userBusinessService.LogIn(view.UserData);
 
@@ -77,6 +80,19 @@ namespace MedicalCenter.GUI.LoggingIn
                     view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
                 }
             }
+        }
+
+        /// <summary>
+        /// Sprawdza czy login i hasło zostały podane. Jeśli tak, aktywuje przycisk "Zaloguj". W przeciwnym razie dezaktywuje go.
+        /// </summary>
+        public void FormCompleted()
+        {
+            // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
+            if (view.Login.Text.Length > 0 && view.Password.Password.Length > 0)
+                view.Logon.IsEnabled = true;
+            else
+            // jeśli nie, przycisk "Zaloguj" jest dezaktywowany
+                view.Logon.IsEnabled = false;
         }
 
         #endregion // Public methods

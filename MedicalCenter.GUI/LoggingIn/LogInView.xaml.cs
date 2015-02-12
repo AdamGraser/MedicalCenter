@@ -77,11 +77,6 @@ namespace MedicalCenter.GUI.LoggingIn
         /// <param name="e"></param>
         private void Logon_Click(object sender, RoutedEventArgs e)
         {
-            System.Security.Cryptography.HashAlgorithm sha = System.Security.Cryptography.HashAlgorithm.Create("SHA512");
-
-            // zahashowanie hasła i zapisanie hashu w obiekcie danych użytkownika
-            UserData.Password = System.Text.Encoding.ASCII.GetString(sha.ComputeHash(System.Text.Encoding.ASCII.GetBytes(Password.Password)));
-
             // próba zalogowania się
             logInPresenter.Logon();
         }
@@ -94,10 +89,7 @@ namespace MedicalCenter.GUI.LoggingIn
         private void Login_TextChanged(object sender, TextChangedEventArgs e)
         {
             // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
-            if (Login.Text.Length > 0 && Password.Password.Length > 0)
-                Logon.IsEnabled = true;
-            else
-                Logon.IsEnabled = false;
+            logInPresenter.FormCompleted();
         }
 
         /// <summary>
@@ -108,10 +100,7 @@ namespace MedicalCenter.GUI.LoggingIn
         private void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
             // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
-            if (Login.Text.Length > 0 && Password.Password.Length > 0)
-                Logon.IsEnabled = true;
-            else
-                Logon.IsEnabled = false;
+            logInPresenter.FormCompleted();
         }
 
         #endregion // Event handlers
