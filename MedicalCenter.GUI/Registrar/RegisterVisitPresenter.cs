@@ -275,12 +275,14 @@ namespace MedicalCenter.GUI.Registrar
 
             do
             {
-                // szukanie dnia, w którym wybrany lekarz przyjmuje pacjentów
+                // szukanie dnia niebędącego świętem, w którym wybrany lekarz przyjmuje pacjentów
                 do
                 {
                     date = date.AddDays(1.0);
                 }
-                while ((maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) == 0);
+                while (userBusinessService.IsHoliday(date)
+                    || userBusinessService.IsWorkerAbsent(selectedDoctor.DoctorId, date)
+                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) == 0);
 
                 // pobranie liczby wizyt zarejestrowanych na ten dzień
                 visitsCount = medicalBusinessService.TodaysVisitsCount(selectedDoctor.DoctorId, date);

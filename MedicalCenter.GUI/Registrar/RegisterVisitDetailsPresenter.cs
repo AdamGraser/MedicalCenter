@@ -159,7 +159,9 @@ namespace MedicalCenter.GUI.Registrar
                     change = (change < 0.0) ? -1.0 : 1.0;
 
                     // przesuwanie daty o 1 dzień tak długo, aż będzie to dzień, w którym wybrany lekarz przyjmuje pacjentów
-                    while (!userBusinessService.IsWorking(view.VisitData.DoctorId, tempDate))
+                    while (userBusinessService.IsHoliday(tempDate)
+                        || !userBusinessService.IsWorking(view.VisitData.DoctorId, tempDate)
+                        || userBusinessService.IsWorkerAbsent(view.VisitData.DoctorId, tempDate))
                     {
                         tempDate = tempDate.AddDays(change);
 
