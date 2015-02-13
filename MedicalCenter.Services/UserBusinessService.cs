@@ -86,12 +86,17 @@ namespace MedicalCenter.Services
         /// <returns>Oddzielone spacją nazwisko i imię wskazanego pracownika lub null, jeśli nie znaleziono pracownika o podanym ID.</returns>
         public string GetWorkerName(int workerId)
         {
-            A_Worker worker = userService.SelectWorker(x => x.Id == workerId);
+            if (workerId > 0)
+            {
+                A_Worker worker = userService.SelectWorker(x => x.Id == workerId);
 
-            if (worker == null)
-                return null;
+                if (worker == null)
+                    return null;
+                else
+                    return worker.LastName + " " + worker.FirstName;
+            }
             else
-                return worker.LastName + " " + worker.FirstName;
+                return null;
         }
 
         /// <summary>
@@ -99,12 +104,15 @@ namespace MedicalCenter.Services
         /// </summary>
         /// <param name="workerId">ID pracownika, którego nieobecność ma zostać sprawdzona.</param>
         /// <param name="date">Dzień, na który ma przypadać rzekoma nieobecność pracownika. Wartość null powoduje, że ta metoda zwraca false.</param>
-        /// <returns>true jeśli pracownik jest nieobecny w danym dniu, w przeciwnym razie false (lub jeśli drugi argument to null)</returns>
+        /// <returns>
+        /// true jeśli pracownik jest nieobecny w danym dniu,
+        /// false jeśli jest obecny, nie znaleziono pracownika o podanym ID lub jeśli drugi argument to null.
+        /// </returns>
         public bool IsWorkerAbsent(int workerId, DateTime date)
         {
             bool retval = false;
 
-            if (date != null)
+            if (date != null && workerId > 0)
             {
                 // szukanie nieobecności wskazanego pracownika, która zaczęła się najpóźniej we wskazanym dniu
                 // i nie ma określonej daty zakończenia lub kończy się nie wcześniej niż we wskazanym dniu
@@ -123,12 +131,15 @@ namespace MedicalCenter.Services
         /// </summary>
         /// <param name="workerId">ID pracownika, którego grafik ma zostać sprawdzony.</param>
         /// <param name="date">Dzień, pod kątem którego grafik ma zostać sprawdzony. Wartość null powoduje, że ta metoda zwraca false.</param>
-        /// <returns>true jeśli pracownik pracuje w danym dniu, w przeciwnym razie false (lub jeśli drugi argument to null)</returns>
+        /// <returns>
+        /// true jeśli pracownik pracuje w danym dniu,
+        /// false jeśli nie pracuje, nie znaleziono pracownika o podanym ID lub jeśli drugi argument to null.
+        /// </returns>
         public bool IsWorking(int workerId, DateTime date)
         {
             bool retval = false;
 
-            if (date != null)
+            if (date != null && workerId > 0)
             {
                 // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
                 // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
@@ -199,7 +210,7 @@ namespace MedicalCenter.Services
         /// <param name="date">Data, którą objemować ma grafik. Wartość null powoduje, że ta metoda zwraca wartość -1.</param>
         /// <returns>
         /// Maksymalną liczbę pacjentów, jaką lekarz może przyjąć w danym dniu tygodnia, wg. wybranego grafika,
-        /// 0 jeśli nie znaleziono grafika dla wskazanego lekarza i/lub objemującego podaną datę,
+        /// 0 jeśli nie znaleziono grafika dla wskazanego lekarza i/lub objemującego podaną datę lub nie znaleziono lekarza o podanym ID,
         /// -1 jeśli drugi argument to null.
         /// </returns>
         public int GetVisitsPerDay(int doctorId, DateTime date)
@@ -208,43 +219,46 @@ namespace MedicalCenter.Services
 
             if (date != null)
             {
-                // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
-                // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
-                A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
-
-                if (schedule != null)
+                if (doctorId > 0)
                 {
-                    switch (date.DayOfWeek)
+                    // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
+                    // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
+                    A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
+
+                    if (schedule != null)
                     {
-                        case DayOfWeek.Monday:
-                            if (schedule.D1From != null && schedule.D1To != null)
-                                visitsPerDay = (int)(schedule.D1To.Value.Subtract(schedule.D1From.Value).TotalMinutes / 20.0);
-                            break;
+                        switch (date.DayOfWeek)
+                        {
+                            case DayOfWeek.Monday:
+                                if (schedule.D1From != null && schedule.D1To != null)
+                                    visitsPerDay = (int)(schedule.D1To.Value.Subtract(schedule.D1From.Value).TotalMinutes / 20.0);
+                                break;
 
-                        case DayOfWeek.Tuesday:
-                            if (schedule.D2From != null && schedule.D2To != null)
-                                visitsPerDay = (int)(schedule.D2To.Value.Subtract(schedule.D2From.Value).TotalMinutes / 20.0);
-                            break;
+                            case DayOfWeek.Tuesday:
+                                if (schedule.D2From != null && schedule.D2To != null)
+                                    visitsPerDay = (int)(schedule.D2To.Value.Subtract(schedule.D2From.Value).TotalMinutes / 20.0);
+                                break;
 
-                        case DayOfWeek.Wednesday:
-                            if (schedule.D3From != null && schedule.D3To != null)
-                                visitsPerDay = (int)(schedule.D3To.Value.Subtract(schedule.D3From.Value).TotalMinutes / 20.0);
-                            break;
+                            case DayOfWeek.Wednesday:
+                                if (schedule.D3From != null && schedule.D3To != null)
+                                    visitsPerDay = (int)(schedule.D3To.Value.Subtract(schedule.D3From.Value).TotalMinutes / 20.0);
+                                break;
 
-                        case DayOfWeek.Thursday:
-                            if (schedule.D4From != null && schedule.D4To != null)
-                                visitsPerDay = (int)(schedule.D4To.Value.Subtract(schedule.D4From.Value).TotalMinutes / 20.0);
-                            break;
+                            case DayOfWeek.Thursday:
+                                if (schedule.D4From != null && schedule.D4To != null)
+                                    visitsPerDay = (int)(schedule.D4To.Value.Subtract(schedule.D4From.Value).TotalMinutes / 20.0);
+                                break;
 
-                        case DayOfWeek.Friday:
-                            if (schedule.D5From != null && schedule.D5To != null)
-                                visitsPerDay = (int)(schedule.D5To.Value.Subtract(schedule.D5From.Value).TotalMinutes / 20.0);
-                            break;
+                            case DayOfWeek.Friday:
+                                if (schedule.D5From != null && schedule.D5To != null)
+                                    visitsPerDay = (int)(schedule.D5To.Value.Subtract(schedule.D5From.Value).TotalMinutes / 20.0);
+                                break;
 
-                        case DayOfWeek.Saturday:
-                            if (schedule.D6From != null && schedule.D6To != null)
-                                visitsPerDay = (int)(schedule.D6To.Value.Subtract(schedule.D6From.Value).TotalMinutes / 20.0);
-                            break;
+                            case DayOfWeek.Saturday:
+                                if (schedule.D6From != null && schedule.D6To != null)
+                                    visitsPerDay = (int)(schedule.D6To.Value.Subtract(schedule.D6From.Value).TotalMinutes / 20.0);
+                                break;
+                        }
                     }
                 }
             }
@@ -261,13 +275,13 @@ namespace MedicalCenter.Services
         /// <param name="date">Dzień, z którego godziny pracy pracownika mają zostać pobrane. Wartość null powoduje, że ta metoda również zwraca null.</param>
         /// <returns>
         /// Napis zawierający godziny pracy wybranego pracownika w danym dniu, w formacie {godzina od} - {godzina do},
-        /// null jeśli nie znaleziono grafika dla wskazanego pracownika i/lub objemującego podaną datę albo drugi argument to null.
+        /// null jeśli nie znaleziono grafika dla wskazanego pracownika i/lub objemującego podaną datę, nie znaleziono pracownika o podanym ID, albo drugi argument to null.
         /// </returns>
         public string GetWorkingHours(int workerId, DateTime date)
         {
             string workingHours = null;
 
-            if (date != null)
+            if (date != null && workerId > 0)
             {
                 // szukanie grafika danego pracownika, który obowiązuje w podanym dniu
                 // (obowiązuje co najmniej od wskazanego dnia i nie ma daty utraty ważności lub data ta jest nie wcześniejsza niż data podana w argumencie)
@@ -321,12 +335,15 @@ namespace MedicalCenter.Services
         /// Data, dla której obowiązywać ma przypisanie wskazanego pracownika do poszukiwanego pomieszczenia.
         /// Wartość null powoduje, że ta metoda również zwraca null.
         /// </param>
-        /// <returns>Numer gabinetu, null jeśli nie znaleziono lub drugi argument to null.</returns>
+        /// <returns>
+        /// Numer gabinetu,
+        /// null jeśli nie gabinetu, nie znaleziono pracownika o podanym ID lub drugi argument to null.
+        /// </returns>
         public string GetRoomNumber(int workerId, DateTime date)
         {
             string roomNumber = null;
 
-            if (date != null)
+            if (date != null && workerId > 0)
             {
                 // szukanie gabinetu, do którego wskazany pracownik jest/był przypisany w wybranym dniu
                 A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == workerId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
@@ -348,14 +365,14 @@ namespace MedicalCenter.Services
         /// </param>
         /// <returns>
         /// ID poradni większe od 0,
-        /// 0 jeśli nie znaleziono takiej poradni,
+        /// 0 jeśli nie znaleziono takiej poradni lub nie znaleziono lekarza o podanym ID,
         /// -1 jeśli drugi argument to null.
         /// </returns>
         public int GetClinicId(int doctorId, DateTime date)
         {
             int clinicId = 0;
 
-            if (date != null)
+            if (date != null && doctorId > 0)
             {
                 A_DictionaryRoom entity = userService.SelectRoom(x => x.WorkerId == doctorId && x.DateFrom <= date && (x.DateTo == null || x.DateTo >= date));
 

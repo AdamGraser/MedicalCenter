@@ -82,12 +82,23 @@ namespace MedicalCenter.Services
         /// Pobiera z bazy dane o pacjencie i zwraca jego nazwisko i imię.
         /// </summary>
         /// <param name="patientId">ID pacjenta.</param>
-        /// <returns>Nazwisko i imię wskazanego pacjenta, oddzielone spacją.</returns>
+        /// <returns>
+        /// Nazwisko i imię wskazanego pacjenta, oddzielone spacją,
+        /// null jeśli nie znaleziono pacjenta o podanym ID.
+        /// </returns>
         public string GetPatientName(int patientId)
         {
-            M_Patient patient = patientService.SelectPatient(x => x.Id == patientId);
+            if (patientId > 0)
+            {
+                M_Patient patient = patientService.SelectPatient(x => x.Id == patientId);
 
-            return patient.LastName + " " + patient.FirstName;
+                if (patient != null)
+                    return patient.LastName + " " + patient.FirstName;
+                else
+                    return null;
+            }
+            else
+                return null;
         }
 
         /// <summary>
