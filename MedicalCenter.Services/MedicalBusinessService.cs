@@ -102,98 +102,103 @@ namespace MedicalCenter.Services
         /// <returns>Lista obiektów z informacjami o wizytach (lub "pustych"), albo null jeśli lekarz nie przyjmuje we wskazanym dniu.</returns>
         public List<DailyVisitsListItem> GetTodaysVisits(int doctorId, DateTime date)
         {
-            // pobranie grafika wskazanego lekarza
-            A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
-            
             List<DailyVisitsListItem> todaysVisits = null;
-            DateTime dateOfVisit = date;
-            bool hasSchedule = false;
 
-            // sprawdzenie czy w wybranym dniu tygodnia dany lekarz w ogóle pracuje
-            switch (date.DayOfWeek)
+            // jeśli wybrany dzień jest świętem lub pracownik jest nieobecny w tym dniu, to lista wizyt jest pusta
+            if (!userBusinessService.IsHoliday(date) || !userBusinessService.IsWorkerAbsent(doctorId, date))
             {
-                case DayOfWeek.Monday:
-                    if (schedule.D1From != null && schedule.D1To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D1From.Value;       //data startowa DXFrom
-                    }
-                    break;
+                // pobranie grafika wskazanego lekarza
+                A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
 
-                case DayOfWeek.Tuesday:
-                    if (schedule.D2From != null && schedule.D2To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D2From.Value;
-                    }
-                    break;
+                DateTime dateOfVisit = date;
+                bool hasSchedule = false;
 
-                case DayOfWeek.Wednesday:
-                    if (schedule.D3From != null && schedule.D3To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D3From.Value;
-                    }
-                    break;
-
-                case DayOfWeek.Thursday:
-                    if (schedule.D4From != null && schedule.D4To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D4From.Value;
-                    }
-                    break;
-
-                case DayOfWeek.Friday:
-                    if (schedule.D5From != null && schedule.D5To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D5From.Value;
-                    }
-                    break;
-
-                case DayOfWeek.Saturday:
-                    if (schedule.D6From != null && schedule.D6To != null)
-                    {
-                        hasSchedule = true;
-                        dateOfVisit = schedule.D6From.Value;
-                    }
-                    break;
-            }
-
-            // jeśli lekarz przyjmuje w danym dniu tygodnia
-            if (hasSchedule)
-            {
-                // pobranie listy wizyt zarejestrowanych do wybranego lekarza na wskazany dzień
-                List<M_Visit> temp = new List<M_Visit>(medicalService.SelectVisits(x => x.DoctorId == doctorId && x.DateOfVisit.Date == date.Date));
-
-                todaysVisits = new List<DailyVisitsListItem>();
-                M_Patient patient;
-
-                // stworzenie listy planowych godzin rozpoczęcia wizyt
-                for (int i = 0; i < userBusinessService.GetVisitsPerDay(doctorId, date); ++i)
+                // sprawdzenie czy w wybranym dniu tygodnia dany lekarz w ogóle pracuje
+                switch (date.DayOfWeek)
                 {
-                    // jeśli są jeszcze jakieś zarejestrowane wizyty
-                    if (temp.Count > 0)
-                    {
-                        // jeśli następna wizyta jest za później niż 20 minut, wstawiamy do listy "puste miejsce"
-                        if (temp[0].DateOfVisit > dateOfVisit)
+                    case DayOfWeek.Monday:
+                        if (schedule.D1From != null && schedule.D1To != null)
                         {
-                            todaysVisits.Add(new DailyVisitsListItem(dateOfVisit));
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D1From.Value;       //data startowa DXFrom
                         }
-                        else
-                        {
-                            // w przeciwnym razie wstawiamy do listy informacje o zarejestrowanej wizycie
-                            patient = patientService.SelectPatient(x => x.Id == temp[0].PatientId);
-                            todaysVisits.Add(new DailyVisitsListItem(temp[0].DateOfVisit, patient.LastName, patient.FirstName, temp[0].State, temp[0].IsEmergency));
-                            temp.RemoveAt(0);
-                        }
-                    }
-                    // jeśli brak już zarejestrowanych wizyt, wstawiamy do listy "puste miejsce"
-                    else
-                        todaysVisits.Add(new DailyVisitsListItem(dateOfVisit));
+                        break;
 
-                    dateOfVisit = dateOfVisit.AddMinutes(20.0);
+                    case DayOfWeek.Tuesday:
+                        if (schedule.D2From != null && schedule.D2To != null)
+                        {
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D2From.Value;
+                        }
+                        break;
+
+                    case DayOfWeek.Wednesday:
+                        if (schedule.D3From != null && schedule.D3To != null)
+                        {
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D3From.Value;
+                        }
+                        break;
+
+                    case DayOfWeek.Thursday:
+                        if (schedule.D4From != null && schedule.D4To != null)
+                        {
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D4From.Value;
+                        }
+                        break;
+
+                    case DayOfWeek.Friday:
+                        if (schedule.D5From != null && schedule.D5To != null)
+                        {
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D5From.Value;
+                        }
+                        break;
+
+                    case DayOfWeek.Saturday:
+                        if (schedule.D6From != null && schedule.D6To != null)
+                        {
+                            hasSchedule = true;
+                            dateOfVisit = schedule.D6From.Value;
+                        }
+                        break;
+                }
+
+                // jeśli lekarz przyjmuje w danym dniu tygodnia
+                if (hasSchedule)
+                {
+                    // pobranie listy wizyt zarejestrowanych do wybranego lekarza na wskazany dzień
+                    List<M_Visit> temp = new List<M_Visit>(medicalService.SelectVisits(x => x.DoctorId == doctorId && x.DateOfVisit.Date == date.Date));
+
+                    todaysVisits = new List<DailyVisitsListItem>();
+                    M_Patient patient;
+
+                    // stworzenie listy planowych godzin rozpoczęcia wizyt
+                    for (int i = 0; i < userBusinessService.GetVisitsPerDay(doctorId, date); ++i)
+                    {
+                        // jeśli są jeszcze jakieś zarejestrowane wizyty
+                        if (temp.Count > 0)
+                        {
+                            // jeśli następna wizyta jest za później niż 20 minut, wstawiamy do listy "puste miejsce"
+                            if (temp[0].DateOfVisit > dateOfVisit)
+                            {
+                                todaysVisits.Add(new DailyVisitsListItem(dateOfVisit));
+                            }
+                            else
+                            {
+                                // w przeciwnym razie wstawiamy do listy informacje o zarejestrowanej wizycie
+                                patient = patientService.SelectPatient(x => x.Id == temp[0].PatientId);
+                                todaysVisits.Add(new DailyVisitsListItem(temp[0].DateOfVisit, patient.LastName, patient.FirstName, temp[0].State, temp[0].IsEmergency));
+                                temp.RemoveAt(0);
+                            }
+                        }
+                        // jeśli brak już zarejestrowanych wizyt, wstawiamy do listy "puste miejsce"
+                        else
+                            todaysVisits.Add(new DailyVisitsListItem(dateOfVisit));
+
+                        dateOfVisit = dateOfVisit.AddMinutes(20.0);
+                    }
                 }
             }
 

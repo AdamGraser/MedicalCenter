@@ -162,6 +162,23 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
+        /// Zwraca wartość określającą czy wskazany dzień jest dniem ustawowo wolnym od pracy.
+        /// Z podanej struktury DateTime brana jest do testu wartość zwracana przez właściwość Date (data z wyzerowaną częścią czasu).
+        /// </summary>
+        /// <param name="date">Struktura zawierająca datę do sprawdzenia.</param>
+        /// <returns>true jeśli wskazany dzień jest ustawowo wolny od pracy, w przeciwnym razie false.</returns>
+        public bool IsHoliday(DateTime date)
+        {
+            bool holiday = false;
+
+            // jeśli wskazany dzień jest świętem wolnym od pracy lub jest to niedziela, zwracana jest wartość "true"
+            if (userService.SelectHoliday(x => x.Date.Date == date.Date) != null || date.DayOfWeek == DayOfWeek.Sunday)
+                holiday = true;
+
+            return holiday;
+        }
+
+        /// <summary>
         /// Pobiera z bazy wybrany grafik wskazanego lekarza, a następnie oblicza ilu maksymalnie pacjentów może przyjąć w podanym dniu tygodnia ten lekarz.
         /// </summary>
         /// <param name="doctorId">ID lekarza, którego grafik ma zostać rozpatrzony.</param>

@@ -44,7 +44,7 @@ namespace MedicalCenter.DBServices
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli A_Users, odpowiadający szukanemu użytkownikowi,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono użytkownika odpowiadającego podanym warunkom.
+        /// lub null, jeżeli nie znaleziono użytkownika odpowiadającego podanym warunkom.
         /// </returns>
         public A_User SelectUser(System.Linq.Expressions.Expression<Func<A_User, bool>> predicate)
         {
@@ -57,7 +57,7 @@ namespace MedicalCenter.DBServices
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli A_Workers,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono pracownika odpowiadającego podanym warunkom.
+        /// lub null, jeżeli nie znaleziono pracownika odpowiadającego podanym warunkom.
         /// </returns>
         public A_Worker SelectWorker(System.Linq.Expressions.Expression<Func<A_Worker, bool>> predicate)
         {
@@ -83,8 +83,8 @@ namespace MedicalCenter.DBServices
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
-        /// Obiekt reprezentujący rekord z tabeli A_DictionaryJobTitle,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono stanowiska odpowiadającego podanym warunkom.
+        /// Obiekt reprezentujący rekord z tabeli A_DictionaryJobTitles,
+        /// lub null, jeżeli nie znaleziono stanowiska odpowiadającego podanym warunkom.
         /// </returns>
         public A_DictionaryJobTitle SelectJobTitle(System.Linq.Expressions.Expression<Func<A_DictionaryJobTitle, bool>> predicate)
         {
@@ -96,8 +96,8 @@ namespace MedicalCenter.DBServices
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
-        /// Obiekt reprezentujący rekord z tabeli A_DictionaryRoom,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono gabinetu odpowiadającego podanym warunkom.
+        /// Obiekt reprezentujący rekord z tabeli A_DictionaryRooms,
+        /// lub null, jeżeli nie znaleziono gabinetu odpowiadającego podanym warunkom.
         /// </returns>
         public A_DictionaryRoom SelectRoom(System.Linq.Expressions.Expression<Func<A_WorkersRoom, bool>> predicate)
         {
@@ -134,8 +134,8 @@ namespace MedicalCenter.DBServices
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
-        /// Obiekt reprezentujący rekord z tabeli A_Schedule,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono grafika odpowiadającego podanym warunkom.
+        /// Obiekt reprezentujący rekord z tabeli A_Schedules,
+        /// lub null, jeżeli nie znaleziono grafika odpowiadającego podanym warunkom.
         /// </returns>
         public A_Schedule SelectSchedule(System.Linq.Expressions.Expression<Func<A_Schedule, bool>> predicate)
         {
@@ -147,12 +147,25 @@ namespace MedicalCenter.DBServices
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
-        /// Obiekt reprezentujący rekord z tabeli A_Absence,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono nieobecności odpowiadającej podanym warunkom.
+        /// Obiekt reprezentujący rekord z tabeli A_Absences,
+        /// lub null, jeżeli nie znaleziono nieobecności odpowiadającej podanym warunkom.
         /// </returns>
         public A_Absence SelectAbsence(System.Linq.Expressions.Expression<Func<A_Absence, bool>> predicate)
         {
             return db.A_Absences.FirstOrDefault(predicate);
+        }
+
+        /// <summary>
+        /// Pobiera z bazy danych spełniający podane kryteria obiekt, zawierający datę, która wskazuje dzień wolny od pracy.
+        /// </summary>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <returns>
+        /// Obiekt reprezentujący rekord z tabeli A_Holidays
+        /// lub null, jeżeli nie znaleziono obiektu spełniającego podane kryteria (najczęściej: wskazany dzień nie jest dniem ustawowo wolnym od pracy).
+        /// </returns>
+        public A_Holiday SelectHoliday(System.Linq.Expressions.Expression<Func<A_Holiday, bool>> predicate)
+        {
+            return db.A_Holidays.FirstOrDefault(predicate);
         }
 
         #endregion // Select

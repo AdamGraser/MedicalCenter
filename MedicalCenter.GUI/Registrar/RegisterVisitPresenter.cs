@@ -69,19 +69,27 @@ namespace MedicalCenter.GUI.Registrar
             int maxVisitsCount = 0;
             bool? state = null;
 
+            // wartość określająca czy rozpatrywany dzień jest wolny od pracy
+            bool holiday = userBusinessService.IsHoliday(view.TheDate.SelectedDate.Value);
+
             foreach (A_Worker w in rawWorkersList)
             {
                 clinicId = userBusinessService.GetClinicId(w.Id, view.TheDate.SelectedDate.Value);
                 visitsCount = medicalBusinessService.TodaysVisitsCount(w.Id, view.TheDate.SelectedDate.Value);
                 maxVisitsCount = userBusinessService.GetVisitsPerDay(w.Id, view.TheDate.SelectedDate.Value);
 
-                // sprawdzenie, czy dany lekarz przyjmuje w danym dniu i czy ma jeszcze wolne godziny do przyjęcia pacjentów
-                if(maxVisitsCount == 0 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
-                    state = null;
-                else if(visitsCount == maxVisitsCount)
-                    state = false;
-                else
-                    state = true;
+                // jeśli wybrany dzień jest wolny od pracy, żaden lekarz nie przyjmuje
+                // w przeciwnym razie trzeba sprawdzać grafik i nieobecności indywidualnie
+                if (!holiday)
+                {
+                    // sprawdzenie, czy dany lekarz przyjmuje w danym dniu i czy ma jeszcze wolne godziny do przyjęcia pacjentów
+                    if (maxVisitsCount == 0 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
+                        state = null;
+                    else if (visitsCount == maxVisitsCount)
+                        state = false;
+                    else
+                        state = true;
+                }
 
                 // dodanie rekordu o lekarzu do listy
                 view.SourceDoctorsList.Add(new DoctorsListItem(clinicId, medicalBusinessService.GetClinicName(clinicId), w.Id, w.LastName, w.FirstName,
