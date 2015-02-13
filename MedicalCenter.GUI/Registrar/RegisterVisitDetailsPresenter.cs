@@ -82,8 +82,8 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void GetPatientsList()
         {
-            view.PatientsList.SourcePatients = patientBusinessService.GetPatients();
-            view.PatientsList.Patients = view.PatientsList.SourcePatients;
+            view.PatientsListView.SourcePatients = patientBusinessService.GetPatients();
+            view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
         }
 
         #endregion // Generic methods
@@ -232,13 +232,13 @@ namespace MedicalCenter.GUI.Registrar
         public void FilterPatientName()
         {
             // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
-            if (view.PatientsList.FilterPatientName.Text.Length > 2)
+            if (view.PatientsListView.FilterPatientName.Text.Length > 2)
                 // pacjenci sortowani są najpierw wg. nazwisk, a następnie wg. imion (pierwszych)
-                view.PatientsList.Patients = new List<Patient>(view.PatientsList.SourcePatients.Where(x => x.LastName.StartsWith(view.PatientsList.FilterPatientName.Text) ||
-                                                        view.PatientsList.FilterPatientName.Text.StartsWith(x.LastName)).OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+                view.PatientsListView.Patients = new List<Patient>(view.PatientsListView.SourcePatients.Where(x => x.LastName.StartsWith(view.PatientsListView.FilterPatientName.Text) ||
+                                                        view.PatientsListView.FilterPatientName.Text.StartsWith(x.LastName)).OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
             // jeśli wpisano mniej niż 3 znaki, wyświetlana jest pełna lista pacjentów
             else
-                view.PatientsList.Patients = view.PatientsList.SourcePatients;
+                view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
         }
 
         /// <summary>
@@ -247,15 +247,15 @@ namespace MedicalCenter.GUI.Registrar
         public void PatientSelected()
         {
             // wybranie pacjenta -> aktywacja przycisków
-            if (view.PatientsList.PatientsList.SelectedIndex > -1)
+            if (view.PatientsListView.PatientsListBox.SelectedIndex > -1)
             {
-                view.PatientsList.Details.IsEnabled = true;
-                view.PatientsList.Choose.IsEnabled = true;
+                view.PatientsListView.Details.IsEnabled = true;
+                view.PatientsListView.Choose.IsEnabled = true;
             }
             else
             {
-                view.PatientsList.Details.IsEnabled = false;
-                view.PatientsList.Choose.IsEnabled = false;
+                view.PatientsListView.Details.IsEnabled = false;
+                view.PatientsListView.Choose.IsEnabled = false;
             }
         }
 
@@ -265,13 +265,13 @@ namespace MedicalCenter.GUI.Registrar
         public void BackPatientsList()
         {
             // ukrycie widoku listy pacjentów
-            view.PatientsList.Visibility = System.Windows.Visibility.Collapsed;
+            view.PatientsListView.Visibility = System.Windows.Visibility.Collapsed;
 
             // wyczyszczenie filtra
-            view.PatientsList.FilterPatientName.Clear();
+            view.PatientsListView.FilterPatientName.Clear();
 
             // wyczyszczenie zaznaczenia na liście pacjentów
-            view.PatientsList.PatientsList.SelectedIndex = -1;
+            view.PatientsListView.PatientsListBox.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.RegistrarPatientDetailsView.EnableEditing(false);
 
             // przekazanie danych pacjenta do nowego widoku
-            view.ParentWindow.RegistrarPatientDetailsView.PatientData = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex];
+            view.ParentWindow.RegistrarPatientDetailsView.PatientData = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex];
         }
 
         /// <summary>
@@ -302,9 +302,9 @@ namespace MedicalCenter.GUI.Registrar
         public void ChoosePatient()
         {
             // przekazanie ID oraz nazwiska i imienia wybranego pacjenta
-            view.VisitData.PatientId = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].Id;
-            view.PatientName = view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].LastName + " "
-                             + view.PatientsList.Patients[view.PatientsList.PatientsList.SelectedIndex].FirstName;
+            view.VisitData.PatientId = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].Id;
+            view.PatientName = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].LastName + " "
+                             + view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].FirstName;
             
             // schowanie listy pacjentów
             BackPatientsList();
@@ -323,10 +323,10 @@ namespace MedicalCenter.GUI.Registrar
         {
             // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
             if (view.VisitData.PatientId > 0)
-                view.PatientsList.PatientsList.SelectedIndex = view.PatientsList.Patients.IndexOf(view.PatientsList.Patients.Find(x => x.Id == view.VisitData.PatientId));
+                view.PatientsListView.PatientsListBox.SelectedIndex = view.PatientsListView.Patients.IndexOf(view.PatientsListView.Patients.Find(x => x.Id == view.VisitData.PatientId));
 
             // pokazanie listy pacjentów
-            view.PatientsList.Visibility = System.Windows.Visibility.Visible;
+            view.PatientsListView.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>

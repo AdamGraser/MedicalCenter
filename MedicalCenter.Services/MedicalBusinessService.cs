@@ -47,6 +47,8 @@ namespace MedicalCenter.Services
         {
             medicalService = new MedicalService();
             patientService = new PatientService();
+            userService = new UserService();
+            userBusinessService = new UserBusinessService();
         }
 
         #endregion // Ctors

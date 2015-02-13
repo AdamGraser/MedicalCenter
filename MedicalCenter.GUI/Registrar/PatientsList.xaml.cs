@@ -57,7 +57,7 @@ namespace MedicalCenter.GUI.Registrar
             registerVisitDetailsPresenter = presenter;
 
             // ustawienie kontekstu danych dla listy pacjentów
-            PatientsList.DataContext = this;
+            PatientsListBox.DataContext = this;
 
             // ukrycie tego widoku (stan domyślny)
             Visibility = System.Windows.Visibility.Collapsed;

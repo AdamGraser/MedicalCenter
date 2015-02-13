@@ -113,35 +113,31 @@ namespace MedicalCenter.GUI.Registrar
         /// Dostępne grupy: cyfry, litery lub spacja, obie grupy.
         /// Niezależnie od wybranej grupy, zawsze sprawdzane jest, czy wskazany klawisz to delete, backspace, tab, return, escape lub enter.
         /// </summary>
-        /// <param name="key">Klawisz do sprawdzenia. Wartość null powoduje zwrócenie przez funkcję wartości false.</param>
+        /// <param name="key">Klawisz do sprawdzenia.</param>
         /// <param name="kindOfKey">Grupa (lub kombinacja grup) klawiszy do sprawdzenia.</param>
-        /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false (lub jeśli pierwszy argument ma wartość null).</returns>
+        /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false.</returns>
         public bool KindOfKey(Key key, GroupsOfKeys kindOfKey)
         {
             bool retval = false;
 
-            // zabezpieczenie przed wyjątkiem
-            if (key != null)
+            // sprawdzenie czy klawisz jest cyfrą
+            if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
+                ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
+                    (key >= Key.NumPad0 && key <= Key.NumPad9)))
             {
-                // sprawdzenie czy klawisz jest cyfrą
-                if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
-                    ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
-                     (key >= Key.NumPad0 && key <= Key.NumPad9)))
-                {
-                    retval = true;
-                }
-                // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
-                if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
-                    ((key >= Key.A && key <= Key.Z) ||
-                      key == Key.Space ||
-                     Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
-                {
-                    retval = true;
-                }
-                // sprawdzenie czy klawisz jest jednym z wymienionych klawiszy specjalnych
-                if (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter)
-                    retval = true;
+                retval = true;
             }
+            // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
+            if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
+                ((key >= Key.A && key <= Key.Z) ||
+                    key == Key.Space ||
+                    Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
+            {
+                retval = true;
+            }
+            // sprawdzenie czy klawisz jest jednym z wymienionych klawiszy specjalnych
+            if (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter)
+                retval = true;
 
             return retval;
         }
