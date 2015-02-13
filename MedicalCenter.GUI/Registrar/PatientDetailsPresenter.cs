@@ -113,36 +113,35 @@ namespace MedicalCenter.GUI.Registrar
         /// Dostępne grupy: cyfry, litery lub spacja, obie grupy.
         /// Niezależnie od wybranej grupy, zawsze sprawdzane jest, czy wskazany klawisz to delete, backspace, tab, return, escape lub enter.
         /// </summary>
-        /// <param name="key">Klawisz do sprawdzenia.</param>
+        /// <param name="key">Klawisz do sprawdzenia. Wartość null powoduje zwrócenie przez funkcję wartości false.</param>
         /// <param name="kindOfKey">Grupa (lub kombinacja grup) klawiszy do sprawdzenia.</param>
-        /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false</returns>
-        /// <exception cref="ArgumentNullException">Pierwszy argument ma wartość null.</exception>
+        /// <returns>true jeśli jest to jeden z tych klawiszy, w przeciwnym razie false (lub jeśli pierwszy argument ma wartość null).</returns>
         public bool KindOfKey(Key key, GroupsOfKeys kindOfKey)
         {
-            // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
-            if (key == null)
-                throw new ArgumentNullException("key", "Pierwszy argument ma wartość null");
-            
             bool retval = false;
-            
-            // sprawdzenie czy klawisz jest cyfrą
-            if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
-                ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
-                 (key >= Key.NumPad0 && key <= Key.NumPad9)))
+
+            // zabezpieczenie przed wyjątkiem
+            if (key != null)
             {
-                retval = true;
+                // sprawdzenie czy klawisz jest cyfrą
+                if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
+                    ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
+                     (key >= Key.NumPad0 && key <= Key.NumPad9)))
+                {
+                    retval = true;
+                }
+                // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
+                if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
+                    ((key >= Key.A && key <= Key.Z) ||
+                      key == Key.Space ||
+                     Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
+                {
+                    retval = true;
+                }
+                // sprawdzenie czy klawisz jest jednym z wymienionych klawiszy specjalnych
+                if (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter)
+                    retval = true;
             }
-            // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
-            if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
-                ((key >= Key.A && key <= Key.Z) ||
-                  key == Key.Space ||
-                 Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
-            {
-                retval = true;
-            }
-            // sprawdzenie czy klawisz jest jednym z wymienionych klawiszy specjalnych
-            if (key == Key.Delete || key == Key.Back || key == Key.Tab || key == Key.Return || key == Key.Escape || key == Key.Enter)
-                retval = true;
 
             return retval;
         }
@@ -151,53 +150,55 @@ namespace MedicalCenter.GUI.Registrar
         /// Usuwa z pola tekstowego wszystkie znaki nienależące do wskazanej grupy znaków.
         /// Obsługiwane grupy znaków: cyfry, litery i spacja, obie grupy naraz.
         /// </summary>
-        /// <param name="textBox">Pole tekstowe, z którego mają zostać usunięte nieprawidłowe znaki.</param>
+        /// <param name="textBox">Pole tekstowe, z którego mają zostać usunięte nieprawidłowe znaki. Wartość null powoduje, że ta funkcja nie dokonuje żadnej zmiany.</param>
         /// <param name="charactersGroup">Grupa (lub kombinacja grup) prawidłowych znaków.</param>
-        /// <exception cref="ArgumentNullException">Pierwszy argument ma wartość null.</exception>
         public void TextBoxChanged(TextBox textBox, GroupsOfCharacters charactersGroup)
         {
-            bool change = false;
-
-            // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
-            if (textBox == null)
-                throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
-
-            // jeśli wybrana grupa to cyfry + ew. litery i spacja
-            if ((charactersGroup & GroupsOfCharacters.Digits) != 0)
+            if (textBox != null)
             {
-                bool both = ((charactersGroup & (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space)) != 0) ? true : false;
+                bool change = false;
 
-                foreach (char c in textBox.Text)
+                // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
+                if (textBox == null)
+                    throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
+
+                // jeśli wybrana grupa to cyfry + ew. litery i spacja
+                if ((charactersGroup & GroupsOfCharacters.Digits) != 0)
                 {
-                    // jeśli to nie cyfra            (i ew.           nie litera i nie spacja)
-                    if (!char.IsDigit(c) && (!both || (!char.IsLetter(c) && c != ' ')))
-                    {
-                        // znajdź i zamień
-                        textBox.Text = textBox.Text.Replace(c.ToString(), "");
+                    bool both = ((charactersGroup & (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space)) != 0) ? true : false;
 
-                        change = true;
+                    foreach (char c in textBox.Text)
+                    {
+                        // jeśli to nie cyfra            (i ew.           nie litera i nie spacja)
+                        if (!char.IsDigit(c) && (!both || (!char.IsLetter(c) && c != ' ')))
+                        {
+                            // znajdź i zamień
+                            textBox.Text = textBox.Text.Replace(c.ToString(), "");
+
+                            change = true;
+                        }
                     }
                 }
-            }
-            // jeśli wybrana grupa to litery i spacja
-            else if(charactersGroup == (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space))
-            {
-                foreach (char c in textBox.Text)
+                // jeśli wybrana grupa to litery i spacja
+                else if (charactersGroup == (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space))
                 {
-                    if (!char.IsLetter(c) && c != ' ')
+                    foreach (char c in textBox.Text)
                     {
-                        textBox.Text = textBox.Text.Replace(c.ToString(), "");
+                        if (!char.IsLetter(c) && c != ' ')
+                        {
+                            textBox.Text = textBox.Text.Replace(c.ToString(), "");
 
-                        change = true;
+                            change = true;
+                        }
                     }
                 }
+
+                if (change)
+                    textBox.CaretIndex = textBox.Text.Length;
+
+                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                view.Save.IsEnabled = IsFormCompleted;
             }
-
-            if (change)
-                textBox.CaretIndex = textBox.Text.Length;
-
-            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-            view.Save.IsEnabled = IsFormCompleted;
         }
 
         #endregion // Generic methods
