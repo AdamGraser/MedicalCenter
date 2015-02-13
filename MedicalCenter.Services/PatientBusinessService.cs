@@ -40,33 +40,40 @@ namespace MedicalCenter.Services
         /// <summary>
         /// Zapisuje w bazie danych podane informacje o pacjencie.
         /// </summary>
-        /// <param name="patient">Informacje do zapisania.</param>
-        /// <returns>true jeśli zapisano pomyślnie, null jeśli podane informacje nie przeszły walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        /// <param name="patient">Informacje do zapisania. Wartość null powoduje, że ta metoda zwraca wartość false.</param>
+        /// <returns>
+        /// true jeśli zapisano pomyślnie,
+        /// null jeśli podane informacje nie przeszły walidacji po stronie bazy,
+        /// false jeśli wystąpił inny błąd lub podany argument to null.
+        /// </returns>
         public bool? SavePatient(Patient patient)
         {
-            bool? retval = true;
-            
-            // stworzenie nowej encji, przepisanie wartości
-            M_Patient entity = new M_Patient();
-            entity.Apartment = patient.Apartment;
-            entity.BirthDate = patient.BirthDate;
-            entity.BuildingNumber = patient.BuildingNumber;
-            entity.City = patient.City;
-            entity.FirstName = patient.FirstName;
-            entity.Gender = patient.Gender;
-            entity.IsInsured = patient.IsInsured;
-            entity.LastName = patient.LastName;
-            entity.Pesel = patient.Pesel;
-            entity.Post = patient.Post;
-            entity.PostalCode = patient.PostalCode;
-            entity.SecondName = patient.SecondName;
-            entity.Street = patient.Street;
+            bool? retval = false;
 
-            // ID > 0 -> zmiana danych istniejącego w bazie pacjenta
-            if (entity.Id > 0)
-                retval = patientService.UpdatePatient(entity);
-            else
-                retval = patientService.InsertPatient(entity);
+            if (patient != null)
+            {
+                // stworzenie nowej encji, przepisanie wartości
+                M_Patient entity = new M_Patient();
+                entity.Apartment = patient.Apartment;
+                entity.BirthDate = patient.BirthDate;
+                entity.BuildingNumber = patient.BuildingNumber;
+                entity.City = patient.City;
+                entity.FirstName = patient.FirstName;
+                entity.Gender = patient.Gender;
+                entity.IsInsured = patient.IsInsured;
+                entity.LastName = patient.LastName;
+                entity.Pesel = patient.Pesel;
+                entity.Post = patient.Post;
+                entity.PostalCode = patient.PostalCode;
+                entity.SecondName = patient.SecondName;
+                entity.Street = patient.Street;
+
+                // ID > 0 -> zmiana danych istniejącego w bazie pacjenta
+                if (entity.Id > 0)
+                    retval = patientService.UpdatePatient(entity);
+                else
+                    retval = patientService.InsertPatient(entity);
+            }
 
             return retval;
         }

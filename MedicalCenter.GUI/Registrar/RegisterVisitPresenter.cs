@@ -83,7 +83,7 @@ namespace MedicalCenter.GUI.Registrar
                 if (!holiday)
                 {
                     // sprawdzenie, czy dany lekarz przyjmuje w danym dniu i czy ma jeszcze wolne godziny do przyjęcia pacjentów
-                    if (maxVisitsCount == 0 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
+                    if (maxVisitsCount < 1 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
                         state = null;
                     else if (visitsCount == maxVisitsCount)
                         state = false;
@@ -282,7 +282,7 @@ namespace MedicalCenter.GUI.Registrar
                 }
                 while (userBusinessService.IsHoliday(date)
                     || userBusinessService.IsWorkerAbsent(selectedDoctor.DoctorId, date)
-                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) == 0);
+                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) < 1);
 
                 // pobranie liczby wizyt zarejestrowanych na ten dzień
                 visitsCount = medicalBusinessService.TodaysVisitsCount(selectedDoctor.DoctorId, date);

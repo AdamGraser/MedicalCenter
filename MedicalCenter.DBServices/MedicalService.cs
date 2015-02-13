@@ -40,29 +40,34 @@ namespace MedicalCenter.DBServices
         /// <summary>
         /// Pobiera z bazy danych informacje o wskazanej poradni medycznej. Funkcja ta uwzględnia modyfikacje słownika.
         /// </summary>
-        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu. Wartość null powoduje, że ta metoda również zwraca null.</param>
         /// <returns>
         /// Obiekt reprezentujący rekord z tabeli M_DictionaryClinic, odpowiadający szukanej poradni medycznej,
-        /// lub obiekt z wartościami domyślnymi, jeżeli nie znaleziono poradni medycznej odpowiadającej podanym warunkom.
+        /// null jeżeli nie znaleziono poradni medycznej odpowiadającej podanym warunkom lub podany argument to null.
         /// </returns>
         public M_DictionaryClinic SelectClinic(System.Linq.Expressions.Expression<Func<M_DictionaryClinic, bool>> predicate)
         {
-            // pobranie encji spełniającej podane kryteria
-            M_DictionaryClinic entity = db.M_DictionaryClinics.FirstOrDefault(predicate);
-
-            // jeśli znaleziono encję pasującą do opisu
-            if (entity != null)
+            if (predicate != null)
             {
-                // jeśli wybrana pozycja była aktualizowana, należy znaleźć najnowszą wersję
-                while (entity.New > 0)
-                    entity = db.M_DictionaryClinics.FirstOrDefault(x => x.Id == entity.New);
+                // pobranie encji spełniającej podane kryteria
+                M_DictionaryClinic entity = db.M_DictionaryClinics.FirstOrDefault(predicate);
 
-                // jeśli wybrana pozycja została oznaczona jako usunięta, to nie można jej zwrócić
-                if (entity.IsDeleted)
-                    entity = null;
+                // jeśli znaleziono encję pasującą do opisu
+                if (entity != null)
+                {
+                    // jeśli wybrana pozycja była aktualizowana, należy znaleźć najnowszą wersję
+                    while (entity.New > 0)
+                        entity = db.M_DictionaryClinics.FirstOrDefault(x => x.Id == entity.New);
+
+                    // jeśli wybrana pozycja została oznaczona jako usunięta, to nie można jej zwrócić
+                    if (entity.IsDeleted)
+                        entity = null;
+                }
+
+                return entity;
             }
-
-            return entity;
+            else
+                return null;
         }
 
         /// <summary>
@@ -116,14 +121,17 @@ namespace MedicalCenter.DBServices
         /// <summary>
         /// Pobiera z bazy danych informacje o wskazanych wizytach.
         /// </summary>
-        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
+        /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu. Wartość null powoduje, że ta metoda również zwraca null.</param>
         /// <returns>
         /// Lista obiektów reprezentujących rekordy z tabeli M_Visits,
-        /// lub null, jeżeli nie znaleziono wizyt odpowiadających podanym warunkom.
+        /// null jeżeli nie znaleziono wizyt odpowiadających podanym warunkom lub podany argument to null.
         /// </returns>
         public IEnumerable<M_Visit> SelectVisits(Func<M_Visit, bool> predicate)
         {
-            return db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
+            if (predicate != null)
+                return db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
+            else
+                return null;
         }
 
         #endregion // Select
@@ -133,57 +141,66 @@ namespace MedicalCenter.DBServices
         /// <summary>
         /// Zapisuje w bazie danych nowy rekord dla wizyty, wpisując do niego podane informacje.
         /// </summary>
-        /// <param name="newVisit">Informacje o nowej wizycie.</param>
-        /// <returns>true jeśli wstawiono pomyślnie, null jeśli podana encja nie przeszła walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        /// <param name="newVisit">Informacje o nowej wizycie. Wartość null powoduje, że ta metoda zwraca false.</param>
+        /// <returns>
+        /// true jeśli wstawiono pomyślnie,
+        /// null jeśli podana encja nie przeszła walidacji po stronie bazy,
+        /// false jeśli wystąpił inny błąd lub podany argument to null.
+        /// </returns>
         public bool? InsertVisit(M_Visit newVisit)
         {
             bool? retval = true;
 
-            // dodanie nowej encji do lokalnego zbioru
-            db.M_Visits.Add(newVisit);
-
-            // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
-            int rowsAffected = 0;
-
-            try
+            if (newVisit != null)
             {
-                // synchronizacja zbioru danych z bazą danych
-                rowsAffected = db.SaveChanges();
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
-            {
-                System.Console.WriteLine(concurrencyException.Message);
+                // dodanie nowej encji do lokalnego zbioru
+                db.M_Visits.Add(newVisit);
 
-                // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
-                if (rowsAffected == 0)
+                // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
+                int rowsAffected = 0;
+
+                try
                 {
-                    try
-                    {
-                        rowsAffected = db.SaveChanges();
-                    }
-                    catch (Exception exception)
-                    {
-                        System.Console.WriteLine(exception.Message);
+                    // synchronizacja zbioru danych z bazą danych
+                    rowsAffected = db.SaveChanges();
+                }
+                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
+                {
+                    System.Console.WriteLine(concurrencyException.Message);
 
-                        // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
-                        retval = false;
+                    // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
+                    if (rowsAffected == 0)
+                    {
+                        try
+                        {
+                            rowsAffected = db.SaveChanges();
+                        }
+                        catch (Exception exception)
+                        {
+                            System.Console.WriteLine(exception.Message);
+
+                            // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
+                            retval = false;
+                        }
                     }
                 }
-            }
-            catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
-            {
-                System.Console.WriteLine(validationException.Message);
+                catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+                {
+                    System.Console.WriteLine(validationException.Message);
 
-                // podana encja nie przeszła walidacji
-                retval = null;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
+                    // podana encja nie przeszła walidacji
+                    retval = null;
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
 
-                // inny błąd
+                    // inny błąd
+                    retval = false;
+                }
+            }
+            else
                 retval = false;
-            }
 
             return retval;
         }
@@ -195,87 +212,96 @@ namespace MedicalCenter.DBServices
         /// <summary>
         /// Aktualizuje w bazie danych rekord o wskazanej wizycie.
         /// </summary>
-        /// <param name="visit">Zaktualizowane informacje o wizycie.</param>
-        /// <returns>true jeśli zaktualizowano pomyślnie, null jeśli podana encja nie przeszła walidacji po stronie bazy, false jeśli wystąpił inny błąd</returns>
+        /// <param name="visit">Zaktualizowane informacje o wizycie. Wartość null powoduje, że ta metoda zwraca false.</param>
+        /// <returns>
+        /// true jeśli zaktualizowano pomyślnie,
+        /// null jeśli podana encja nie przeszła walidacji po stronie bazy,
+        /// false jeśli wystąpił inny błąd lub podany argument to null.
+        /// </returns>
         public bool? UpdateVisit(M_Visit visit)
         {
             bool? retval = true;
 
-            // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
-            int rowsAffected = 0;
-
-            // referencja do encji, która ma zostać zmieniona
-            M_Visit record = null;
-
-            try
+            if (visit != null)
             {
-                // szukanie encji o podanym ID
-                record = db.M_Visits.Find(new int[] { visit.Id });
-            }
-            catch (InvalidOperationException ioe)
-            {
-                System.Console.WriteLine(ioe.Message);
+                // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
+                int rowsAffected = 0;
 
-                retval = false;
-            }
+                // referencja do encji, która ma zostać zmieniona
+                M_Visit record = null;
 
-            // jeśli znaleziono encję o podanym ID, następuje aktualizacja jej właściwości
-            if (record != null)
-            {
-                if (retval == true)
+                try
                 {
-                    record.DateOfVisit = visit.DateOfVisit;
-                    record.Description = visit.Description;
-                    record.Diagnosis   = visit.Diagnosis;
-                    record.DoctorId    = visit.DoctorId;
-                    record.Ended       = visit.Ended;
-                    record.IsEmergency = visit.IsEmergency;
-                    record.LastEdit    = visit.LastEdit;
-                    record.Started     = visit.Started;
-                    record.State       = visit.State;
+                    // szukanie encji o podanym ID
+                    record = db.M_Visits.Find(new int[] { visit.Id });
+                }
+                catch (InvalidOperationException ioe)
+                {
+                    System.Console.WriteLine(ioe.Message);
 
-                    try
-                    {
-                        // synchronizacja zbioru danych z bazą danych
-                        rowsAffected = db.SaveChanges();
-                    }
-                    catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
-                    {
-                        System.Console.WriteLine(concurrencyException.Message);
+                    retval = false;
+                }
 
-                        // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
-                        if (rowsAffected == 0)
+                // jeśli znaleziono encję o podanym ID, następuje aktualizacja jej właściwości
+                if (record != null)
+                {
+                    if (retval == true)
+                    {
+                        record.DateOfVisit = visit.DateOfVisit;
+                        record.Description = visit.Description;
+                        record.Diagnosis = visit.Diagnosis;
+                        record.DoctorId = visit.DoctorId;
+                        record.Ended = visit.Ended;
+                        record.IsEmergency = visit.IsEmergency;
+                        record.LastEdit = visit.LastEdit;
+                        record.Started = visit.Started;
+                        record.State = visit.State;
+
+                        try
                         {
-                            try
-                            {
-                                rowsAffected = db.SaveChanges();
-                            }
-                            catch (Exception exception)
-                            {
-                                System.Console.WriteLine(exception.Message);
+                            // synchronizacja zbioru danych z bazą danych
+                            rowsAffected = db.SaveChanges();
+                        }
+                        catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException concurrencyException)
+                        {
+                            System.Console.WriteLine(concurrencyException.Message);
 
-                                // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
-                                retval = false;
+                            // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
+                            if (rowsAffected == 0)
+                            {
+                                try
+                                {
+                                    rowsAffected = db.SaveChanges();
+                                }
+                                catch (Exception exception)
+                                {
+                                    System.Console.WriteLine(exception.Message);
+
+                                    // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
+                                    retval = false;
+                                }
                             }
                         }
-                    }
-                    catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
-                    {
-                        System.Console.WriteLine(validationException.Message);
+                        catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+                        {
+                            System.Console.WriteLine(validationException.Message);
 
-                        // podana encja nie przeszła walidacji
-                        retval = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine(ex.Message);
+                            // podana encja nie przeszła walidacji
+                            retval = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine(ex.Message);
 
-                        // inny błąd
-                        retval = false;
+                            // inny błąd
+                            retval = false;
+                        }
                     }
                 }
+                // jeśli nie znaleziono encji o podanym ID, zgłaszane jest to jako błąd
+                else
+                    retval = false;
             }
-            // jeśli nie znaleziono encji o podanym ID, zgłaszane jest to jako błąd
             else
                 retval = false;
 
