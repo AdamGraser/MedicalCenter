@@ -92,7 +92,7 @@ namespace MedicalCenter.DBServices
         }
 
         /// <summary>
-        /// Pobiera z bazy numer gabinetu, w którym przyjmuje/przyjmował dany lekarz we wskazanym dniu.
+        /// Pobiera z tabeli A_DictionaryRooms rekord, którego id zawiera spełniający podane kryteria rekord z tabeli A_WorkersRooms.
         /// </summary>
         /// <param name="predicate">Funkcja (predykat) sprawdzająca warunek dla każdego elementu.</param>
         /// <returns>
@@ -108,7 +108,23 @@ namespace MedicalCenter.DBServices
 
             // zwrócenie numeru gabinetu lub null, jeśli nie znaleziono (lub nie znaleziono powiązania między gabinetem a pracownikiem)
             if (temp != null)
-                return db.A_DictionaryRooms.FirstOrDefault(x => x.Id == temp.RoomId);
+            {
+                // pobranie obiektu z numerem telefonu
+                A_DictionaryRoom room = db.A_DictionaryRooms.FirstOrDefault(x => x.Id == temp.RoomId);
+
+                if (room != null)
+                {
+                    // jeśli pobrany wpis był aktualizowany, szukana jest jego najnowsza wersja
+                    while (room.New > 0)
+                        room = db.A_DictionaryRooms.FirstOrDefault(x => x.Id == room.New);
+
+                    // jeśli wpis został oznaczony jako usunięty, zwracany jest null
+                    if (room.IsDeleted)
+                        room = null;
+                }
+
+                return room;
+            }
             else
                 return null;
         }

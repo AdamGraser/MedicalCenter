@@ -72,7 +72,7 @@ namespace MedicalCenter.DBServices
         public List<M_DictionaryClinic> SelectClinics()
         {
             // wrzucenie całej zawartości tabeli do listy
-            List<M_DictionaryClinic> list = new List<M_DictionaryClinic>(db.M_DictionaryClinics.AsEnumerable().OrderBy(x => x.Name));
+            List<M_DictionaryClinic> list = db.M_DictionaryClinics.ToList();
 
             int i = 0;
             int temp = 0;
@@ -99,10 +99,16 @@ namespace MedicalCenter.DBServices
                         temp = list.IndexOf(entity);
                     }
                 }
-                // jeśli rekord nie był aktualizowany, następuje przejście do następnego
+                
+                // jeśli rekord został oznaczony jako usunięty
+                if (entity.IsDeleted)
+                    list.RemoveAt(i);
                 else
                     ++i;
             }
+
+            // sortowanie listy wg. nazw poradni
+            list = list.OrderBy(x => x.Name).ToList();
 
             return list;
         }
