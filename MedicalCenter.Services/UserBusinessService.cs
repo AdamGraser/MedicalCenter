@@ -53,15 +53,15 @@ namespace MedicalCenter.Services
                 // jeśli podane poświadczenia są prawidłowe
                 if (usr != null && usr.WorkerId > 0)
                 {
-                    // zapisanie ID pracownika
-                    user.Id = usr.WorkerId;
-
                     // pobranie informacji o pracowniku, do którego przypisany jest sprawdzony użytkownik systemu
                     A_Worker wrk = userService.SelectWorker(x => x.Id == usr.WorkerId);
 
                     // jeśli rekord użytkownika w bazie zawiera prawidłowe ID pracownika
                     if (wrk.Id > 0)
                     {
+                        // zapisanie ID pracownika
+                        user.Id = usr.WorkerId;
+
                         // pobranie informacji o stanowisku służbowym pracownika
                         A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Id == wrk.JobTitle);
 
