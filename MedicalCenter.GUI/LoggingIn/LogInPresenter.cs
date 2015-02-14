@@ -84,7 +84,16 @@ namespace MedicalCenter.GUI.LoggingIn
             else
             {
                 // wyświetlenie komunikatu o nieprawidłowych poświadczeniach
-                view.Message.Content = "Nieprawidłowy login i/lub hasło";
+                if (view.UserData.Id == 0)
+                    view.Message.Content = "Nieprawidłowy login i/lub hasło";
+                // wyświetlenie komunikatu o dezaktywacji konta
+                else
+                {
+                    view.Message.Content = "Wskazane konto zostało dezaktywowane";
+                    
+                    // przywrócenie wartości domyślnej
+                    view.UserData.Id = 0;
+                }
 
                 // zaznaczenie zawartości pola na login
                 view.Login.Focus();

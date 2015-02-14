@@ -53,28 +53,35 @@ namespace MedicalCenter.Services
                 // jeśli podane poświadczenia są prawidłowe
                 if (usr != null && usr.WorkerId > 0)
                 {
-                    // pobranie informacji o pracowniku, do którego przypisany jest sprawdzony użytkownik systemu
-                    A_Worker wrk = userService.SelectWorker(x => x.Id == usr.WorkerId);
-
-                    // jeśli rekord użytkownika w bazie zawiera prawidłowe ID pracownika
-                    if (wrk.Id > 0)
+                    // jeśli konto jest aktywne
+                    if (usr.Expires == null || usr.Expires.Value > DateTime.Today)
                     {
-                        // zapisanie ID pracownika
-                        user.Id = usr.WorkerId;
+                        // pobranie informacji o pracowniku, do którego przypisany jest sprawdzony użytkownik systemu
+                        A_Worker wrk = userService.SelectWorker(x => x.Id == usr.WorkerId);
 
-                        // pobranie informacji o stanowisku służbowym pracownika
-                        A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Id == wrk.JobTitle);
-
-                        // jeśli rekord pracownika w bazie zawiera prawidłowe ID stanowiska
-                        if (job.Id > 0)
+                        // jeśli rekord użytkownika w bazie zawiera prawidłowe ID pracownika
+                        if (wrk.Id > 0)
                         {
-                            // zapisanie imienia, nazwiska i nazwy stanowiska
-                            user.Title = job.JobTitle + " - " + wrk.LastName + " " + wrk.FirstName;
+                            // zapisanie ID pracownika
+                            user.Id = usr.WorkerId;
 
-                            // zapisanie kodu stanowiska
-                            user.JobTitleCode = job.Code;
+                            // pobranie informacji o stanowisku służbowym pracownika
+                            A_DictionaryJobTitle job = userService.SelectJobTitle(x => x.Id == wrk.JobTitle);
+
+                            // jeśli rekord pracownika w bazie zawiera prawidłowe ID stanowiska
+                            if (job.Id > 0)
+                            {
+                                // zapisanie imienia, nazwiska i nazwy stanowiska
+                                user.Title = job.JobTitle + " - " + wrk.LastName + " " + wrk.FirstName;
+
+                                // zapisanie kodu stanowiska
+                                user.JobTitleCode = job.Code;
+                            }
                         }
                     }
+                    // jeśli konto zostało dezaktywowane, ID pracownika zostaje przypisana wartość -1, co jest rozpoznawane w prezenterze formularza logowania
+                    else
+                        user.Id = -1;
                 }
             }
         }
