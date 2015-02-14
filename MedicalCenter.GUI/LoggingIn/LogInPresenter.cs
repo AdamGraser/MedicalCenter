@@ -58,10 +58,11 @@ namespace MedicalCenter.GUI.LoggingIn
             // jeśli były poprawne
             if (view.UserData.Id > 0)
             {
-                // wyczyszczenie pól z loginem, hasłem i hashem hasła
+                // wyczyszczenie pól z loginem, hasłem i hashem hasła oraz etykiety z komunikatem
                 view.Login.Clear();
                 view.UserData.Password = string.Empty;
                 view.Password.Clear();
+                view.Message.Content = string.Empty;
 
                 // zmiana tytułu okna głównego
                 view.ParentWindow.Title = view.UserData.Title;
@@ -79,6 +80,15 @@ namespace MedicalCenter.GUI.LoggingIn
                     // zmiana ekranu logowania na menu główne
                     view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
                 }
+            }
+            else
+            {
+                // wyświetlenie komunikatu o nieprawidłowych poświadczeniach
+                view.Message.Content = "Nieprawidłowy login i/lub hasło";
+
+                // zaznaczenie zawartości pola na login
+                view.Login.Focus();
+                view.Login.SelectAll();
             }
         }
 
