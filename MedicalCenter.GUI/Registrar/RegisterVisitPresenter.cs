@@ -74,8 +74,14 @@ namespace MedicalCenter.GUI.Registrar
 
             foreach (A_Worker w in rawWorkersList)
             {
-                clinicId = userBusinessService.GetClinicId(w.Id, view.TheDate.SelectedDate.Value);
+                // pobranie ID poradni, do której przynależy lekarz w wybranym dniu
+                // jeśli pobrane ID ma wartość 0, to lekarz jeszcze nie pracował/już nie pracuje w tej przychodni w wybranym dniu
+                if ((clinicId = userBusinessService.GetClinicId(w.Id, view.TheDate.SelectedDate.Value)) == 0)
+                    continue;
+                
+                // pobranie liczby wizyt zarejestrowanych na wskazany dzień do danego lekarza
                 visitsCount = medicalBusinessService.TodaysVisitsCount(w.Id, view.TheDate.SelectedDate.Value);
+                // pobranie maksymalnej planowej liczby wizyt dla danego lekarza
                 maxVisitsCount = userBusinessService.GetVisitsPerDay(w.Id, view.TheDate.SelectedDate.Value);
 
                 // jeśli wybrany dzień jest wolny od pracy, żaden lekarz nie przyjmuje
