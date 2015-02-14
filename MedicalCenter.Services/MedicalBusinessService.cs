@@ -132,7 +132,7 @@ namespace MedicalCenter.Services
             if (date != null && doctorId > 0)
             {
                 // jeśli wybrany dzień jest świętem lub pracownik jest nieobecny w tym dniu, to lista wizyt jest pusta
-                if (!userBusinessService.IsHoliday(date) || !userBusinessService.IsWorkerAbsent(doctorId, date))
+                if (!userBusinessService.IsHoliday(date) && !userBusinessService.IsWorkerAbsent(doctorId, date))
                 {
                     // pobranie grafika wskazanego lekarza
                     A_Schedule schedule = userService.SelectSchedule(x => x.WorkerId == doctorId && x.ValidFrom <= date && (x.ValidTo == null || x.ValidTo >= date));
