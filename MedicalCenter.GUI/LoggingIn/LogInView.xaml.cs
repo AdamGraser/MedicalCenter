@@ -35,7 +35,7 @@ namespace MedicalCenter.GUI.LoggingIn
         /// <summary>
         /// Dane użytkownika systemu (login i hasło lub imię, nazwisko i stanowisko zalogowanego użytkownika).
         /// </summary>
-        public User UserData;
+        public User UserData { get; private set; }
 
         /// <summary>
         /// Dodatkowy widok konfiguracji połączenia z serwerem bazy danych (domyślnie ukryty).
@@ -45,7 +45,7 @@ namespace MedicalCenter.GUI.LoggingIn
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
-        public MainWindow ParentWindow;
+        public MainWindow ParentWindow { get; private set; }
 
         #endregion // Public properties
 
