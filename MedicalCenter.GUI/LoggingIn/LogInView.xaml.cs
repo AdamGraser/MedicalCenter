@@ -38,6 +38,11 @@ namespace MedicalCenter.GUI.LoggingIn
         public User UserData;
 
         /// <summary>
+        /// Dodatkowy widok konfiguracji połączenia z serwerem bazy danych (domyślnie ukryty).
+        /// </summary>
+        public ConfigureConnection ConfigureConnectionView { get; private set; }
+
+        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow;
@@ -56,14 +61,19 @@ namespace MedicalCenter.GUI.LoggingIn
 
             this.ParentWindow = parentWindow;
 
+            // utworzenie obiektu danych użytkownika
             UserData = new User();
             UserData.Title = "Nazwa placówki medycznej";
 
+            // utworzenie prezentera dla tego widoku
             logInPresenter = new LogInPresenter(this);
 
             // powiązanie obiektu z danymi użytkownika z polem na login
             // (w XAML'u zapisane zostało już konkretne powiązanie własciwości UserData.Login z właściwością Login.Text)
             Login.DataContext = UserData;
+
+            // utworzenie dodatkowego widoku konfiguracji połączenia z serwerem bazy danych
+            ConfigureConnectionView = new ConfigureConnection(logInPresenter);
         }
 
         #endregion // Ctors
@@ -101,6 +111,17 @@ namespace MedicalCenter.GUI.LoggingIn
         {
             // jeśli wpisano login i hasło, możliwe jest podjęcie próby zalogowania się
             logInPresenter.FormCompleted();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Konfiguruj połączenie z bazą danych" pod formularzem logowania.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfigureDBConnection_Click(object sender, RoutedEventArgs e)
+        {
+            // wyświetlenie widoku konfiguracji połączenia z serwerem bazy danych
+            logInPresenter.Configure();
         }
 
         #endregion // Event handlers

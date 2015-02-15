@@ -53,7 +53,7 @@ namespace MedicalCenter.GUI.Registrar
         {
             InitializeComponent();
 
-            // utworzenie prezentera dla tego widoku
+            // zapisanie referencji do prezentera
             registerVisitDetailsPresenter = presenter;
 
             // ustawienie kontekstu danych dla listy pacjentów

@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LoggingIn\ConfigureConnection.xaml.cs">
+      <DependentUpon>ConfigureConnection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoggingIn\LogInPresenter.cs" />
     <Compile Include="Registrar\PatientDetailsPresenter.cs" />
     <Compile Include="Registrar\PatientDetailsView.xaml.cs">
@@ -78,6 +81,10 @@
     <Compile Include="Registrar\RegisterVisitView.xaml.cs">
       <DependentUpon>RegisterVisitView.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoggingIn\ConfigureConnection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoggingIn\LogInView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

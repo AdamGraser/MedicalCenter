@@ -50,6 +50,6 @@
                     Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Click="Logon_Click" Style="{DynamicResource MedicalCenterButton}" />
         </Grid>
 
-        <Button Grid.Row="2" Name="ConfigureDBConnection" Content="Konfiguruj połączenie z bazą danych" Padding="20,16,5,15" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,15" />
+        <Button Grid.Row="2" Name="ConfigureDBConnection" Content="Konfiguruj połączenie z bazą danych" Padding="20,16,5,15" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="14" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="ConfigureDBConnection_Click" />
     </Grid>
 </UserControl>
