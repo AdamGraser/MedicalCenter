@@ -43,7 +43,7 @@ namespace MedicalCenter.GUI.LoggingIn
         /// <summary>
         /// Konstruktor zapisujący referencję do prezentera i inicjalizujący elementy interfejsu.
         /// </summary>
-        /// <param name="logInPresenter"></param>
+        /// <param name="logInPresenter">Referencja do prezentera formularza logowania.</param>
         public ConfigureConnection(LogInPresenter logInPresenter)
         {
             InitializeComponent();

@@ -47,8 +47,9 @@ namespace MedicalCenter.GUI.Registrar
         #region Ctors
 
         /// <summary>
-        /// Konstruktor ustawiający kontekst danych dla listy pacjentów.
+        /// Konstruktor ustawiający kontekst danych dla listy pacjentów, zapisujący referencję do prezentera i ukrywający ten widok.
         /// </summary>
+        /// <param name="presenter">Referencja do prezentera drugiego ekranu logowania.</param>
         public PatientsList(RegisterVisitDetailsPresenter presenter)
         {
             InitializeComponent();

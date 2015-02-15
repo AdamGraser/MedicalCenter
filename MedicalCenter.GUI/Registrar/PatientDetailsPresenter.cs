@@ -204,6 +204,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku szczegółów pacjenta.
         /// </summary>
+        /// <param name="question">Wartość określająca czy wyświetlone ma zostać pytanie z prośbą o potwierdzenie operacji.</param>
         public void Back(bool question)
         {
             System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.DialogResult.Yes;
@@ -661,8 +662,8 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Obsługa zdarzenia wciśnięcia klawisza podczas edycji pola tekstowego na miejscowość w widoku szczegółów pacjenta.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">Klawisz do sprawdzenia.</param>
+        /// <returns>true jeśli wskazany klawisz jest dozwolony w tym polu, false jeśli niedozwolony.</returns>
         public bool CityKeyDown(Key key)
         {
             // sprawdzenie, czy wskazany przycisk jest literą, spacją lub cyfrą
