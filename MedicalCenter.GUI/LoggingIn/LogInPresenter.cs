@@ -54,8 +54,43 @@ namespace MedicalCenter.GUI.LoggingIn
             // zahashowanie hasła i zapisanie hashu w obiekcie danych użytkownika
             view.UserData.Password = view.Password.Password;
 
-            // sprawdzenie poprawności podanych poświadczeń
-            userBusinessService.LogIn(view.UserData);
+            try
+            {
+                // sprawdzenie poprawności podanych poświadczeń
+                userBusinessService.LogIn(view.UserData);
+            }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                Console.WriteLine("--------------------"
+                                + "\nWystąpił błąd podczas próby połączenia się z serwerem."
+                                + "\nInformacja: {0}"
+                                + "\nŹródło: {1}"
+                                + "\nW metodzie: {2}"
+                                + "\nPomoc: {3}"
+                                + "\nDodatkowe informacje: {4}"
+                                + "\nStack trace:\n{5}"
+                                + "\n--------------------\n"
+                                , sqlEx.Message, sqlEx.Source, sqlEx.TargetSite, sqlEx.HelpLink, sqlEx.Data, sqlEx.StackTrace);
+
+                view.Message.Content = "Wystąpił błąd podczas próby połączenia się z serwerem";
+                view.UserData.Id = -0x0F;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("--------------------"
+                                + "\nWystąpił błąd podczas próby sprawdzenia poprawności danych logowania."
+                                + "\nInformacja: {0}"
+                                + "\nŹródło: {1}"
+                                + "\nW metodzie: {2}"
+                                + "\nPomoc: {3}"
+                                + "\nDodatkowe informacje: {4}"
+                                + "\nStack trace:\n{5}"
+                                + "\n--------------------\n"
+                                , ex.Message, ex.Source, ex.TargetSite, ex.HelpLink, ex.Data, ex.StackTrace);
+
+                view.Message.Content = "Wystąpił błąd podczas próby sprawdzenia poprawności danych logowania";
+                view.UserData.Id = -0x0F;
+            }
 
             // jeśli były poprawne
             if (view.UserData.Id > 0)
@@ -91,7 +126,8 @@ namespace MedicalCenter.GUI.LoggingIn
                 // wyświetlenie komunikatu o dezaktywacji konta
                 else
                 {
-                    view.Message.Content = "Wskazane konto zostało dezaktywowane";
+                    if (view.UserData.Id == -1)
+                        view.Message.Content = "Wskazane konto zostało dezaktywowane";
                     
                     // przywrócenie wartości domyślnej
                     view.UserData.Id = 0;
