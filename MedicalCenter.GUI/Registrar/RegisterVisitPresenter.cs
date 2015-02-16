@@ -72,6 +72,8 @@ namespace MedicalCenter.GUI.Registrar
             // wartość określająca czy rozpatrywany dzień jest wolny od pracy
             bool holiday = userBusinessService.IsHoliday(view.TheDate.SelectedDate.Value);
 
+            view.SourceDoctorsList = new List<DoctorsListItem>();
+
             foreach (A_Worker w in rawWorkersList)
             {
                 // pobranie ID poradni, do której przynależy lekarz w wybranym dniu
@@ -111,7 +113,8 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void GetClinicsList()
         {
-            medicalBusinessService.GetClinics(view.ClinicsList);
+            view.ClinicsList = medicalBusinessService.GetClinics();
+            view.ClinicsList.Add(0, "");
         }
 
         /// <summary>
@@ -258,7 +261,6 @@ namespace MedicalCenter.GUI.Registrar
                 view.TheDate.SelectedDate = DateTime.Today;
 
             // wczytanie na nowo listy lekarzy dla nowo wybranego dnia
-            view.SourceDoctorsList = new List<DoctorsListItem>();
             GetDoctorsList();
 
             // uwzględnienie filtracji

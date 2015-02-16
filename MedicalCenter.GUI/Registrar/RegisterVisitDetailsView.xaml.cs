@@ -93,7 +93,6 @@ namespace MedicalCenter.GUI.Registrar
 
             // inicjalizacja właściwości
             VisitData = new Visit();
-            DailyVisits = new List<DailyVisitsListItem>();
             DoctorName = string.Empty;
 
             // utworzenie listy pacjentów (domyślnie ukryta)

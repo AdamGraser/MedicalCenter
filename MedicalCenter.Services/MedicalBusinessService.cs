@@ -59,21 +59,19 @@ namespace MedicalCenter.Services
         /// Pobiera z bazy danych informacje o wszystkich istniejących obecnie w tej placówce poradniach medycznych.
         /// Pobrane informacje dodaje do kolekcji clinicsList.
         /// </summary>
-        /// <param name="clinicsList">
-        /// Kolekcja, do której dodane mają zostać informacje pobrane z bazy danych.
-        /// Wartość null powoduje, że ta metoda nie wykonuje żadnej akcji.
-        /// </param>
-        public void GetClinics(Dictionary<int, string> clinicsList)
+        /// <returns>Lista informacji o poradniach (pary &lt;id,nazwa&gt;).</returns>
+        public SortedDictionary<int, string> GetClinics()
         {
-            if (clinicsList != null)
-            {
-                // pobranie z bazy danych informacji o poradniach
-                List<M_DictionaryClinic> list = medicalService.SelectClinics();
+            // pobranie z bazy danych informacji o poradniach
+            List<M_DictionaryClinic> list = medicalService.SelectClinics();
 
-                // przepisanie ID i nazw poradni do wskazanej kolekcji Dictionary
-                foreach (M_DictionaryClinic entity in list)
-                    clinicsList.Add(entity.Id, entity.Name);
-            }
+            SortedDictionary<int, string> clinicsList = new SortedDictionary<int, string>();
+
+            // przepisanie ID i nazw poradni do wskazanej kolekcji Dictionary
+            foreach (M_DictionaryClinic entity in list)
+                clinicsList.Add(entity.Id, entity.Name);
+
+            return clinicsList;
         }
 
         /// <summary>

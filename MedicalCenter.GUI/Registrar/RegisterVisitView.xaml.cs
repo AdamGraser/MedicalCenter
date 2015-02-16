@@ -50,7 +50,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Lista nazw poradni i ID odpowiadających im rekordów z tabeli M_DictionaryClinics.
         /// </summary>
-        public Dictionary<int, string> ClinicsList { get; private set; }
+        public SortedDictionary<int, string> ClinicsList { get; set; }
 
         /// <summary>
         /// Filtr poradni.
@@ -93,12 +93,9 @@ namespace MedicalCenter.GUI.Registrar
             TheDate.DisplayDateStart = DateTime.Today;
 
             // utworzenie listy lekarzy (poradnia, lekarz, liczba pacjentów w wybranym dniu, nr gabinetu)
-            SourceDoctorsList = new List<DoctorsListItem>();
             registerVisitPresenter.GetDoctorsList();
 
             // utworzenie listy poradni medycznych
-            ClinicsList = new Dictionary<int, string>();
-            ClinicsList.Add(0, "");
             registerVisitPresenter.GetClinicsList();
 
             // ustawienie kontekstu danych tabeli, aby móc z nią powiązać listy lekarzy i poradni
