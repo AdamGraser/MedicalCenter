@@ -69,6 +69,9 @@ namespace MedicalCenter.GUI.LoggingIn
 
             // przekazanie referencji do prezentera dodatkowemu widokowi konfiguracji połączenia z serwerem bazy danych
             ConfigureConnectionView.Presenter = logInPresenter;
+
+            // nadanie focus'a polu na login
+            Login.Focus();
         }
 
         #endregion // Ctors
