@@ -167,7 +167,7 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         public void ConfigureAddressChanged()
         {
-            if (view.ConfigureConnectionView.ServerAddress.Length > 0)
+            if (view.ConfigureConnectionView.Address.Text.Length > 0)
                 view.ConfigureConnectionView.Save.IsEnabled = true;
             else
                 view.ConfigureConnectionView.Save.IsEnabled = false;
@@ -182,7 +182,7 @@ namespace MedicalCenter.GUI.LoggingIn
             view.ConfigureConnectionView.Visibility = System.Windows.Visibility.Collapsed;
 
             // wyczyszczenie pola na adres serwera
-            view.ConfigureConnectionView.ServerAddress = string.Empty;
+            view.ConfigureConnectionView.Address.Clear();
         }
 
         /// <summary>
