@@ -114,7 +114,9 @@ namespace MedicalCenter.GUI.Registrar
         public void GetClinicsList()
         {
             view.ClinicsList = medicalBusinessService.GetClinics();
-            view.ClinicsList.Add(0, "");
+
+            if(!view.ClinicsList.ContainsKey(0))
+                view.ClinicsList.Add(0, "");
         }
 
         /// <summary>
