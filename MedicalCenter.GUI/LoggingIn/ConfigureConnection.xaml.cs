@@ -20,15 +20,6 @@ namespace MedicalCenter.GUI.LoggingIn
     /// </summary>
     public partial class ConfigureConnection : UserControl
     {
-        #region Private fields
-
-        /// <summary>
-        /// Prezenter obsługujący m.in. zdarzenia użytkownika.
-        /// </summary>
-        LogInPresenter logInPresenter;
-
-        #endregion // Private fields
-
         #region Public properties
 
         /// <summary>
@@ -36,20 +27,21 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         public string ServerAddress { get; set; }
 
+        /// <summary>
+        /// Prezenter obsługujący m.in. zdarzenia użytkownika.
+        /// </summary>
+        public LogInPresenter Presenter { get; set; }
+
         #endregion // Public properties
 
         #region Ctors
 
         /// <summary>
-        /// Konstruktor zapisujący referencję do prezentera i inicjalizujący elementy interfejsu.
+        /// Konstruktor inicjalizujący elementy interfejsu.
         /// </summary>
-        /// <param name="logInPresenter">Referencja do prezentera formularza logowania.</param>
-        public ConfigureConnection(LogInPresenter logInPresenter)
+        public ConfigureConnection()
         {
             InitializeComponent();
-
-            // zapisanie referencji do prezentera
-            this.logInPresenter = logInPresenter;
 
             // inicjalizacja pola na adres serwera bazy danych pustym stringiem
             ServerAddress = string.Empty;
@@ -70,7 +62,7 @@ namespace MedicalCenter.GUI.LoggingIn
         private void Address_TextChanged(object sender, TextChangedEventArgs e)
         {
             // aktywacja/dezaktywacja przycisku "Zapisz" jeśli pole jest niepuste/puste
-            logInPresenter.ConfigureAddressChanged();
+            Presenter.ConfigureAddressChanged();
         }
 
         /// <summary>
@@ -81,7 +73,7 @@ namespace MedicalCenter.GUI.LoggingIn
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             // wyczyszczenie pola na adres serwera, ukrycie tego widoku
-            logInPresenter.ConfigureBack();
+            Presenter.ConfigureBack();
         }
 
         /// <summary>
@@ -92,7 +84,7 @@ namespace MedicalCenter.GUI.LoggingIn
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             // zapisanie adresu serwera do plików konfiguracyjnych, powrót do formularza logowania
-            logInPresenter.ConfigureSave();
+            Presenter.ConfigureSave();
         }
 
         #endregion // Events handlers

@@ -38,11 +38,6 @@ namespace MedicalCenter.GUI.LoggingIn
         public User UserData { get; private set; }
 
         /// <summary>
-        /// Dodatkowy widok konfiguracji połączenia z serwerem bazy danych (domyślnie ukryty).
-        /// </summary>
-        public ConfigureConnection ConfigureConnectionView { get; private set; }
-
-        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow { get; private set; }
@@ -72,8 +67,8 @@ namespace MedicalCenter.GUI.LoggingIn
             // (w XAML'u zapisane zostało już konkretne powiązanie własciwości UserData.Login z właściwością Login.Text)
             Login.DataContext = UserData;
 
-            // utworzenie dodatkowego widoku konfiguracji połączenia z serwerem bazy danych
-            ConfigureConnectionView = new ConfigureConnection(logInPresenter);
+            // przekazanie referencji do prezentera dodatkowemu widokowi konfiguracji połączenia z serwerem bazy danych
+            ConfigureConnectionView.Presenter = logInPresenter;
         }
 
         #endregion // Ctors
