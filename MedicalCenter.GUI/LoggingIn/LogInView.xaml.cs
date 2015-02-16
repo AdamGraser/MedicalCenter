@@ -119,6 +119,17 @@ namespace MedicalCenter.GUI.LoggingIn
             logInPresenter.Configure();
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia otrzymania focusu przez pole tekstowe lub hasłowe formularza logowania.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // zaznaczenie całej zawartości pola
+            logInPresenter.TextBoxFocused(e.Source);
+        }
+
         #endregion // Event handlers
     }
 }

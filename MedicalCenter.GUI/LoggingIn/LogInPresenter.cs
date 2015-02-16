@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml.Serialization;
 using MedicalCenter.Services;
 using MedicalCenter.Models.LoggingIn;
@@ -137,6 +138,28 @@ namespace MedicalCenter.GUI.LoggingIn
                 view.Login.Focus();
                 view.Login.SelectAll();
             }
+        }
+
+        /// <summary>
+        /// Zaznacza całą zawartość pola tekstowego/hasłowego przy nadaniu mu focusa.
+        /// </summary>
+        /// <param name="source">Źródło zdarzenia (przekazane z metody obsługującej zdarzenie GotFocus).</param>
+        public void TextBoxFocused(object source)
+        {
+            // rzutowanie - sprawdzenie czy źródłem zdarzenia jest pole na login
+            TextBox loginTextBox = source as TextBox;
+
+            // jeśli to nie pole na login
+            if (loginTextBox == null)
+            {
+                // rzutowanie - sprawdzenie czy źródłem zdarzenia jest pole na hasło (jedyna pozostała możliwość, ale...)
+                PasswordBox passwordTextBox = source as PasswordBox;
+
+                if (passwordTextBox != null)
+                    passwordTextBox.SelectAll();
+            }
+            else
+                loginTextBox.SelectAll();
         }
 
         /// <summary>
