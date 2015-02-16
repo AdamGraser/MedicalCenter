@@ -27,6 +27,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="45" />
@@ -35,7 +36,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="3" x:Name="Message" HorizontalAlignment="Left" FontFamily="Segoe UI Light" FontSize="26" Foreground="IndianRed" />
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" x:Name="Message" HorizontalAlignment="Stretch" TextBlock.TextAlignment="Left" FontFamily="Segoe UI Light" FontSize="26" Foreground="IndianRed" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="Login" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" />
             <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="Login" Width="210" Height="36" Margin="5,6,0,8" BorderBrush="CornflowerBlue" BorderThickness="1"
