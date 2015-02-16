@@ -203,7 +203,7 @@ namespace MedicalCenter.Services
             if (date != null)
             {
                 // jeśli wskazany dzień jest świętem wolnym od pracy lub jest to niedziela, zwracana jest wartość "true"
-                if (userService.SelectHoliday(x => x.Date.Date == date.Date) != null || date.DayOfWeek == DayOfWeek.Sunday)
+                if (userService.SelectHoliday(x => x.Date == date) != null || date.DayOfWeek == DayOfWeek.Sunday)
                     holiday = true;
             }
 
