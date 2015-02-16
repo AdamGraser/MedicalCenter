@@ -48,6 +48,14 @@ namespace MedicalCenter.GUI.LoggingIn
         #region Public methods
 
         /// <summary>
+        /// Nadaje focus polu na login.
+        /// </summary>
+        public void FocusLogin()
+        {
+            view.Login.Focus();
+        }
+
+        /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Zaloguj" w formularzu logowania.
         /// </summary>
         public void Logon()

@@ -69,14 +69,22 @@ namespace MedicalCenter.GUI.LoggingIn
 
             // przekazanie referencji do prezentera dodatkowemu widokowi konfiguracji połączenia z serwerem bazy danych
             ConfigureConnectionView.Presenter = logInPresenter;
-
-            // nadanie focus'a polu na login
-            Login.Focus();
         }
 
         #endregion // Ctors
 
         #region Event handlers
+
+        /// <summary>
+        /// Obsługa zdarzenia załadowania tej kontrolki użytkownika (tego widoku).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // nadanie focus'a polu na login
+            logInPresenter.FocusLogin();
+        }
 
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Zaloguj" w formularzu logowania.
@@ -112,17 +120,6 @@ namespace MedicalCenter.GUI.LoggingIn
         }
 
         /// <summary>
-        /// Obsługa zdarzenia kliknięcia przycisku "Konfiguruj połączenie z bazą danych" pod formularzem logowania.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ConfigureDBConnection_Click(object sender, RoutedEventArgs e)
-        {
-            // wyświetlenie widoku konfiguracji połączenia z serwerem bazy danych
-            logInPresenter.Configure();
-        }
-
-        /// <summary>
         /// Obsługa zdarzenia otrzymania focusu przez pole tekstowe lub hasłowe formularza logowania.
         /// </summary>
         /// <param name="sender"></param>
@@ -131,6 +128,17 @@ namespace MedicalCenter.GUI.LoggingIn
         {
             // zaznaczenie całej zawartości pola
             logInPresenter.TextBoxFocused(e.Source);
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku "Konfiguruj połączenie z bazą danych" pod formularzem logowania.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfigureDBConnection_Click(object sender, RoutedEventArgs e)
+        {
+            // wyświetlenie widoku konfiguracji połączenia z serwerem bazy danych
+            logInPresenter.Configure();
         }
 
         #endregion // Event handlers

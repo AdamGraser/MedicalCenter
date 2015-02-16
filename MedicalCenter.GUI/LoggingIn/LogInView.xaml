@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MedicalCenter.GUI.LoggingIn" x:Class="MedicalCenter.GUI.LoggingIn.LogInView" 
              mc:Ignorable="d" 
-             d:DesignHeight="521" d:DesignWidth="781" MinHeight="521" MinWidth="781" Height="521" Width="781" MaxHeight="521" MaxWidth="781">
+             d:DesignHeight="521" d:DesignWidth="781" MinHeight="521" MinWidth="781" Height="521" Width="781" MaxHeight="521" MaxWidth="781"
+             Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
