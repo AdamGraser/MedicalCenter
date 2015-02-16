@@ -76,7 +76,7 @@ namespace MedicalCenter.Models.Registrar
         /// <summary>
         /// Kolor odpowiadający stanowi danego lekarza (przyjmuje, max pacjentów, nie przyjmuje).
         /// </summary>
-        public uint Color { get; private set; }
+        public System.Windows.Media.Brush Color { get; private set; }
 
         #endregion // Public properties
 
@@ -105,11 +105,11 @@ namespace MedicalCenter.Models.Registrar
             this.State = State;
 
             if (State == null)
-                this.Color = 0xFF808080;
+                this.Color = System.Windows.Media.Brushes.Gray;
             else if (State == false)
-                this.Color = 0xFF000000;
+                this.Color = System.Windows.Media.Brushes.Black;
             else
-                this.Color = 0xFF6495ED;
+                this.Color = System.Windows.Media.Brushes.CornflowerBlue;
         }
 
         #endregion // Ctors
