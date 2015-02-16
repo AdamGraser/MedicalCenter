@@ -48,6 +48,7 @@ namespace MedicalCenter.GUI.Registrar
         {
             medicalBusinessService = new MedicalBusinessService();
             userBusinessService = new UserBusinessService();
+            patientBusinessService = new PatientBusinessService();
             this.view = view;
         }
 
