@@ -28,7 +28,7 @@
         
         <DataGrid Grid.Row="1" Name="DoctorsListTable" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" TabIndex="0"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True"
-                  ScrollViewer.CanContentScroll="True" Margin="10,0,10,15" VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="White" Background="White"
+                  ScrollViewer.CanContentScroll="True" Margin="10,0,10,15" VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="#00FFFFFF" Background="White"
                   SelectionChanged="DoctorsListTable_SelectionChanged">
             
             <DataGrid.Resources>
