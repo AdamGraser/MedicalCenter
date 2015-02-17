@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using MedicalCenter.Data;
 using MedicalCenter.Models.Registrar;
 using MedicalCenter.Services;
@@ -132,44 +133,152 @@ namespace MedicalCenter.GUI.Registrar
             // jeśli kontrolki filtrów już istnieją
             if (view.FilterClinicName != null && view.FilterDoctorName != null)
             {
+                // tworzenie kolekcji uwzględniającej podane kryteria
+                IEnumerable<DoctorsListItem> filteredList;
+
                 // jeśli wybrano poradnię w filtrze
                 if (view.FilterClinicName.SelectedIndex > 0)
                 {
                     // jeśli wpisano również co najmniej 3 znaki w filtrze nazwiska
                     if (view.FilterDoctorName.Text.Length > 2)
                     {
-                        view.DoctorsList.Clear();
-                        view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
-                                                                                                    && (x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
-                                                                                                     || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorName.ToLower())))
-                                                                                           .OrderBy(x => x.DoctorName));
-                        view.DoctorsListTable.Items.Refresh();
+                        filteredList = view.SourceDoctorsList.Where(x => x.ClinicId == view.ClinicsList.Keys.ElementAt(view.FilterClinicName.SelectedIndex)
+                                                                      && (x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                                                                      || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorName.ToLower())));
                     }
                     // filtrowanie tylko po poradni
                     else
                     {
-                        view.DoctorsList.Clear();
-                        view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)).OrderBy(x => x.DoctorName));
-                        view.DoctorsListTable.Items.Refresh();
+                        filteredList = view.SourceDoctorsList.Where(x => x.ClinicId == view.ClinicsList.Keys.ElementAt(view.FilterClinicName.SelectedIndex));
                     }
                 }
                 // filtrowanie tylko po nazwiskach
                 else if (view.FilterDoctorName.Text.Length > 2)
                 {
-                    view.DoctorsList.Clear();
-                    view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
-                                                                                                || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()))
-                                                                                       .OrderBy(x => x.DoctorName));
-                    view.DoctorsListTable.Items.Refresh();
+                    filteredList = view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                                                                  || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()));
                 }
                 // brak filtrowania
                 else
                 {
-                    view.DoctorsList.Clear();
-                    view.DoctorsList.AddRange(view.SourceDoctorsList);
-                    view.DoctorsListTable.Items.Refresh();
+                    filteredList = view.SourceDoctorsList;
                 }
+
+                // wyczyszczenie źródłowej kolekcji
+                view.DoctorsList.Clear();
+
+                // zapełnienie źródłowej kolekcji elementami z tymczasowej kolekcji uwzględniającej kryteria,
+                // posortowanymi wg. aktualnie używanego kryterium sortowania
+                switch (view.Criteria)
+                {
+                    case SortingCriteria.SortByDoctorNameAscending:
+                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.DoctorName));
+                        break;
+
+                    case SortingCriteria.SortByDoctorNameDescending:
+                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.DoctorName));
+                        break;
+
+                    case SortingCriteria.SortByClinicNameAscending:
+                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.ClinicName));
+                        break;
+
+                    case SortingCriteria.SortByClinicNameDescending:
+                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.ClinicName));
+                        break;
+
+                    case SortingCriteria.SortByPatientsNumberAscending:
+                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.PatientsNumber));
+                        break;
+
+                    case SortingCriteria.SortByPatientsNumberDescending:
+                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.PatientsNumber));
+                        break;
+
+                    case SortingCriteria.SortByRoomNumberAscending:
+                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.RoomNumber));
+                        break;
+
+                    case SortingCriteria.SortByRoomNumberDescending:
+                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.RoomNumber));
+                        break;
+                }
+
+                // odświeżenie tabeli
+                view.DoctorsListTable.Items.Refresh();
             }
+        }
+
+        /// <summary>
+        /// Zapisuje kryterium sortowania listy lekarzy.
+        /// </summary>
+        /// <param name="column">Kolumna, wg. której lista lekarzy została posortowana.</param>
+        public void DoctorsListSorting(DataGridColumn column)
+        {
+            IEnumerable<DoctorsListItem> temp = new List<DoctorsListItem>();
+
+            // stworzenie nowej kolekcji źródłowej, będącej posortowaną wg. nowego kryterium wersją bieżącej kolekcji źródłowej
+            switch (view.DoctorsListTable.Columns.IndexOf(column))
+            {
+                case 0:
+                    if (view.Criteria == SortingCriteria.SortByClinicNameAscending)
+                    {
+                        view.Criteria = SortingCriteria.SortByClinicNameDescending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.ClinicName));
+                    }
+                    else
+                    {
+                        view.Criteria = SortingCriteria.SortByClinicNameAscending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.ClinicName));
+                    }
+                    break;
+
+                case 1:
+                    if (view.Criteria == SortingCriteria.SortByDoctorNameAscending)
+                    {
+                        view.Criteria = SortingCriteria.SortByDoctorNameDescending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.DoctorName));
+                    }
+                    else
+                    {
+                        view.Criteria = SortingCriteria.SortByDoctorNameAscending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.DoctorName));
+                    }
+                    break;
+
+                case 2:
+                    if (view.Criteria == SortingCriteria.SortByPatientsNumberAscending)
+                    {
+                        view.Criteria = SortingCriteria.SortByPatientsNumberDescending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.PatientsNumber));
+                    }
+                    else
+                    {
+                        view.Criteria = SortingCriteria.SortByPatientsNumberAscending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.PatientsNumber));
+                    }
+                    break;
+
+                case 3:
+                    if (view.Criteria == SortingCriteria.SortByRoomNumberAscending)
+                    {
+                        view.Criteria = SortingCriteria.SortByRoomNumberDescending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.RoomNumber));
+                    }
+                    else
+                    {
+                        view.Criteria = SortingCriteria.SortByRoomNumberAscending;
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.RoomNumber));
+                    }
+                    break;
+            }
+
+            // ustawienie nowej kolekcji źródłowej jako źródła danych tabeli
+            view.DoctorsList.Clear();
+            view.DoctorsList.AddRange(temp);
+
+            // odświeżenie tabeli
+            view.DoctorsListTable.Items.Refresh();
         }
 
         /// <summary>
@@ -188,6 +297,10 @@ namespace MedicalCenter.GUI.Registrar
             // czyszczenie tabeli
             view.SourceDoctorsList.Clear();
             view.DoctorsList.Clear();
+            view.DoctorsListTable.Items.Refresh();
+
+            // przywrócenie domyślnego sortowania
+            view.Criteria = SortingCriteria.SortByDoctorNameAscending;
 
             // wyczyszczenie ID pacjenta
             view.PatientId = 0;
@@ -343,4 +456,54 @@ namespace MedicalCenter.GUI.Registrar
 
         #endregion // Public methods
     }
+
+    #region Enums
+
+    /// <summary>
+    /// Pole wyliczeniowe przedstawiające zestaw opcji sortowania dostępnych dla listy lekarzy.
+    /// </summary>
+    public enum SortingCriteria : byte
+    {
+        /// <summary>
+        /// Sortowanie rosnąco według nazw poradni.
+        /// </summary>
+        SortByClinicNameAscending,
+
+        /// <summary>
+        /// Sortowanie malejąco według nazw poradni.
+        /// </summary>
+        SortByClinicNameDescending,
+
+        /// <summary>
+        /// Sortowanie rosnąco według nazwisk lekarzy.
+        /// </summary>
+        SortByDoctorNameAscending,
+
+        /// <summary>
+        /// Sortowanie malejąco według nazwisk lekarzy.
+        /// </summary>
+        SortByDoctorNameDescending,
+
+        /// <summary>
+        /// Sortowanie rosnąco według liczby pacjentów.
+        /// </summary>
+        SortByPatientsNumberAscending,
+
+        /// <summary>
+        /// Sortowanie malejąco według liczby pacjentów.
+        /// </summary>
+        SortByPatientsNumberDescending,
+
+        /// <summary>
+        /// Sortowanie rosnąco według numerów gabinetów.
+        /// </summary>
+        SortByRoomNumberAscending,
+
+        /// <summary>
+        /// Sortowanie malejąco według numerów gabinetów.
+        /// </summary>
+        SortByRoomNumberDescending
+    };
+
+    #endregion // Enums
 }

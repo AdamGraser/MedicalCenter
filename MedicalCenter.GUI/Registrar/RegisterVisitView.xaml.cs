@@ -63,6 +63,11 @@ namespace MedicalCenter.GUI.Registrar
         public TextBox FilterDoctorName { get; private set; }
 
         /// <summary>
+        /// Aktywne kryterium sortowania.
+        /// </summary>
+        public SortingCriteria Criteria { get; set; }
+
+        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow { get; private set; }
@@ -100,6 +105,9 @@ namespace MedicalCenter.GUI.Registrar
 
             // ustawienie kontekstu danych tabeli, aby móc z nią powiązać listy lekarzy i poradni
             DoctorsListTable.DataContext = this;
+
+            // zapisanie domyślnego kryterium sortowania
+            Criteria = SortingCriteria.SortByDoctorNameAscending;
         }
 
         #endregion // Ctors
@@ -229,6 +237,20 @@ namespace MedicalCenter.GUI.Registrar
         {
             // przejście do następnego ekranu rejestracji wizyty
             registerVisitPresenter.Next();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia sortowania tabeli z listą lekarzy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoctorsListTable_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            // zapisanie kryterium sortowania
+            registerVisitPresenter.DoctorsListSorting(e.Column);
+
+            // anulowanie wykonania standardowego sortowania
+            e.Handled = true;
         }
 
         #endregion // Events handlers
