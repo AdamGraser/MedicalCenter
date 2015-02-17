@@ -235,8 +235,10 @@ namespace MedicalCenter.GUI.Registrar
             // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
             if (view.PatientsListView.FilterPatientName.Text.Length > 2)
                 // pacjenci sortowani są najpierw wg. nazwisk, a następnie wg. imion (pierwszych)
-                view.PatientsListView.Patients = new List<Patient>(view.PatientsListView.SourcePatients.Where(x => x.LastName.StartsWith(view.PatientsListView.FilterPatientName.Text) ||
-                                                        view.PatientsListView.FilterPatientName.Text.StartsWith(x.LastName)).OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+                view.PatientsListView.Patients = 
+                    new List<Patient>(view.PatientsListView.SourcePatients.Where(x => x.LastName.ToLower().StartsWith(view.PatientsListView.FilterPatientName.Text.ToLower())
+                                                                                   || view.PatientsListView.FilterPatientName.Text.ToLower().StartsWith(x.LastName.ToLower()))
+                                                                          .OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
             // jeśli wpisano mniej niż 3 znaki, wyświetlana jest pełna lista pacjentów
             else
                 view.PatientsListView.Patients = view.PatientsListView.SourcePatients;

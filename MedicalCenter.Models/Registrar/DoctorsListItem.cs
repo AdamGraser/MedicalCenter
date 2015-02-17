@@ -11,22 +11,6 @@ namespace MedicalCenter.Models.Registrar
     /// </summary>
     public class DoctorsListItem
     {
-        #region Private fields
-
-        /// <summary>
-        /// Przechowuje nazwisko wskazanego lekarza.
-        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
-        /// </summary>
-        string doctorLastName;
-
-        /// <summary>
-        /// Przechowuje imię wskazanego lekarza.
-        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
-        /// </summary>
-        string doctorFirstName;
-
-        #endregion // Private fields
-
         // Public getters, private setters
         #region Public properties
 
@@ -47,13 +31,25 @@ namespace MedicalCenter.Models.Registrar
         public int DoctorId { get; private set; }
 
         /// <summary>
+        /// Przechowuje nazwisko wskazanego lekarza.
+        /// Jest to wartość z kolumny LastName z tabeli A_Workers.
+        /// </summary>
+        public string DoctorLastName { get; private set; }
+
+        /// <summary>
+        /// Przechowuje imię wskazanego lekarza.
+        /// Jest to wartość z kolumny FirstName z tabeli A_Workers.
+        /// </summary>
+        public string DoctorFirstName { get; private set; }
+
+        /// <summary>
         /// Zwraca nazwisko i imię lekarza, oddzielone spacją.
         /// </summary>
         public string DoctorName
         {
             get
             {
-                return doctorLastName + " " + doctorFirstName;
+                return DoctorLastName + " " + DoctorFirstName;
             }
         }
         
@@ -98,8 +94,8 @@ namespace MedicalCenter.Models.Registrar
             this.ClinicId = ClinicId;
             this.ClinicName = ClinicName;
             this.DoctorId = DoctorId;
-            this.doctorLastName = DoctorLastName;
-            this.doctorFirstName = DoctorFirstName;
+            this.DoctorLastName = DoctorLastName;
+            this.DoctorFirstName = DoctorFirstName;
             this.PatientsNumber = PatientsNumber;
             this.RoomNumber = RoomNumber;
             this.State = State;

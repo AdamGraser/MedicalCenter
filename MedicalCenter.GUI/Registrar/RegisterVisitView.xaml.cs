@@ -99,7 +99,7 @@ namespace MedicalCenter.GUI.Registrar
             registerVisitPresenter.GetClinicsList();
 
             // ustawienie kontekstu danych tabeli, aby móc z nią powiązać listy lekarzy i poradni
-            DoctorsListTable.DataContext = DoctorsList;
+            DoctorsListTable.DataContext = this;
         }
 
         #endregion // Ctors

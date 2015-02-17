@@ -137,8 +137,9 @@ namespace MedicalCenter.GUI.Registrar
                     if (view.FilterDoctorName.Text.Length > 2)
                     {
                         view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
-                                                                                                    && (x.DoctorName.StartsWith(view.FilterDoctorName.Text)
-                                                                                                     || view.FilterDoctorName.Text.StartsWith(x.DoctorName))).OrderBy(x => x.DoctorName));
+                                                                                                    && (x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                                                                                                     || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorName.ToLower())))
+                                                                                           .OrderBy(x => x.DoctorName));
                     }
                     // filtrowanie tylko po poradni
                     else
@@ -149,8 +150,9 @@ namespace MedicalCenter.GUI.Registrar
                 // filtrowanie tylko po nazwiskach
                 else if (view.FilterDoctorName.Text.Length > 2)
                 {
-                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.DoctorName.StartsWith(view.FilterDoctorName.Text)
-                                                                                                || view.FilterDoctorName.Text.StartsWith(x.DoctorName)).OrderBy(x => x.DoctorName));
+                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                                                                                                || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()))
+                                                                                       .OrderBy(x => x.DoctorName));
                 }
                 // brak filtrowania
                 else
