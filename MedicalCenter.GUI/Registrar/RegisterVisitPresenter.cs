@@ -73,7 +73,11 @@ namespace MedicalCenter.GUI.Registrar
             // wartość określająca czy rozpatrywany dzień jest wolny od pracy
             bool holiday = userBusinessService.IsHoliday(view.TheDate.SelectedDate.Value);
 
-            view.SourceDoctorsList = new List<DoctorsListItem>();
+            // wyczyszczenie lub utworzenie nowej podstawowej listy lekarzy
+            if (view.SourceDoctorsList == null)
+                view.SourceDoctorsList = new List<DoctorsListItem>();
+            else
+                view.SourceDoctorsList.Clear();
 
             foreach (A_Worker w in rawWorkersList)
             {
@@ -109,8 +113,16 @@ namespace MedicalCenter.GUI.Registrar
                                                                                 
             }
 
-            view.DoctorsList = new List<DoctorsListItem>();
+            // wyczyszczenie lub utworzenie nowej listy źródłowej lekarzy
+            if (view.DoctorsList == null)
+                view.DoctorsList = new List<DoctorsListItem>();
+            else
+                view.DoctorsList.Clear();
+
+            // wypełnienie listy lekarzy
             view.DoctorsList.AddRange(view.SourceDoctorsList);
+
+            // odświeżenie tabeli
             view.DoctorsListTable.Items.Refresh();
         }
 
@@ -287,26 +299,21 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void Back()
         {
+            // przywrócenie domyślnego sortowania
+            view.Criteria = SortingCriteria.SortByDoctorNameAscending;
+            
             // wyczyszczenie filtrów
             view.FilterClinicName.SelectedIndex = -1;
             view.FilterDoctorName.Clear();
 
+            // ustawienie dzisiejszej daty
+            view.TheDate.SelectedDate = DateTime.Today;
+
             // wyczyszczenie zaznaczenia w tabeli
             view.DoctorsListTable.SelectedIndex = -1;
 
-            // czyszczenie tabeli
-            view.SourceDoctorsList.Clear();
-            view.DoctorsList.Clear();
-            view.DoctorsListTable.Items.Refresh();
-
-            // przywrócenie domyślnego sortowania
-            view.Criteria = SortingCriteria.SortByDoctorNameAscending;
-
             // wyczyszczenie ID pacjenta
             view.PatientId = 0;
-
-            // ustawienie dzisiejszej daty
-            view.TheDate.SelectedDate = DateTime.Today;
 
             // przywrócenie widoku menu głównego
             view.ParentWindow.ContentArea.Content = view.ParentWindow.History.Pop();
