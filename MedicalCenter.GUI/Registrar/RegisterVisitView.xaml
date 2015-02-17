@@ -26,16 +26,28 @@
             </StackPanel>
         </Grid>
         
-        <DataGrid Grid.Row="1" Name="DoctorsListTable" ItemsSource="{Binding DoctorsList, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" TabIndex="0"
-                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True"
-                  ScrollViewer.CanContentScroll="True" Margin="10,0,10,15" VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="#00FFFFFF" Background="White"
-                  SelectionChanged="DoctorsListTable_SelectionChanged">
+        <DataGrid Grid.Row="1" Name="DoctorsListTable" ItemsSource="{Binding DoctorsList, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow"
+                  TabIndex="0" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                  CanUserSortColumns="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="10,0,10,15"
+                  VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="#00FFFFFF" Background="White" SelectionChanged="DoctorsListTable_SelectionChanged">
             
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridColumnHeader.IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FFBEE6FD" />
+                        </Trigger>
+                    </Style.Triggers>
                     <Setter Property="Background" Value="CornflowerBlue" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="0,0,0,8" />
+                </Style>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridRow.IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FFC9DEF1" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -45,15 +57,26 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Style.Triggers>
+                        <Trigger Property="ScrollBar.IsEnabled" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
             </DataGrid.Resources>
             
             <DataGrid.Columns>
                 <DataGridTemplateColumn IsReadOnly="True" Width="52*" SortMemberPath="ClinicName">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate x:Name="ClinicsHeader">
-                            <StackPanel Margin="15,0,9,0">
+                            <StackPanel Margin="15,0,9,0" ToolTip="Kliknij, aby posortować/zmienić kolejność">
                                 <Label Content="Poradnia" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
-                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
+                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1"
+                                          Foreground="DimGray"  SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
@@ -68,9 +91,9 @@
                 <DataGridTemplateColumn IsReadOnly="True" Width="48*" SortMemberPath="DoctorName">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                            <StackPanel Margin="9,0,12,0">
+                            <StackPanel Margin="9,0,12,0" ToolTip="Kliknij, aby posortować/zmienić kolejność">
                                 <Label Content="Lekarz" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
-                                <TextBox Name="FilterDoctorName" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" VerticalContentAlignment="Center" FontSize="14"
+                                <TextBox Name="FilterDoctorName" Foreground="DimGray" CaretBrush="DimGray" VerticalContentAlignment="Center" FontSize="14"
                                          BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" Loaded="FilterDoctorName_Loaded" />
                             </StackPanel>
                         </ItemContainerTemplate>
@@ -86,7 +109,8 @@
                 <DataGridTemplateColumn IsReadOnly="True" Width="22*" SortMemberPath="PatientsNumber">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                            <TextBlock Text="Liczba pacjentów" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" TextWrapping="Wrap" Block.TextAlignment="Center" />
+                            <TextBlock Text="Liczba pacjentów" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" TextWrapping="Wrap" Block.TextAlignment="Center"
+                                       ToolTip="Kliknij, aby posortować/zmienić kolejność" />
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
@@ -100,7 +124,8 @@
                 <DataGridTemplateColumn IsReadOnly="True" Width="28*" SortMemberPath="RoomNumber">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                            <Label Content="Nr gabinetu" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
+                            <Label Content="Nr gabinetu" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center"
+                                   ToolTip="Kliknij, aby posortować/zmienić kolejność" />
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>

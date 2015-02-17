@@ -108,7 +108,9 @@ namespace MedicalCenter.GUI.Registrar
                                                                                 
             }
 
-            view.DoctorsList = view.SourceDoctorsList;
+            view.DoctorsList = new List<DoctorsListItem>();
+            view.DoctorsList.AddRange(view.SourceDoctorsList);
+            view.DoctorsListTable.Items.Refresh();
         }
 
         /// <summary>
@@ -136,28 +138,36 @@ namespace MedicalCenter.GUI.Registrar
                     // jeśli wpisano również co najmniej 3 znaki w filtrze nazwiska
                     if (view.FilterDoctorName.Text.Length > 2)
                     {
-                        view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
+                        view.DoctorsList.Clear();
+                        view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)
                                                                                                     && (x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
                                                                                                      || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorName.ToLower())))
                                                                                            .OrderBy(x => x.DoctorName));
+                        view.DoctorsListTable.Items.Refresh();
                     }
                     // filtrowanie tylko po poradni
                     else
                     {
-                        view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)).OrderBy(x => x.DoctorName));
+                        view.DoctorsList.Clear();
+                        view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.ClinicName == (view.FilterClinicName.SelectedItem as string)).OrderBy(x => x.DoctorName));
+                        view.DoctorsListTable.Items.Refresh();
                     }
                 }
                 // filtrowanie tylko po nazwiskach
                 else if (view.FilterDoctorName.Text.Length > 2)
                 {
-                    view.DoctorsList = new List<DoctorsListItem>(view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                    view.DoctorsList.Clear();
+                    view.DoctorsList.AddRange(view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
                                                                                                 || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()))
                                                                                        .OrderBy(x => x.DoctorName));
+                    view.DoctorsListTable.Items.Refresh();
                 }
                 // brak filtrowania
                 else
                 {
-                    view.DoctorsList = view.SourceDoctorsList;
+                    view.DoctorsList.Clear();
+                    view.DoctorsList.AddRange(view.SourceDoctorsList);
+                    view.DoctorsListTable.Items.Refresh();
                 }
             }
         }
