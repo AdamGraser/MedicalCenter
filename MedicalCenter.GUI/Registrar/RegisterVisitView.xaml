@@ -40,10 +40,10 @@
             </DataGrid.Resources>
             
             <DataGrid.Columns>
-                <DataGridTemplateColumn IsReadOnly="True" Width="4*" SortMemberPath="ClinicName">
+                <DataGridTemplateColumn IsReadOnly="True" Width="52*" SortMemberPath="ClinicName">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate x:Name="ClinicsHeader">
-                            <StackPanel Margin="15,0,15,0">
+                            <StackPanel Margin="15,0,9,0">
                                 <Label Content="Poradnia" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
                                 <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
                             </StackPanel>
@@ -51,15 +51,16 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding ClinicName}" Foreground="{Binding Color}" />
+                            <TextBlock Text="{Binding ClinicName}" ToolTip="{Binding ClinicName}" Foreground="{Binding Color}"
+                                       FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" TextTrimming="CharacterEllipsis" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn IsReadOnly="True" Width="5*" SortMemberPath="DoctorName">
+                <DataGridTemplateColumn IsReadOnly="True" Width="48*" SortMemberPath="DoctorName">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                            <StackPanel Margin="15,0,15,0">
+                            <StackPanel Margin="9,0,12,0">
                                 <Label Content="Lekarz" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
                                 <TextBox Name="FilterDoctorName" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" Loaded="FilterDoctorName_Loaded" />
                             </StackPanel>
@@ -67,12 +68,13 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DoctorName}" Foreground="{Binding Color}" />
+                            <TextBlock Text="{Binding DoctorName}" ToolTip="{Binding DoctorName}" Foreground="{Binding Color}"
+                                       FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" TextTrimming="CharacterEllipsis" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn IsReadOnly="True" Width="3*" SortMemberPath="PatientsNumber">
+                <DataGridTemplateColumn IsReadOnly="True" Width="22*" SortMemberPath="PatientsNumber">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
                             <TextBlock Text="Liczba pacjentów" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" TextWrapping="Wrap" Block.TextAlignment="Center" />
@@ -80,12 +82,13 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PatientsNumber}" Foreground="{Binding Color}" />
+                            <TextBlock Text="{Binding PatientsNumber}" Foreground="{Binding Color}"
+                                       FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn IsReadOnly="True" Width="3*" SortMemberPath="RoomNumber">
+                <DataGridTemplateColumn IsReadOnly="True" Width="28*" SortMemberPath="RoomNumber">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <ItemContainerTemplate>
                             <Label Content="Nr gabinetu" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
@@ -93,7 +96,8 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding RoomNumber}" Foreground="{Binding Color}" />
+                            <TextBlock Text="{Binding RoomNumber}" Foreground="{Binding Color}"
+                                       FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
