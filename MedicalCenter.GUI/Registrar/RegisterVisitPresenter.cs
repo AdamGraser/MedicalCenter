@@ -275,12 +275,12 @@ namespace MedicalCenter.GUI.Registrar
                     if (view.Criteria == SortingCriteria.SortByRoomNumberAscending)
                     {
                         view.Criteria = SortingCriteria.SortByRoomNumberDescending;
-                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.RoomNumber));
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderByDescending(x => x.RoomNumber.Length).ThenByDescending(x => x.RoomNumber));
                     }
                     else
                     {
                         view.Criteria = SortingCriteria.SortByRoomNumberAscending;
-                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.RoomNumber));
+                        temp = new List<DoctorsListItem>(view.DoctorsList.OrderBy(x => x.RoomNumber.Length).ThenBy(x => x.RoomNumber));
                     }
                     break;
             }
