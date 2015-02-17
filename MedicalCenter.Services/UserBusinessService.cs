@@ -217,8 +217,9 @@ namespace MedicalCenter.Services
         /// <param name="date">Data, którą objemować ma grafik. Wartość null powoduje, że ta metoda zwraca wartość -1.</param>
         /// <returns>
         /// Maksymalną liczbę pacjentów, jaką lekarz może przyjąć w danym dniu tygodnia, wg. wybranego grafika,
-        /// 0 jeśli nie znaleziono grafika dla wskazanego lekarza i/lub objemującego podaną datę lub nie znaleziono lekarza o podanym ID,
-        /// -1 jeśli drugi argument to null.
+        /// 0 jeśli nie znaleziono grafika dla wskazanego lekarza lub nie znaleziono lekarza o podanym ID,
+        /// -1 jeśli nie znaleziono grafika objemującego podaną datę,
+        /// -15 (-0xFF) jeśli drugi argument to null.
         /// </returns>
         public int GetVisitsPerDay(int doctorId, DateTime date)
         {
@@ -267,10 +268,12 @@ namespace MedicalCenter.Services
                                 break;
                         }
                     }
+                    else
+                        visitsPerDay = -1;
                 }
             }
             else
-                visitsPerDay = -1;
+                visitsPerDay = -0xFF;
 
             return visitsPerDay;
         }

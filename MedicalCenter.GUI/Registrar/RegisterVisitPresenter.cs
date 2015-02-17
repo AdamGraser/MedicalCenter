@@ -80,18 +80,21 @@ namespace MedicalCenter.GUI.Registrar
                 // jeśli pobrane ID ma wartość 0, to lekarz jeszcze nie pracował/już nie pracuje w tej przychodni w wybranym dniu
                 if ((clinicId = userBusinessService.GetClinicId(w.Id, view.TheDate.SelectedDate.Value)) == 0)
                     continue;
+
+                // pobranie maksymalnej planowej liczby wizyt dla danego lekarza
+                // liczba ujemna oznacza brak grafika danego lekarza, obejmującego wskazany dzień - lekarz ten więc nie może pojawić się na liście
+                if ((maxVisitsCount = userBusinessService.GetVisitsPerDay(w.Id, view.TheDate.SelectedDate.Value)) < 0)
+                    continue;
                 
                 // pobranie liczby wizyt zarejestrowanych na wskazany dzień do danego lekarza
                 visitsCount = medicalBusinessService.TodaysVisitsCount(w.Id, view.TheDate.SelectedDate.Value);
-                // pobranie maksymalnej planowej liczby wizyt dla danego lekarza
-                maxVisitsCount = userBusinessService.GetVisitsPerDay(w.Id, view.TheDate.SelectedDate.Value);
 
                 // jeśli wybrany dzień jest wolny od pracy, żaden lekarz nie przyjmuje
                 // w przeciwnym razie trzeba sprawdzać grafik i nieobecności indywidualnie
                 if (!holiday)
                 {
                     // sprawdzenie, czy dany lekarz przyjmuje w danym dniu i czy ma jeszcze wolne godziny do przyjęcia pacjentów
-                    if (maxVisitsCount < 1 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
+                    if (maxVisitsCount == 0 || userBusinessService.IsWorkerAbsent(w.Id, view.TheDate.SelectedDate.Value))
                         state = null;
                     else if (visitsCount == maxVisitsCount)
                         state = false;
@@ -292,7 +295,12 @@ namespace MedicalCenter.GUI.Registrar
                 }
                 while (userBusinessService.IsHoliday(date)
                     || userBusinessService.IsWorkerAbsent(selectedDoctor.DoctorId, date)
-                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) < 1);
+                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) == 0);
+
+                // wartość -1 oznacza brak grafika danego lekarza, obejmującego wskazany dzień,
+                // co oznacza, że lekarz ma komplet pacjentów aż do końca obowiązywania jego grafika (a nawet umowy o pracę z przychodnią)
+                if (maxVisitsCount < 0)
+                    break;
 
                 // pobranie liczby wizyt zarejestrowanych na ten dzień
                 visitsCount = medicalBusinessService.TodaysVisitsCount(selectedDoctor.DoctorId, date);
@@ -300,17 +308,25 @@ namespace MedicalCenter.GUI.Registrar
             // wyszukiwanie trwa dopóki nie zostanie znaleziony dzień, w którym nie osiągnięto maksymalnej liczby zarejestrowanych do wybranego lekarza wizyt
             while (visitsCount >= maxVisitsCount);
 
-            // zapisanie ID lekarza
-            visitsCount = selectedDoctor.DoctorId;
+            if (maxVisitsCount > 0)
+            {
+                // zapisanie ID lekarza
+                visitsCount = selectedDoctor.DoctorId;
 
-            // zmiana daty na "najbliższy wolny termin"
-            view.TheDate.SelectedDate = date;
+                // zmiana daty na "najbliższy wolny termin"
+                view.TheDate.SelectedDate = date;
 
-            // zaznaczenie na odświeżonej liście lekarza, którego dotyczyła ta operacja
-            selectedDoctor = view.DoctorsList.FirstOrDefault(x => x.DoctorId == visitsCount);
+                // zaznaczenie na odświeżonej liście lekarza, którego dotyczyła ta operacja
+                selectedDoctor = view.DoctorsList.FirstOrDefault(x => x.DoctorId == visitsCount);
 
-            if (selectedDoctor != null)
-                view.DoctorsListTable.SelectedIndex = view.DoctorsList.IndexOf(selectedDoctor);
+                if (selectedDoctor != null)
+                    view.DoctorsListTable.SelectedIndex = view.DoctorsList.IndexOf(selectedDoctor);
+            }
+            else
+                System.Windows.Forms.MessageBox.Show("Brak wolnych terminów u wybranego lekarza w okresie obowiązywania jego grafika."
+                                                   , "Brak wolnych terminów"
+                                                   , System.Windows.Forms.MessageBoxButtons.OK
+                                                   , System.Windows.Forms.MessageBoxIcon.Exclamation);
         }
 
         #endregion // Public methods
