@@ -208,11 +208,11 @@ namespace MedicalCenter.GUI.Registrar
                         break;
 
                     case SortingCriteria.SortByRoomNumberAscending:
-                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.RoomNumber));
+                        view.DoctorsList.AddRange(filteredList.OrderBy(x => x.RoomNumber.Length).ThenBy(x => x.RoomNumber));
                         break;
 
                     case SortingCriteria.SortByRoomNumberDescending:
-                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.RoomNumber));
+                        view.DoctorsList.AddRange(filteredList.OrderByDescending(x => x.RoomNumber.Length).ThenByDescending(x => x.RoomNumber));
                         break;
                 }
 
