@@ -37,6 +37,14 @@
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="0,0,0,8" />
                 </Style>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF9DC3E6" />
+                            <Setter Property="BorderBrush" Value="#FF9DC3E6" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
             </DataGrid.Resources>
             
             <DataGrid.Columns>
