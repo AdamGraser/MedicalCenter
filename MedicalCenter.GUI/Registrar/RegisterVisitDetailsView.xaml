@@ -55,6 +55,16 @@
         </StackPanel>
 
         <ListBox Grid.Row="2" x:Name="DailyVisitsList" Margin="10,0,10,0" ScrollViewer.CanContentScroll="True" TabIndex="4" ItemsSource="{Binding DailyVisits}" SelectionChanged="DailyVisitsList_SelectionChanged">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Style.Triggers>
+                        <Trigger Property="ScrollBar.IsEnabled" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -63,13 +73,13 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock Text="{Binding DateOfVisit.Hour}" />
-                            <TextBlock Text=":" />
-                            <TextBlock Text="{Binding DateOfVisit.Minute}" />
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding DateOfVisit.Hour}"   FontSize="20" FontFamily="Segoe UI" TextAlignment="Right" />
+                            <TextBlock Text=":"                            FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
+                            <TextBlock Text="{Binding DateOfVisit.Minute}" FontSize="20" FontFamily="Segoe UI" TextAlignment="Left" />
                         </StackPanel>
 
-                        <TextBlock Grid.Column="1" Text="{Binding PatientName}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding PatientName}" HorizontalAlignment="Center" FontSize="20" FontFamily="Segoe UI" TextTrimming="CharacterEllipsis" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

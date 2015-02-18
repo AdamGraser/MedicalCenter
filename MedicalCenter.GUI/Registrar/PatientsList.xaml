@@ -19,6 +19,16 @@
         </StackPanel>
 
         <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="2" SelectionChanged="PatientsList_SelectionChanged">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Style.Triggers>
+                        <Trigger Property="ScrollBar.IsEnabled" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -26,16 +36,10 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Pesel}" FontFamily="Segoe UI" FontSize="14" Foreground="DimGray" Margin="0,0,8,0" />
                         
-                        <TextBlock Grid.Column="0" Text="{Binding Pesel}" Margin="0,0,8,0" />
-                        
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock Text="{Binding LastName}" />
-                            <TextBlock Text=" " />
-                            <TextBlock Text="{Binding FirstName}" />
-                            <TextBlock Text=" " />
-                            <TextBlock Text="{Binding SecondName}" />
-                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" FontFamily="Segoe UI" FontSize="14" Foreground="DimGray" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

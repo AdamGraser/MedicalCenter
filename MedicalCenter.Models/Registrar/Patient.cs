@@ -38,6 +38,17 @@ namespace MedicalCenter.Models.Registrar
         public string SecondName { get; set; }
 
         /// <summary>
+        /// Zwraca napis zawierający nazwisko i imiona pacjenta, oddzielone spacjami.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return LastName + " " + FirstName + ((SecondName != null && SecondName != string.Empty) ? " " + SecondName : string.Empty);
+            }
+        }
+
+        /// <summary>
         /// Przechowuje datę urodzenia pacjenta.
         /// Jest to wartość z kolumny BirthDate z tabeli M_Patients.
         /// </summary>
