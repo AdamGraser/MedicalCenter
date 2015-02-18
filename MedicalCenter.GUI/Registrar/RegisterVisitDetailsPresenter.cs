@@ -166,7 +166,7 @@ namespace MedicalCenter.GUI.Registrar
                     }
 
                     // dokonanie zmiany daty wizyty
-                    view.VisitData.DateOfVisit = tempDate;
+                    view.TheDate.SelectedDate = tempDate;
                 }
             }
         }
