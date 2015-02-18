@@ -15,7 +15,7 @@
 
         <TextBox Grid.Row="0" Name="FilterPatientName" HorizontalAlignment="Center" Width="210" Height="36" Margin="0,15,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" TabIndex="1" TextChanged="FilterPatientName_TextChanged" />
         
-        <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="2" SelectionChanged="PatientsList_SelectionChanged" Loaded="PatientsList_Loaded">
+        <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="2" SelectionChanged="PatientsList_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

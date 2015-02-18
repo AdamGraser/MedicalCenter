@@ -106,8 +106,6 @@ namespace MedicalCenter.GUI.Registrar
 
         #region Public methods
 
-        #region Generic methods
-
         /// <summary>
         /// Sprawdza, czy wskazany klawisz należy do wskazanej grupy klawiszy.
         /// Dostępne grupy: cyfry, litery lub spacja, obie grupy.
@@ -196,10 +194,6 @@ namespace MedicalCenter.GUI.Registrar
                 view.Save.IsEnabled = IsFormCompleted;
             }
         }
-
-        #endregion // Generic methods
-
-        #region Detailed methods
 
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku szczegółów pacjenta.
@@ -731,8 +725,6 @@ namespace MedicalCenter.GUI.Registrar
                 validationErrors = false;
             }
         }
-
-        #endregion // Detailed methods
 
         #endregion // Public methods
     }

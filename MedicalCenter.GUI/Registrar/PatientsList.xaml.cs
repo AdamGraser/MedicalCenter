@@ -21,16 +21,12 @@ namespace MedicalCenter.GUI.Registrar
     /// </summary>
     public partial class PatientsList : UserControl
     {
-        #region Private fields
+        #region Public properties
 
         /// <summary>
         /// Prezenter obsługujący m.in. zdarzenia użytkownika.
         /// </summary>
-        RegisterVisitDetailsPresenter registerVisitDetailsPresenter;
-
-        #endregion // Private fields
-
-        #region Public properties
+        public RegisterVisitDetailsPresenter Presenter { get; set; }
 
         /// <summary>
         /// Źródło elementów wyświetlanych na liście pacjentów.
@@ -49,13 +45,9 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Konstruktor ustawiający kontekst danych dla listy pacjentów, zapisujący referencję do prezentera i ukrywający ten widok.
         /// </summary>
-        /// <param name="presenter">Referencja do prezentera drugiego ekranu logowania.</param>
-        public PatientsList(RegisterVisitDetailsPresenter presenter)
+        public PatientsList()
         {
             InitializeComponent();
-
-            // zapisanie referencji do prezentera
-            registerVisitDetailsPresenter = presenter;
 
             // ustawienie kontekstu danych dla listy pacjentów
             PatientsListBox.DataContext = this;
@@ -69,17 +61,6 @@ namespace MedicalCenter.GUI.Registrar
         #region Events handlers
 
         /// <summary>
-        /// Obsługa zdarzenia załadowania listy pacjentów (element interfejsu).
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PatientsList_Loaded(object sender, RoutedEventArgs e)
-        {
-            // wypełnienie listy pacjentów
-            registerVisitDetailsPresenter.GetPatientsList();
-        }
-
-        /// <summary>
         /// Obsługa zdarzenia zmiany zawartości pola tekstowego filtru.
         /// </summary>
         /// <param name="sender"></param>
@@ -87,7 +68,7 @@ namespace MedicalCenter.GUI.Registrar
         private void FilterPatientName_TextChanged(object sender, TextChangedEventArgs e)
         {
             // filtrowanie listy pacjentów
-            registerVisitDetailsPresenter.FilterPatientName();
+            Presenter.ChoosePatientFilter();
         }
         
         /// <summary>
@@ -98,7 +79,7 @@ namespace MedicalCenter.GUI.Registrar
         private void PatientsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // aktywacja/dezaktywacja przycisków "Szczegóły" i "Wybierz"
-            registerVisitDetailsPresenter.PatientSelected();
+            Presenter.ChoosePatientSelected();
         }
 
         /// <summary>
@@ -109,7 +90,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             // wyczyszczenie filtra i zaznaczenia na liście pacjentów, ukrycie widoku listy pacjentów
-            registerVisitDetailsPresenter.BackPatientsList();
+            Presenter.ChoosePatientBack();
         }
 
         /// <summary>
@@ -120,7 +101,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Details_Click(object sender, RoutedEventArgs e)
         {
             // wyświetlenie szczegółów wybranego pacjenta
-            registerVisitDetailsPresenter.PatientDetails();
+            Presenter.ChoosePatientDetails();
         }
 
         /// <summary>
@@ -131,7 +112,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Choose_Click(object sender, RoutedEventArgs e)
         {
             // przekazanie ID wybranego pacjenta do widoku głównego, ukrycie listy pacjentów
-            registerVisitDetailsPresenter.ChoosePatient();
+            Presenter.ChoosePatientSelect();
         }
 
         #endregion // Events handlers

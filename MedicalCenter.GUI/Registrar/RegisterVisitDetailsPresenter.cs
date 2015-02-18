@@ -56,8 +56,6 @@ namespace MedicalCenter.GUI.Registrar
 
         #region Public methods
 
-        #region Generic methods
-
         /// <summary>
         /// Pobiera i przekazuje do widoku listę wizyt z danego dnia dla wybranego lekarza.
         /// Jeśli liczba wizyt osiągnęła bądź przekroczyła maksimum, uaktywniany jest checkbox "Nagły przypadek".
@@ -77,19 +75,6 @@ namespace MedicalCenter.GUI.Registrar
             else
                 view.IsEmergency.IsEnabled = false;
         }
-
-        /// <summary>
-        /// Wypełnia listę pacjentów.
-        /// </summary>
-        public void GetPatientsList()
-        {
-            view.PatientsListView.SourcePatients = patientBusinessService.GetPatients();
-            view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
-        }
-
-        #endregion // Generic methods
-
-        #region Detailed methods
 
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Dodaj pacjenta" przy liście wizyt (rejestracja wizyty).
@@ -228,9 +213,26 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
+        /// </summary>
+        public void ChoosePatient()
+        {
+            // pobranie listy pacjentów
+            view.PatientsListView.SourcePatients = patientBusinessService.GetPatients();
+            view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
+
+            // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
+            if (view.VisitData.PatientId > 0)
+                view.PatientsListView.PatientsListBox.SelectedIndex = view.PatientsListView.Patients.IndexOf(view.PatientsListView.Patients.Find(x => x.Id == view.VisitData.PatientId));
+
+            // pokazanie listy pacjentów
+            view.PatientsListView.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        /// <summary>
         /// Filtruje listę pacjentów.
         /// </summary>
-        public void FilterPatientName()
+        public void ChoosePatientFilter()
         {
             // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
             if (view.PatientsListView.FilterPatientName.Text.Length > 2)
@@ -247,7 +249,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Aktywuje/dezaktywuje przyciski "Szczegóły" i "Wybierz" w zależności od zaznaczenia pacjenta bądź jego braku.
         /// </summary>
-        public void PatientSelected()
+        public void ChoosePatientSelected()
         {
             // wybranie pacjenta -> aktywacja przycisków
             if (view.PatientsListView.PatientsListBox.SelectedIndex > -1)
@@ -265,7 +267,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Obsługa kliknięcia przycisku "Powrót" pod listą pacjentów.
         /// </summary>
-        public void BackPatientsList()
+        public void ChoosePatientBack()
         {
             // ukrycie widoku listy pacjentów
             view.PatientsListView.Visibility = System.Windows.Visibility.Collapsed;
@@ -280,7 +282,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Wyświetla szczegóły pacjenta (obsługa kliknięcia przycisku "Szczegóły" pod listą pacjentów).
         /// </summary>
-        public void PatientDetails()
+        public void ChoosePatientDetails()
         {
             // dodanie tego widoku do historii
             view.ParentWindow.History.Push(view);
@@ -302,7 +304,7 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Przekazanie ID wybranego pacjenta do głównego widoku i schowanie widoku listy pacjentów (obsługa kliknięcia przycisku "Wybierz" pod listą pacjentów).
         /// </summary>
-        public void ChoosePatient()
+        public void ChoosePatientSelect()
         {
             // przekazanie ID oraz nazwiska i imienia wybranego pacjenta
             view.VisitData.PatientId = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].Id;
@@ -310,26 +312,18 @@ namespace MedicalCenter.GUI.Registrar
                              + view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].FirstName;
             
             // schowanie listy pacjentów
-            BackPatientsList();
+            ChoosePatientBack();
+
+            // wyczyszczenie listy pacjentów
+            view.PatientsListView.Patients.Clear();
+            view.PatientsListView.SourcePatients.Clear();
+            view.PatientsListView.PatientsListBox.Items.Refresh();
 
             // ew. aktywacja przycisku "Zarejestruj"
             if(view.DailyVisitsList.SelectedIndex > -1)
                 view.Register.IsEnabled = true;
             else
                 view.Register.IsEnabled = false;
-        }
-
-        /// <summary>
-        /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
-        /// </summary>
-        public void SelectPatient()
-        {
-            // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
-            if (view.VisitData.PatientId > 0)
-                view.PatientsListView.PatientsListBox.SelectedIndex = view.PatientsListView.Patients.IndexOf(view.PatientsListView.Patients.Find(x => x.Id == view.VisitData.PatientId));
-
-            // pokazanie listy pacjentów
-            view.PatientsListView.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>
@@ -358,8 +352,6 @@ namespace MedicalCenter.GUI.Registrar
                 view.ParentWindow.RegistrarRegisterVisitView.ViewBack();
             }
         }
-
-        #endregion // Detailed methods
 
         #endregion // Public methods
     }
