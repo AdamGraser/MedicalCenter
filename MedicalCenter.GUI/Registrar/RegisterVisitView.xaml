@@ -29,8 +29,8 @@
         <DataGrid Grid.Row="1" Name="DoctorsListTable" ItemsSource="{Binding DoctorsList, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow"
                   TabIndex="0" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
                   CanUserSortColumns="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="10,0,10,15"
-                  VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="#00FFFFFF" Background="White" SelectionChanged="DoctorsListTable_SelectionChanged"
-                  Sorting="DoctorsListTable_Sorting">
+                  VerticalGridLinesBrush="CornflowerBlue" HorizontalGridLinesBrush="#00FFFFFF" Background="White" BorderBrush="CornflowerBlue"
+                  SelectionChanged="DoctorsListTable_SelectionChanged" Sorting="DoctorsListTable_Sorting">
             
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -76,8 +76,8 @@
                         <ItemContainerTemplate x:Name="ClinicsHeader">
                             <StackPanel Margin="15,0,9,0" ToolTip="Kliknij, aby posortować/zmienić kolejność">
                                 <Label Content="Poradnia" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
-                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" TabIndex="1"
-                                          Foreground="DimGray"  SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
+                                <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" Height="21"
+                                          TabIndex="1" BorderThickness="0" Foreground="DimGray" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>

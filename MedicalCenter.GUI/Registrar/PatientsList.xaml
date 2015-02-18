@@ -18,7 +18,7 @@
             <Button Name="Sort" Content="↑" ToolTip="Sortowanie rosnące. Kliknij, aby posortować malejąco." Height="36" Width="37" Padding="0,-7,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Background="White" Foreground="CornflowerBlue" FontFamily="Segoe UI" FontSize="32" VerticalContentAlignment="Center" HorizontalAlignment="Center" TabIndex="2" Click="Sort_Click" />
         </StackPanel>
 
-        <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="2" SelectionChanged="PatientsList_SelectionChanged">
+        <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="3" SelectionChanged="PatientsList_SelectionChanged">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ScrollBar}">
                     <Style.Triggers>
@@ -46,9 +46,9 @@
         </ListBox>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
-            <Button Name="Back" Content="Powrót" Padding="26,0,27,0" Margin="0,0,30,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="5" IsCancel="True" Click="Back_Click" />
-            <Button Name="Details" Content="Szczegóły" Padding="26,0,27,0" Margin="0,0,30,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="3" IsEnabled="False" Click="Details_Click" />
-            <Button Name="Choose" Content="Wybierz" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="4" IsEnabled="False" IsDefault="True" Click="Choose_Click" />
+            <Button Name="Back" Content="Powrót" Padding="26,0,27,0" Margin="0,0,30,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="6" IsCancel="True" Click="Back_Click" />
+            <Button Name="Details" Content="Szczegóły" Padding="26,0,27,0" Margin="0,0,30,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="4" IsEnabled="False" Click="Details_Click" />
+            <Button Name="Choose" Content="Wybierz" Padding="26,0,27,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="5" IsEnabled="False" IsDefault="True" Click="Choose_Click" />
         </StackPanel>
         
     </Grid>
