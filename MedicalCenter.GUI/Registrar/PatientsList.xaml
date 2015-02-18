@@ -13,8 +13,11 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Name="FilterPatientName" HorizontalAlignment="Center" Width="210" Height="36" Margin="0,15,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" TabIndex="1" TextChanged="FilterPatientName_TextChanged" />
-        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <TextBox Name="FilterPatientName" HorizontalAlignment="Center" Width="210" Height="36" Margin="67,0,30,0" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" TabIndex="1" TextChanged="FilterPatientName_TextChanged" />
+            <Button Name="Sort" Content="↑" ToolTip="Sortowanie rosnące. Kliknij, aby posortować malejąco." Height="36" Width="37" Padding="0,-7,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Background="White" Foreground="CornflowerBlue" FontFamily="Segoe UI" FontSize="32" VerticalContentAlignment="Center" HorizontalAlignment="Center" TabIndex="2" Click="Sort_Click" />
+        </StackPanel>
+
         <ListBox Grid.Row="1" Name="PatientsListBox" Width="500" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Stretch" ItemsSource="{Binding Patients}" TabIndex="2" SelectionChanged="PatientsList_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>

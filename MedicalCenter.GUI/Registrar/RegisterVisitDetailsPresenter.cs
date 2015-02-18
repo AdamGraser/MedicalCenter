@@ -249,19 +249,57 @@ namespace MedicalCenter.GUI.Registrar
         {
             // wyczyszczenie listy pacjentów
             view.PatientsListView.Patients.Clear();
+
+            IEnumerable<Patient> temp = new List<Patient>();
             
             // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
             if (view.PatientsListView.FilterPatientName.Text.Length > 2)
-                // pacjenci sortowani są najpierw wg. nazwisk, a następnie wg. imion (pierwszych)
-                view.PatientsListView.Patients.AddRange(
-                    view.PatientsListView.SourcePatients.Where(x => x.LastName.ToLower().StartsWith(view.PatientsListView.FilterPatientName.Text.ToLower())
-                                                                 || view.PatientsListView.FilterPatientName.Text.ToLower().StartsWith(x.LastName.ToLower()))
-                                                        .OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+                temp = view.PatientsListView.SourcePatients.Where(x => x.LastName.ToLower().StartsWith(view.PatientsListView.FilterPatientName.Text.ToLower())
+                                                                    || view.PatientsListView.FilterPatientName.Text.ToLower().StartsWith(x.LastName.ToLower()));
             // jeśli wpisano mniej niż 3 znaki, wyświetlana jest pełna lista pacjentów
             else
-                view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients);
+                temp = view.PatientsListView.SourcePatients;
+
+            // uwzględnienie sortowania
+            if (view.PatientsListView.SortDescending)
+                view.PatientsListView.Patients.AddRange(temp.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName));
+            else
+                view.PatientsListView.Patients.AddRange(temp.OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
 
             // odświeżenie listy
+            view.PatientsListView.PatientsListBox.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Sortuje listę pacjentów rosnąco lub malejąco wg. nazwisk i imion.
+        /// </summary>
+        public void ChoosePatientSort()
+        {
+            // stworzenie kopii listy źródłowej pacjentów
+            List<Patient> temp = new List<Patient>(view.PatientsListView.Patients);
+
+            // wyczyszczenie źródłowej listy pacjentów
+            view.PatientsListView.Patients.Clear();
+
+            // jeśli dotychczas lista była posortowana malejąco
+            if (view.PatientsListView.SortDescending)
+            {
+                // zmiana sortowania na rosnące
+                view.PatientsListView.SortDescending = false;
+                view.PatientsListView.Sort.Content = "↑";
+                view.PatientsListView.Sort.ToolTip = "Sortowanie rosnące. Kliknij, aby posortować malejąco.";
+                view.PatientsListView.Patients.AddRange(temp.OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+            }
+            else
+            {
+                // zmiana sortowania na rosnące
+                view.PatientsListView.SortDescending = true;
+                view.PatientsListView.Sort.Content = "↓";
+                view.PatientsListView.Sort.ToolTip = "Sortowanie malejące. Kliknij, aby posortować rosnąco.";
+                view.PatientsListView.Patients.AddRange(temp.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName));
+            }
+
+            // odświeżanie listy
             view.PatientsListView.PatientsListBox.Items.Refresh();
         }
 

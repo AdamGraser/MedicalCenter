@@ -38,6 +38,11 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public List<Patient> SourcePatients { get; set; }
 
+        /// <summary>
+        /// Określa czy lista pacjentów ma być sortowana malejąco.
+        /// </summary>
+        public bool SortDescending { get; set; }
+
         #endregion // Public properties
 
         #region Ctors
@@ -69,6 +74,17 @@ namespace MedicalCenter.GUI.Registrar
         {
             // filtrowanie listy pacjentów
             Presenter.ChoosePatientFilter();
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia kliknięcia przycisku sortowania.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Sort_Click(object sender, RoutedEventArgs e)
+        {
+            // sortowanie listy pacjentów
+            Presenter.ChoosePatientSort();
         }
         
         /// <summary>
