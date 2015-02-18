@@ -303,32 +303,62 @@ namespace MedicalCenter.Services
                     {
                         case DayOfWeek.Monday:
                             if (schedule.D1From != null && schedule.D1To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D1From.Value.Hour == 0) ? "00" : schedule.D1From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D1From.Value.Minute == 0) ? "00" : schedule.D1From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D1To.Value.Hour == 0) ? "00" : schedule.D1To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D1To.Value.Minute == 0) ? "00" : schedule.D1To.Value.Minute.ToString());
+                            }
                             break;
 
                         case DayOfWeek.Tuesday:
                             if (schedule.D2From != null && schedule.D2To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D2From.Value.Hour == 0) ? "00" : schedule.D2From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D2From.Value.Minute == 0) ? "00" : schedule.D2From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D2To.Value.Hour == 0) ? "00" : schedule.D2To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D2To.Value.Minute == 0) ? "00" : schedule.D2To.Value.Minute.ToString());
+                            }
                             break;
 
                         case DayOfWeek.Wednesday:
                             if (schedule.D3From != null && schedule.D3To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D3From.Value.Hour == 0) ? "00" : schedule.D3From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D3From.Value.Minute == 0) ? "00" : schedule.D3From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D3To.Value.Hour == 0) ? "00" : schedule.D3To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D3To.Value.Minute == 0) ? "00" : schedule.D3To.Value.Minute.ToString());
+                            }
                             break;
 
                         case DayOfWeek.Thursday:
                             if (schedule.D4From != null && schedule.D4To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D4From.Value.Hour == 0) ? "00" : schedule.D4From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D4From.Value.Minute == 0) ? "00" : schedule.D4From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D4To.Value.Hour == 0) ? "00" : schedule.D4To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D4To.Value.Minute == 0) ? "00" : schedule.D4To.Value.Minute.ToString());
+                            }
                             break;
 
                         case DayOfWeek.Friday:
                             if (schedule.D5From != null && schedule.D5To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D5From.Value.Hour == 0) ? "00" : schedule.D5From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D5From.Value.Minute == 0) ? "00" : schedule.D5From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D5To.Value.Hour == 0) ? "00" : schedule.D5To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D5To.Value.Minute == 0) ? "00" : schedule.D5To.Value.Minute.ToString());
+                            }
                             break;
 
                         case DayOfWeek.Saturday:
                             if (schedule.D6From != null && schedule.D6To != null)
-                                workingHours = schedule.D1From.Value.Hour + ":" + schedule.D1From.Value.Minute + " - " + schedule.D1To.Value.Hour + ":" + schedule.D1To.Value.Minute;
+                            {
+                                workingHours = ((schedule.D6From.Value.Hour == 0) ? "00" : schedule.D6From.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D6From.Value.Minute == 0) ? "00" : schedule.D6From.Value.Minute.ToString());
+                                workingHours += " - " + ((schedule.D6To.Value.Hour == 0) ? "00" : schedule.D6To.Value.Hour.ToString());
+                                workingHours += ":" + ((schedule.D6To.Value.Minute == 0) ? "00" : schedule.D6To.Value.Minute.ToString());
+                            }
                             break;
                     }
                 }
