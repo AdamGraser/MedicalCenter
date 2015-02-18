@@ -73,11 +73,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="{Binding DateOfVisit.Hour}"   FontSize="20" FontFamily="Segoe UI" TextAlignment="Right" />
-                            <TextBlock Text=":"                            FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
-                            <TextBlock Text="{Binding DateOfVisit.Minute}" FontSize="20" FontFamily="Segoe UI" TextAlignment="Left" />
-                        </StackPanel>
+                        <TextBlock Grid.Column="0" Text="{Binding HourOfVisit}" FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
 
                         <TextBlock Grid.Column="1" Text="{Binding PatientName}" HorizontalAlignment="Center" FontSize="20" FontFamily="Segoe UI" TextTrimming="CharacterEllipsis" />
                     </Grid>

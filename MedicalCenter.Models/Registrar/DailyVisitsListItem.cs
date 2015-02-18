@@ -37,6 +37,19 @@ namespace MedicalCenter.Models.Registrar
         public DateTime DateOfVisit { get; private set; }
 
         /// <summary>
+        /// Zwraca napis zawierający godzinę i minutę ze struktury "DateOfVisit", oddzielone dwukropkiem.
+        /// </summary>
+        public string HourOfVisit
+        {
+            get
+            {
+                return ((DateOfVisit.Hour == 0) ? "00" : DateOfVisit.Hour.ToString())
+                       + ":" +
+                       ((DateOfVisit.Minute == 0) ? "00" : DateOfVisit.Minute.ToString());
+            }
+        }
+
+        /// <summary>
         /// Zwraca nazwisko i imię pacjenta, oddzielone spacją lub pusty string, jeśli brak nazwiska.
         /// </summary>
         public string PatientName
