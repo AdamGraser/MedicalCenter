@@ -62,12 +62,21 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void GetVisitsList()
         {
-            // pobranie listy wizyt
-            view.DailyVisits = medicalBusinessService.GetTodaysVisits(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
-
-            // jeśli jest null, to lekarz nie przyjmuje w danym dniu (tworzenie nowej listy, bo null'a się nie poda jako ItemsSource)
+            // wyczyszczenie lub utworzenie listy wizyt
             if (view.DailyVisits == null)
                 view.DailyVisits = new List<DailyVisitsListItem>();
+            else
+                view.DailyVisits.Clear();
+
+            // pobranie listy wizyt
+            List<DailyVisitsListItem> temp = medicalBusinessService.GetTodaysVisits(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
+
+            // wypełnienie listy wizyt
+            if (temp != null)
+                view.DailyVisits.AddRange(temp);
+
+            // odświeżenie listy
+            view.DailyVisitsList.Items.Refresh();
 
             // sprawdzenie liczby wizyt -> aktywacja lub dezaktywacja checkbox'a
             if (view.DailyVisits.Count >= medicalBusinessService.TodaysVisitsCount(view.VisitData.DoctorId, view.VisitData.DateOfVisit))
@@ -104,15 +113,12 @@ namespace MedicalCenter.GUI.Registrar
             // wyczyszczenie zaznaczenia na liście
             view.DailyVisitsList.SelectedIndex = -1;
 
-            // czyszczenie listy
-            view.DailyVisits.Clear();
+            // przywracanie domyślnej daty
+            view.TheDate.SelectedDate = DateTime.Today;
 
             // czyszczenie i dezaktywacja pola "Nagły przypadek"
             view.IsEmergency.IsChecked = false;
             view.IsEmergency.IsEnabled = false;
-
-            // przywracanie domyślnej daty
-            view.TheDate.SelectedDate = DateTime.Today;
 
             // wyczyszczenie ID, nazwiska i imienia pacjenta oraz ID, nazwiska i imienia lekarza
             view.VisitData.PatientId = 0;
@@ -217,9 +223,16 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void ChoosePatient()
         {
+            // stworzenie w razie potrzeby listy źródłowej pacjentów
+            if (view.PatientsListView.Patients == null)
+                view.PatientsListView.Patients =new List<Patient>();
+            
             // pobranie listy pacjentów
             view.PatientsListView.SourcePatients = patientBusinessService.GetPatients();
-            view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
+            view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients);
+
+            // odświeżenie listy
+            view.PatientsListView.PatientsListBox.Items.Refresh();
 
             // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
             if (view.VisitData.PatientId > 0)
@@ -234,16 +247,22 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void ChoosePatientFilter()
         {
+            // wyczyszczenie listy pacjentów
+            view.PatientsListView.Patients.Clear();
+            
             // jeśli wpisano co najmniej 3 znaki, następuje filtrowanie pacjentów po nazwiskach
             if (view.PatientsListView.FilterPatientName.Text.Length > 2)
                 // pacjenci sortowani są najpierw wg. nazwisk, a następnie wg. imion (pierwszych)
-                view.PatientsListView.Patients = 
-                    new List<Patient>(view.PatientsListView.SourcePatients.Where(x => x.LastName.ToLower().StartsWith(view.PatientsListView.FilterPatientName.Text.ToLower())
-                                                                                   || view.PatientsListView.FilterPatientName.Text.ToLower().StartsWith(x.LastName.ToLower()))
-                                                                          .OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+                view.PatientsListView.Patients.AddRange(
+                    view.PatientsListView.SourcePatients.Where(x => x.LastName.ToLower().StartsWith(view.PatientsListView.FilterPatientName.Text.ToLower())
+                                                                 || view.PatientsListView.FilterPatientName.Text.ToLower().StartsWith(x.LastName.ToLower()))
+                                                        .OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
             // jeśli wpisano mniej niż 3 znaki, wyświetlana jest pełna lista pacjentów
             else
-                view.PatientsListView.Patients = view.PatientsListView.SourcePatients;
+                view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients);
+
+            // odświeżenie listy
+            view.PatientsListView.PatientsListBox.Items.Refresh();
         }
 
         /// <summary>
@@ -271,6 +290,11 @@ namespace MedicalCenter.GUI.Registrar
         {
             // ukrycie widoku listy pacjentów
             view.PatientsListView.Visibility = System.Windows.Visibility.Collapsed;
+
+            // czyszczenie listy pacjentów
+            view.PatientsListView.Patients.Clear();
+            view.PatientsListView.SourcePatients = null;
+            view.PatientsListView.PatientsListBox.Items.Refresh();
 
             // wyczyszczenie filtra
             view.PatientsListView.FilterPatientName.Clear();
@@ -313,11 +337,6 @@ namespace MedicalCenter.GUI.Registrar
             
             // schowanie listy pacjentów
             ChoosePatientBack();
-
-            // wyczyszczenie listy pacjentów
-            view.PatientsListView.Patients.Clear();
-            view.PatientsListView.SourcePatients.Clear();
-            view.PatientsListView.PatientsListBox.Items.Refresh();
 
             // ew. aktywacja przycisku "Zarejestruj"
             if(view.DailyVisitsList.SelectedIndex > -1)

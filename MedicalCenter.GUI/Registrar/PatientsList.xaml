@@ -24,14 +24,14 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         
-                        <TextBlock Grid.Column="0" Text="{Binding Path=/Pesel}" Margin="0,0,8,0" />
+                        <TextBlock Grid.Column="0" Text="{Binding Pesel}" Margin="0,0,8,0" />
                         
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=/LastName}" />
+                            <TextBlock Text="{Binding LastName}" />
                             <TextBlock Text=" " />
-                            <TextBlock Text="{Binding Path=/FirstName}" />
+                            <TextBlock Text="{Binding FirstName}" />
                             <TextBlock Text=" " />
-                            <TextBlock Text="{Binding Path=/SecondName}" />
+                            <TextBlock Text="{Binding SecondName}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
