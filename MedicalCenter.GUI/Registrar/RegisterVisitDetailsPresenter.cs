@@ -197,10 +197,11 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void HourSelected()
         {
-            // jeśli wybrano z listy wolną godzinę
             if (view.DailyVisitsList.SelectedIndex > -1)
             {
-                if (view.DailyVisits[view.DailyVisitsList.SelectedIndex].PatientName == string.Empty)
+                // jeśli wybrano z listy wolną godzinę, z maksymalnie 5-minutowym opóźnieniem
+                if (view.DailyVisits[view.DailyVisitsList.SelectedIndex].PatientName == string.Empty
+                 && DateTime.Now.AddMinutes(-5.0) <= view.DailyVisits[view.DailyVisitsList.SelectedIndex].DateOfVisit)
                 {
                     // oraz wybrano pacjenta, to przycisk "Zarejestruj" jest aktywowany
                     if (view.VisitData.PatientId > 0)
@@ -213,7 +214,7 @@ namespace MedicalCenter.GUI.Registrar
                 {
                     view.Register.IsEnabled = false;
                     
-                    // jeśli wybrano zajętą godzinę, zaznaczenie zostaje wyczyszczone
+                    // jeśli wybrano zajętą lub zbyt późną godzinę, zaznaczenie zostaje wyczyszczone
                     view.DailyVisitsList.SelectedIndex = -1;
                 }
             }
