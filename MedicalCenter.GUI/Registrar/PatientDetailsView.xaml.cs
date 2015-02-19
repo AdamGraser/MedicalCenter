@@ -126,7 +126,7 @@ namespace MedicalCenter.GUI.Registrar
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             // wyczyszczenie wszystkich pól i powrót do menu głównego
-            patientDetailsPresenter.Back(true);
+            patientDetailsPresenter.Back();
         }
 
         /// <summary>

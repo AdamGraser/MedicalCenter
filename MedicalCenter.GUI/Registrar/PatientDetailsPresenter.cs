@@ -149,51 +149,62 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="charactersGroup">Grupa (lub kombinacja grup) prawidłowych znaków.</param>
         public void TextBoxChanged(TextBox textBox, GroupsOfCharacters charactersGroup)
         {
-            if (textBox != null)
+            if (editMode)
             {
-                bool change = false;
-
-                // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
-                if (textBox == null)
-                    throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
-
-                // jeśli wybrana grupa to cyfry + ew. litery i spacja
-                if ((charactersGroup & GroupsOfCharacters.Digits) != 0)
+                if (textBox != null)
                 {
-                    bool both = ((charactersGroup & (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space)) != 0) ? true : false;
+                    bool change = false;
 
-                    foreach (char c in textBox.Text)
+                    // rzucenie wyjątkiem jeśli pierwszy argument ma wartość null
+                    if (textBox == null)
+                        throw new ArgumentNullException("textBox", "Pole tekstowe ma wartość null");
+
+                    // jeśli wybrana grupa to cyfry + ew. litery i spacja
+                    if ((charactersGroup & GroupsOfCharacters.Digits) != 0)
                     {
-                        // jeśli to nie cyfra            (i ew.           nie litera i nie spacja)
-                        if (!char.IsDigit(c) && (!both || (!char.IsLetter(c) && c != ' ')))
-                        {
-                            // znajdź i zamień
-                            textBox.Text = textBox.Text.Replace(c.ToString(), "");
+                        bool both = ((charactersGroup & (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space)) != 0) ? true : false;
 
-                            change = true;
+                        foreach (char c in textBox.Text)
+                        {
+                            // jeśli to nie cyfra            (i ew.           nie litera i nie spacja)
+                            if (!char.IsDigit(c) && (!both || (!char.IsLetter(c) && c != ' ')))
+                            {
+                                // znajdź i zamień
+                                textBox.Text = textBox.Text.Replace(c.ToString(), "");
+
+                                change = true;
+                            }
                         }
                     }
-                }
-                // jeśli wybrana grupa to litery i spacja
-                else if (charactersGroup == (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space))
-                {
-                    foreach (char c in textBox.Text)
+                    // jeśli wybrana grupa to litery i spacja
+                    else if (charactersGroup == (GroupsOfCharacters.BigLetters | GroupsOfCharacters.SmallLetters | GroupsOfCharacters.Space))
                     {
-                        if (!char.IsLetter(c) && c != ' ')
+                        foreach (char c in textBox.Text)
                         {
-                            textBox.Text = textBox.Text.Replace(c.ToString(), "");
+                            if (!char.IsLetter(c) && c != ' ')
+                            {
+                                textBox.Text = textBox.Text.Replace(c.ToString(), "");
 
-                            change = true;
+                                change = true;
+                            }
                         }
                     }
+
+                    if (change)
+                        textBox.CaretIndex = textBox.Text.Length;
+
+                    // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                    view.Save.IsEnabled = IsFormCompleted;
                 }
-
-                if (change)
-                    textBox.CaretIndex = textBox.Text.Length;
-
-                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-                view.Save.IsEnabled = IsFormCompleted;
             }
+        }
+
+        /// <summary>
+        /// Wywołuje swoje argumentowe przeciążenie, podając jako argument wartość określającą czy formularz jest w trybie edycji.
+        /// </summary>
+        public void Back()
+        {
+            Back(editMode);
         }
 
         /// <summary>
@@ -389,18 +400,18 @@ namespace MedicalCenter.GUI.Registrar
                     view.ViewTitle.Text = "Podgląd pacjenta";
                 }
 
-                view.LastName.IsEnabled = editMode;
-                view.FirstName.IsEnabled = editMode;
-                view.SecondName.IsEnabled = editMode;
-                view.BirthDate.IsEnabled = editMode;
-                view.Gender.IsEnabled = editMode;
-                view.Pesel.IsEnabled = editMode;
-                view.Street.IsEnabled = editMode;
-                view.BuildingNumber.IsEnabled = editMode;
-                view.Apartment.IsEnabled = editMode;
-                view.PostalCode.IsEnabled = editMode;
-                view.City.IsEnabled = editMode;
-                view.Post.IsEnabled = editMode;
+                view.LastName.IsEnabled =
+                view.FirstName.IsEnabled =
+                view.SecondName.IsEnabled =
+                view.BirthDate.IsEnabled =
+                view.Gender.IsEnabled =
+                view.Pesel.IsEnabled =
+                view.Street.IsEnabled =
+                view.BuildingNumber.IsEnabled =
+                view.Apartment.IsEnabled =
+                view.PostalCode.IsEnabled =
+                view.City.IsEnabled =
+                view.Post.IsEnabled =
                 view.IsInsured.IsEnabled = editMode;
             }
         }
