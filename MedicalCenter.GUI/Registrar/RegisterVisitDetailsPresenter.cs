@@ -359,6 +359,19 @@ namespace MedicalCenter.GUI.Registrar
 
             // przekazanie danych pacjenta do nowego widoku
             view.ParentWindow.RegistrarPatientDetailsView.PatientData = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex];
+            view.ParentWindow.RegistrarPatientDetailsView.Apartment.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.Apartment;
+            view.ParentWindow.RegistrarPatientDetailsView.BirthDate.SelectedDate = view.ParentWindow.RegistrarPatientDetailsView.PatientData.BirthDate;
+            view.ParentWindow.RegistrarPatientDetailsView.BuildingNumber.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.BuildingNumber;
+            view.ParentWindow.RegistrarPatientDetailsView.City.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.City;
+            view.ParentWindow.RegistrarPatientDetailsView.FirstName.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.FirstName;
+            view.ParentWindow.RegistrarPatientDetailsView.Gender.SelectedIndex = ((view.ParentWindow.RegistrarPatientDetailsView.PatientData.Gender) ? 0 : 1);
+            view.ParentWindow.RegistrarPatientDetailsView.IsInsured.IsChecked = view.ParentWindow.RegistrarPatientDetailsView.PatientData.IsInsured;
+            view.ParentWindow.RegistrarPatientDetailsView.LastName.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.LastName;
+            view.ParentWindow.RegistrarPatientDetailsView.Pesel.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.Pesel.ToString();
+            view.ParentWindow.RegistrarPatientDetailsView.Post.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.Post;
+            view.ParentWindow.RegistrarPatientDetailsView.PostalCode.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.PostalCode;
+            view.ParentWindow.RegistrarPatientDetailsView.SecondName.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.SecondName;
+            view.ParentWindow.RegistrarPatientDetailsView.Street.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.Street;
         }
 
         /// <summary>
