@@ -115,6 +115,9 @@ namespace MedicalCenter.Services
             // konwersja do listy obiektów Patient
             foreach (M_Patient e in entities)
             {
+                if (e.Id == 0)
+                    continue;
+
                 patients.Add(new Patient(e.Id, e.LastName, e.FirstName, e.SecondName, e.BirthDate, e.Gender, e.Pesel,
                                          e.Street, e.BuildingNumber, e.Apartment, e.PostalCode, e.City, e.Post, e.IsInsured));
             }

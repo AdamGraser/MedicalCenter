@@ -54,8 +54,11 @@ namespace MedicalCenter.GUI.Registrar
         {
             InitializeComponent();
 
+            // utworzenie pustej listy na potrzeby działania data bindingu
+            Patients = new List<Patient>();
+            
             // ustawienie kontekstu danych dla listy pacjentów
-            PatientsListBox.DataContext = this;
+            DataContext = this;
 
             // ukrycie tego widoku (stan domyślny)
             Visibility = System.Windows.Visibility.Collapsed;
