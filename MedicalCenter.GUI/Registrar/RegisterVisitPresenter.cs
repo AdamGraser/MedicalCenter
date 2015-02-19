@@ -333,7 +333,7 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.PatientId = view.PatientId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.DoctorName = userBusinessService.GetWorkerName(view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId);
-            //view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.TheDate.SelectedDate = view.TheDate.SelectedDate.Value;
 
             // jeśli wybrano pacjenta, do następnego widoku przekazywane jest także jego imię i nazwisko

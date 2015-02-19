@@ -33,7 +33,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Data" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" VerticalAlignment="Center" Margin="0,0,8,0" />
                 <Button x:Name="TheDateBackwards" Content="&lt;" Height="36" Padding="5,-8,7,0" Margin="0,2,8,0" BorderBrush="CornflowerBlue" BorderThickness="1" Background="White" Foreground="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="32" VerticalContentAlignment="Center" TabIndex="1" Click="TheDateBackwards_Click" />
-                <DatePicker x:Name="TheDate" Width="210" Height="36" Margin="0,2,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" TabIndex="2" SelectedDate="{Binding VisitData.DateOfVisit, Mode=TwoWay}" SelectedDateChanged="TheDate_SelectedDateChanged" />
+                <DatePicker x:Name="TheDate" Width="210" Height="36" Margin="0,2,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" TabIndex="2" SelectedDate="{Binding Path=VisitData.DateOfVisit, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="TheDate_SelectedDateChanged" />
                 <Button x:Name="TheDateForward" Content="&gt;" Height="36" Padding="7,-8,5,0" Margin="8,2,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Background="White" Foreground="CornflowerBlue" FontFamily="Segoe UI Light" FontSize="32" VerticalContentAlignment="Center"  TabIndex="3" Click="TheDateForward_Click" />
             </StackPanel>
             <Grid Margin="10,0,10,0">
@@ -45,11 +45,11 @@
 
                 <Label Grid.Column="0" Content="Godziny przyjęć" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" VerticalAlignment="Center" Margin="0,0,50,0" />
 
-                <Label Grid.Column="1" Content="{Binding Hours}" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" VerticalAlignment="Center" />
+                <Label Grid.Column="1" Name="Hours" FontFamily="Segoe UI Light" FontSize="26" Foreground="CornflowerBlue" VerticalAlignment="Center" />
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Label Content="Nagły przypadek" FontFamily="Segoe UI Light" FontSize="18" Foreground="CornflowerBlue" VerticalAlignment="Center" Margin="0,0,22,0" />
-                    <CheckBox x:Name="IsEmergency" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,3,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Foreground="CornflowerBlue" Style="{DynamicResource MedicalCenterCheckBox}" IsEnabled="False" IsChecked="{Binding VisitData.IsEmergency, Mode=TwoWay}" TabIndex="5" />
+                    <CheckBox x:Name="IsEmergency" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,3,0,0" BorderBrush="CornflowerBlue" BorderThickness="1" Foreground="CornflowerBlue" Style="{DynamicResource MedicalCenterCheckBox}" IsEnabled="False" IsChecked="{Binding Path=VisitData.IsEmergency, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" />
                 </StackPanel>
             </Grid>
         </StackPanel>

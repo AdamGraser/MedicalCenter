@@ -53,11 +53,6 @@ namespace MedicalCenter.GUI.Registrar
         public string PatientName { get; set; }
 
         /// <summary>
-        /// Przechowuje tekstowy zapis godzin pracy wybranego lekarza w danym dniu.
-        /// </summary>
-        public string Hours { get; set; }
-
-        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow { get; private set; }

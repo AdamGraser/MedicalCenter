@@ -86,7 +86,7 @@ namespace MedicalCenter.GUI.Registrar
 
             // pobranie z bazy danych godzin przyjęć lekarza w wybranym dniu
             string hours = userBusinessService.GetWorkingHours(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
-            view.Hours = ((hours != null) ? hours : string.Empty);
+            view.Hours.Content = ((hours != null) ? hours : string.Empty);
         }
 
         /// <summary>
