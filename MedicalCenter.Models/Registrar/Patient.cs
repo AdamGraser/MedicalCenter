@@ -17,7 +17,7 @@ namespace MedicalCenter.Models.Registrar
         /// Przechowuje ID rekordu z tabeli M_Patients, reprezentującego danego pacjenta.
         /// Wartość 0 oznacza użycie domyślnego konstruktora, co jest rozumiane jako utworzenie nowego obiektu (rekordu).
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Przechowuje nazwisko pacjenta.

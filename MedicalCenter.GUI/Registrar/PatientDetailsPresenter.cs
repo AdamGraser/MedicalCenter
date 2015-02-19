@@ -96,6 +96,7 @@ namespace MedicalCenter.GUI.Registrar
             this.view = view;
             this.patientBusinessService = new PatientBusinessService();
             this.validationErrors = false;
+            this.editMode = true;
             this.thickness1 = new System.Windows.Thickness(1.0);
             this.thickness2 = new System.Windows.Thickness(2.0);
             this.minDate = new DateTime(1800, 1, 1);

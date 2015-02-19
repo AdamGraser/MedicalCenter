@@ -28,6 +28,11 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         PatientDetailsPresenter patientDetailsPresenter;
 
+        /// <summary>
+        /// Przechowuje dane pacjenta, którego dane są przeglądane lub edytowane/zbiór danych nowego pacjenta.
+        /// </summary>
+        Patient patientData;
+
         #endregion // Private fields
 
         #region Public properties
@@ -35,7 +40,28 @@ namespace MedicalCenter.GUI.Registrar
         /// <summary>
         /// Dane pacjenta, którego dane są przeglądane lub edytowane/zbiór danych nowego pacjenta.
         /// </summary>
-        public Patient PatientData { get; set; }
+        public Patient PatientData
+        {
+            get { return patientData; }
+
+            set
+            {
+                patientData.Apartment = value.Apartment;
+                patientData.BirthDate = value.BirthDate;
+                patientData.BuildingNumber = value.BuildingNumber;
+                patientData.City = value.City;
+                patientData.FirstName = value.FirstName;
+                patientData.Gender = value.Gender;
+                patientData.Id = value.Id;
+                patientData.IsInsured = value.IsInsured;
+                patientData.LastName = value.LastName;
+                patientData.Pesel = value.Pesel;
+                patientData.Post = value.Post;
+                patientData.PostalCode = value.PostalCode;
+                patientData.SecondName = value.SecondName;
+                patientData.Street = value.Street;
+            }
+        }
 
         /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
