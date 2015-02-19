@@ -276,9 +276,6 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void ChoosePatientSort()
         {
-            // stworzenie kopii listy źródłowej pacjentów
-            List<Patient> temp = new List<Patient>(view.PatientsListView.Patients);
-
             // wyczyszczenie źródłowej listy pacjentów
             view.PatientsListView.Patients.Clear();
 
@@ -289,7 +286,7 @@ namespace MedicalCenter.GUI.Registrar
                 view.PatientsListView.SortDescending = false;
                 view.PatientsListView.Sort.Content = "↑";
                 view.PatientsListView.Sort.ToolTip = "Sortowanie rosnące. Kliknij, aby posortować malejąco.";
-                view.PatientsListView.Patients.AddRange(temp.OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
+                view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients.OrderBy(x => x.LastName).ThenBy(x => x.FirstName));
             }
             else
             {
@@ -297,7 +294,7 @@ namespace MedicalCenter.GUI.Registrar
                 view.PatientsListView.SortDescending = true;
                 view.PatientsListView.Sort.Content = "↓";
                 view.PatientsListView.Sort.ToolTip = "Sortowanie malejące. Kliknij, aby posortować rosnąco.";
-                view.PatientsListView.Patients.AddRange(temp.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName));
+                view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName));
             }
 
             // odświeżanie listy
