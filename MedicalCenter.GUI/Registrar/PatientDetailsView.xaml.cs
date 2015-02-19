@@ -87,7 +87,7 @@ namespace MedicalCenter.GUI.Registrar
             patientDetailsPresenter = new PatientDetailsPresenter(this);
 
             // utworzenie pustego obiektu na dane pacjenta
-            PatientData = new Patient();
+            patientData = new Patient();
 
             // ustawienie kontekstu danych, aby móc powiązać obiekt PatientData z polami formularza
             DataContext = PatientData;
