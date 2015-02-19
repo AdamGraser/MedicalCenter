@@ -364,7 +364,7 @@ namespace MedicalCenter.GUI.Registrar
             view.ParentWindow.RegistrarPatientDetailsView.BuildingNumber.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.BuildingNumber;
             view.ParentWindow.RegistrarPatientDetailsView.City.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.City;
             view.ParentWindow.RegistrarPatientDetailsView.FirstName.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.FirstName;
-            view.ParentWindow.RegistrarPatientDetailsView.Gender.SelectedIndex = ((view.ParentWindow.RegistrarPatientDetailsView.PatientData.Gender) ? 0 : 1);
+            view.ParentWindow.RegistrarPatientDetailsView.Gender.SelectedIndex = ((view.ParentWindow.RegistrarPatientDetailsView.PatientData.Gender) ? 1 : 0);
             view.ParentWindow.RegistrarPatientDetailsView.IsInsured.IsChecked = view.ParentWindow.RegistrarPatientDetailsView.PatientData.IsInsured;
             view.ParentWindow.RegistrarPatientDetailsView.LastName.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.LastName;
             view.ParentWindow.RegistrarPatientDetailsView.Pesel.Text = view.ParentWindow.RegistrarPatientDetailsView.PatientData.Pesel.ToString();
