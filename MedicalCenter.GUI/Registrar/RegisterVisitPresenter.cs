@@ -330,14 +330,20 @@ namespace MedicalCenter.GUI.Registrar
                 view.ParentWindow.RegistrarRegisterVisitDetailsView = new RegisterVisitDetailsView(view.ParentWindow);
 
             // przekazanie do następnego widoku daty wizyty, ID pacjenta, ID oraz imię i nazwisko lekarza
-            view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.PatientId = view.PatientId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
             view.ParentWindow.RegistrarRegisterVisitDetailsView.DoctorName = userBusinessService.GetWorkerName(view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DoctorId);
+            //view.ParentWindow.RegistrarRegisterVisitDetailsView.VisitData.DateOfVisit = view.TheDate.SelectedDate.Value;
+            view.ParentWindow.RegistrarRegisterVisitDetailsView.TheDate.SelectedDate = view.TheDate.SelectedDate.Value;
 
             // jeśli wybrano pacjenta, do następnego widoku przekazywane jest także jego imię i nazwisko
             if (view.PatientId > 0)
                 view.ParentWindow.RegistrarRegisterVisitDetailsView.PatientName = patientBusinessService.GetPatientName(view.PatientId);
+
+            // jeśli data wizyty jest dzisiejsza, lista wizyt nie została automatycznie wypełniona,
+            // więc musi to zostać wykonane ręcznie
+            if (view.TheDate.SelectedDate.Value == DateTime.Today)
+                view.ParentWindow.RegistrarRegisterVisitDetailsView.RefreshVisitsList();
 
             // zapisanie bieżącego widoku w historii widoków
             view.ParentWindow.History.Push(view);

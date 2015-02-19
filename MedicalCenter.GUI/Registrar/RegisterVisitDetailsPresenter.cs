@@ -57,7 +57,7 @@ namespace MedicalCenter.GUI.Registrar
         #region Public methods
 
         /// <summary>
-        /// Pobiera i przekazuje do widoku listę wizyt z danego dnia dla wybranego lekarza.
+        /// Pobiera i przekazuje do widoku listę wizyt z danego dnia dla wybranego lekarza oraz wyświetla nad listą godziny, w których lekarz przyjmuje pacjentów.
         /// Jeśli liczba wizyt osiągnęła bądź przekroczyła maksimum, uaktywniany jest checkbox "Nagły przypadek".
         /// </summary>
         public void GetVisitsList()
@@ -79,10 +79,14 @@ namespace MedicalCenter.GUI.Registrar
             view.DailyVisitsList.Items.Refresh();
 
             // sprawdzenie liczby wizyt -> aktywacja lub dezaktywacja checkbox'a
-            if (view.DailyVisits.Count >= medicalBusinessService.TodaysVisitsCount(view.VisitData.DoctorId, view.VisitData.DateOfVisit))
+            if (view.DailyVisits.All(x => x.PatientName != string.Empty))
                 view.IsEmergency.IsEnabled = true;
             else
                 view.IsEmergency.IsEnabled = false;
+
+            // pobranie z bazy danych godzin przyjęć lekarza w wybranym dniu
+            string hours = userBusinessService.GetWorkingHours(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
+            view.Hours = ((hours != null) ? hours : string.Empty);
         }
 
         /// <summary>
@@ -113,9 +117,6 @@ namespace MedicalCenter.GUI.Registrar
             // wyczyszczenie zaznaczenia na liście
             view.DailyVisitsList.SelectedIndex = -1;
 
-            // przywracanie domyślnej daty
-            view.TheDate.SelectedDate = DateTime.Today;
-
             // czyszczenie i dezaktywacja pola "Nagły przypadek"
             view.IsEmergency.IsChecked = false;
             view.IsEmergency.IsEnabled = false;
@@ -125,6 +126,9 @@ namespace MedicalCenter.GUI.Registrar
             view.PatientName = string.Empty;
             view.VisitData.DoctorId = 0;
             view.DoctorName = string.Empty;
+
+            // przywracanie domyślnej daty (co spowoduje wyczyszczenie listy wizyt i zniknięcie godzin pracy lekarza)
+            view.TheDate.SelectedDate = DateTime.Today;
 
             // przywrócenie widoku listy lekarzy
             view.ParentWindow.ContentArea.Content = view.ParentWindow.History.Pop();
@@ -173,7 +177,7 @@ namespace MedicalCenter.GUI.Registrar
 
         /// <summary>
         /// Obsługa zmiany daty wizyty.
-        /// Kontrola zakresu wybranej daty, wyświetlenie godzin przyjmowania lekarza w wybranym dniu i pobranie listy wizyt na wybrany dzień.
+        /// Kontrola zakresu wybranej daty i pobranie listy wizyt na wybrany dzień.
         /// </summary>
         public void TheDateChanged()
         {
@@ -183,9 +187,6 @@ namespace MedicalCenter.GUI.Registrar
             // kontrola zakresu daty - nie może być wcześniejsza niż dzisiejsza
             else if (view.TheDate.SelectedDate < DateTime.Today)
                 view.TheDate.SelectedDate = DateTime.Today;
-
-            // pobranie z bazy danych godzin przyjęć lekarza w wybranym dniu
-            view.Hours = userBusinessService.GetWorkingHours(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
 
             // pobranie listy wizyt dla danego lekarza we wskazanym dniu
             GetVisitsList();

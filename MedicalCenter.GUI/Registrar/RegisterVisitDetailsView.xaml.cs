@@ -187,5 +187,15 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         #endregion // Events handlers
+
+        #region Public methods
+
+        public void RefreshVisitsList()
+        {
+            // odświeżenie listy wizyt
+            registerVisitDetailsPresenter.GetVisitsList();
+        }
+
+        #endregion // Public methods
     }
 }
