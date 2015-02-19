@@ -78,9 +78,37 @@ namespace MedicalCenter.GUI.Registrar
             // odświeżenie listy
             view.DailyVisitsList.Items.Refresh();
 
-            // sprawdzenie liczby wizyt -> aktywacja lub dezaktywacja checkbox'a
-            if (view.DailyVisits.All(x => x.PatientName != string.Empty))
-                view.IsEmergency.IsEnabled = true;
+            // jeśli lekarz dziś przyjmuje
+            if (view.DailyVisits.Count > 0)
+            {
+                // wszystkie godziny zajęte -> aktywacja pola "Nagły przypadek"
+                if (view.DailyVisits.All(x => x.PatientName != string.Empty))
+                    view.IsEmergency.IsEnabled = true;
+                else
+                {
+                    // aktywacja pola "Nagły przypadek"
+                    view.IsEmergency.IsEnabled = true;
+
+                    DateTime now = DateTime.Now.AddMinutes(-5.0);
+
+                    // sprawdzenie wszystkich godzin na liście
+                    foreach (DailyVisitsListItem v in view.DailyVisits)
+                    {
+                        // jeśli bieżąca godzina jest dostatecznie późna
+                        if (now <= v.DateOfVisit)
+                        {
+                            // i jest wolna
+                            if (v.PatientName == string.Empty)
+                            {
+                                // pole jest dezaktywowane, bo jednak jest jeszcze możliwość zarejestrowania się w ramach planowych godzin przyjęć lekarza
+                                view.IsEmergency.IsEnabled = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            // jeśli nie -> dezaktywacja pola "Nagły przypadek"
             else
                 view.IsEmergency.IsEnabled = false;
 
