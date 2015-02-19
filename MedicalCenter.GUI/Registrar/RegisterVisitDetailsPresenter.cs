@@ -193,6 +193,23 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Dodaje na koniec/usuwa z końca listy wizyt nową pozycję, reprezentującą wolną godzinę, na którą można zarejestrować wizytę dla nagłego przypadku.
+        /// </summary>
+        /// <param name="isChecked">Wartość określająca, czy pole "Nagły przypadek" jest zaznaczone.</param>
+        public void Emergency(bool isChecked)
+        {
+            // jeśli to nagły przypadek, to dodawana jest nowa pozycja
+            if (isChecked)
+                view.DailyVisits.Add(new DailyVisitsListItem(view.DailyVisits[view.DailyVisits.Count - 1].DateOfVisit.AddMinutes(20.0)));
+            // w przeciwnym razie usuwana jest ostatnia pozycja z listy
+            else
+                view.DailyVisits.RemoveAt(view.DailyVisits.Count - 1);
+
+            // odświeżenie listy
+            view.DailyVisitsList.Items.Refresh();
+        }
+
+        /// <summary>
         /// Sprawdza jakiego rodzaju pozycja została zaznaczona na liście wizyt i w razie potrzeby czyści to zaznaczenie lub aktywuje przycisk "Zarejestruj".
         /// </summary>
         public void HourSelected()

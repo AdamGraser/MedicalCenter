@@ -181,6 +181,28 @@ namespace MedicalCenter.GUI.Registrar
             registerVisitDetailsPresenter.ChangeDate(1.0);
         }
 
+        /// <summary>
+        /// Obsługa zdarzenia zaznaczenia pola "Nagły przypadek".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IsEmergency_Checked(object sender, RoutedEventArgs e)
+        {
+            // dodanie do listy wizyt nowej pozycji (wolnej godziny) na samym końcu
+            registerVisitDetailsPresenter.Emergency(true);
+        }
+
+        /// <summary>
+        /// Obsługa zdarzenia odznaczenia pola "Nagły przypadek".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IsEmergency_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // usunięcie z końca listy wizyt nowej pozycji (wolnej godziny)
+            registerVisitDetailsPresenter.Emergency(false);
+        }
+
         #endregion // Events handlers
 
         #region Public methods
