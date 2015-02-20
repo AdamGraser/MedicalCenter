@@ -26,32 +26,32 @@ namespace MedicalCenter.GUI
         /// <summary>
         /// Przechowuje ID rekordu z tabeli A_Workers, reprezentującego osobę aktualnie zalogowaną.
         /// </summary>
-        public int Id;
+        public int Id { get; set; }
 
         /// <summary>
         /// Historia stron, przez które przeszedł użytkownik.
         /// </summary>
-        public Stack<UserControl> History;
+        public Stack<UserControl> History { get; private set; }
 
         /// <summary>
         /// Rejestratorka - menu główne.
         /// </summary>
-        public Registrar.MainMenuView RegistrarMainMenuView;
+        public Registrar.MainMenuView RegistrarMainMenuView { get; set; }
 
         /// <summary>
         /// Rejestratorka - dodawanie nowego pacjenta do bazy.
         /// </summary>
-        public Registrar.PatientDetailsView RegistrarPatientDetailsView;
+        public Registrar.PatientDetailsView RegistrarPatientDetailsView { get; set; }
 
         /// <summary>
         /// Rejestratorka - rejestrowanie wizyty - lista lekarzy.
         /// </summary>
-        public Registrar.RegisterVisitView RegistrarRegisterVisitView;
+        public Registrar.RegisterVisitView RegistrarRegisterVisitView { get; set; }
 
         /// <summary>
         /// Rejestratorka - rejestrowanie wizyty - lista wizyt w danym dniu dla wybranego lekarza.
         /// </summary>
-        public Registrar.RegisterVisitDetailsView RegistrarRegisterVisitDetailsView;
+        public Registrar.RegisterVisitDetailsView RegistrarRegisterVisitDetailsView { get; set; }
 
         #endregion // Public properties
 
