@@ -120,14 +120,14 @@ namespace MedicalCenter.GUI.Registrar
             bool retval = false;
 
             // sprawdzenie czy klawisz jest cyfrą
-            if (kindOfKey == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
+            if ((kindOfKey & (GroupsOfKeys.Digits | GroupsOfKeys.Numerics)) == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
                 ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
                     (key >= Key.NumPad0 && key <= Key.NumPad9)))
             {
                 retval = true;
             }
             // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
-            if (kindOfKey == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
+            if ((kindOfKey & (GroupsOfKeys.Letters | GroupsOfKeys.Space)) == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
                 ((key >= Key.A && key <= Key.Z) ||
                     key == Key.Space ||
                     Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
