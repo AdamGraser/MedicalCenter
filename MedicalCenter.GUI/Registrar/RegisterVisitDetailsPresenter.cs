@@ -84,7 +84,7 @@ namespace MedicalCenter.GUI.Registrar
             view.DailyVisitsList.Items.Refresh();
 
             // jeśli lekarz dziś przyjmuje
-            if (view.DailyVisits.Count > 0)
+            if (view.DailyVisits.Count > 0 && view.TheDate.SelectedDate.Value.Date == DateTime.Today)
             {
                 // wszystkie godziny zajęte -> aktywacja pola "Nagły przypadek"
                 if (view.DailyVisits.All(x => x.PatientName != string.Empty))
