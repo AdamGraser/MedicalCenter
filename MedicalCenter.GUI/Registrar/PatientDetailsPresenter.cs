@@ -261,8 +261,14 @@ namespace MedicalCenter.GUI.Registrar
                         }
                         else
                         {
-                            // przekazanie ID pacjenta do widoku rejestrowania wizyty
-                            registerVisitDetails.VisitData.PatientId = view.PatientData.Id;
+                            // jeśli dodano nowego pacjenta do bazy danych
+                            if (view.ViewTitle.Text.StartsWith("Dodaj"))
+                                // przekazanie ID pacjenta do widoku rejestrowania wizyty
+                                registerVisitDetails.VisitData.PatientId = view.PatientData.Id;
+                            // jeśli zmieniono dane istniejącego w bazie pacjenta
+                            else
+                                // odświeżenie listy pacjentów po zmianie danych
+                                registerVisitDetails.RefreshPatientsList();
 
                             // zmiana treści okna głównego na widok listy wizyt na dany dzień dla wybranego lekarza
                             view.ParentWindow.ContentArea.Content = registerVisitDetails;
