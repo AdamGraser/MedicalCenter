@@ -220,7 +220,7 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void RefreshPatientsList()
         {
-            registerVisitDetailsPresenter.ChoosePatientFill();
+            registerVisitDetailsPresenter.ChoosePatientRefresh();
         }
 
         #endregion // Public methods

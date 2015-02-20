@@ -290,6 +290,21 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
+        /// Odświeża zawartość listy pacjentów, zachowując zaznaczenie.
+        /// </summary>
+        public void ChoosePatientRefresh()
+        {
+            // zapisanie indeksu wybranego elementu (pacjenta)
+            int selectedIndex = view.PatientsListView.PatientsListBox.SelectedIndex;
+
+            // odświeżenie zawartości listy
+            ChoosePatientFill();
+
+            // zaznaczenie dotychczas wybranego elementu
+            view.PatientsListView.PatientsListBox.SelectedIndex = selectedIndex;
+        }
+
+        /// <summary>
         /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
         /// </summary>
         public void ChoosePatient()
