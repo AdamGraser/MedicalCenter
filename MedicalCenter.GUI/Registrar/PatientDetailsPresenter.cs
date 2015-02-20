@@ -120,14 +120,14 @@ namespace MedicalCenter.GUI.Registrar
             bool retval = false;
 
             // sprawdzenie czy klawisz jest cyfrą
-            if ((kindOfKey & (GroupsOfKeys.Digits | GroupsOfKeys.Numerics)) == (GroupsOfKeys.Digits | GroupsOfKeys.Numerics) &&
+            if ((kindOfKey & (GroupsOfKeys.Digits | GroupsOfKeys.Numerics)) != 0 &&
                 ((key >= Key.D0 && key <= Key.D9 && !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)) ||
                     (key >= Key.NumPad0 && key <= Key.NumPad9)))
             {
                 retval = true;
             }
             // sprawdzenie czy klawisz jest literą lub spacją (+ ew. wciśnięty alt i/lub shift)
-            if ((kindOfKey & (GroupsOfKeys.Letters | GroupsOfKeys.Space)) == (GroupsOfKeys.Letters | GroupsOfKeys.Space) &&
+            if ((kindOfKey & (GroupsOfKeys.Letters | GroupsOfKeys.Space)) != 0 &&
                 ((key >= Key.A && key <= Key.Z) ||
                     key == Key.Space ||
                     Keyboard.Modifiers.HasFlag(ModifierKeys.Alt)))
@@ -645,6 +645,9 @@ namespace MedicalCenter.GUI.Registrar
                 // analogicznie dla daty maksymalnej
                 else if (view.BirthDate.SelectedDate.Value > maxDate)
                     view.BirthDate.SelectedDate = maxDate;
+
+                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                view.Save.IsEnabled = IsFormCompleted;
             }
         }
 
@@ -669,6 +672,9 @@ namespace MedicalCenter.GUI.Registrar
 
             if (change)
                 view.City.CaretIndex = view.City.Text.Length;
+
+            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+            view.Save.IsEnabled = IsFormCompleted;
         }
 
         /// <summary>
