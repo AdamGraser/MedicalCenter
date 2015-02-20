@@ -181,6 +181,10 @@ namespace MedicalCenter.DBServices
 
                             // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
                             retval = false;
+
+                            // utworzenie nowego obiektu kontekstu bazodanowego
+                            db.Dispose();
+                            db = new MedicalCenterDBContainer();
                         }
                     }
                 }
@@ -190,6 +194,10 @@ namespace MedicalCenter.DBServices
 
                     // podana encja nie przeszła walidacji
                     retval = null;
+
+                    // utworzenie nowego obiektu kontekstu bazodanowego
+                    db.Dispose();
+                    db = new MedicalCenterDBContainer();
                 }
                 catch (Exception ex)
                 {
@@ -197,6 +205,10 @@ namespace MedicalCenter.DBServices
 
                     // inny błąd
                     retval = false;
+
+                    // utworzenie nowego obiektu kontekstu bazodanowego
+                    db.Dispose();
+                    db = new MedicalCenterDBContainer();
                 }
             }
             else
@@ -240,6 +252,10 @@ namespace MedicalCenter.DBServices
                     System.Console.WriteLine(ioe.Message);
 
                     retval = false;
+
+                    // utworzenie nowego obiektu kontekstu bazodanowego
+                    db.Dispose();
+                    db = new MedicalCenterDBContainer();
                 }
 
                 // jeśli znaleziono encję o podanym ID, następuje aktualizacja jej właściwości
@@ -279,6 +295,10 @@ namespace MedicalCenter.DBServices
 
                                     // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
                                     retval = false;
+
+                                    // utworzenie nowego obiektu kontekstu bazodanowego
+                                    db.Dispose();
+                                    db = new MedicalCenterDBContainer();
                                 }
                             }
                         }
@@ -288,6 +308,10 @@ namespace MedicalCenter.DBServices
 
                             // podana encja nie przeszła walidacji
                             retval = null;
+
+                            // utworzenie nowego obiektu kontekstu bazodanowego
+                            db.Dispose();
+                            db = new MedicalCenterDBContainer();
                         }
                         catch (Exception ex)
                         {
@@ -295,6 +319,10 @@ namespace MedicalCenter.DBServices
 
                             // inny błąd
                             retval = false;
+
+                            // utworzenie nowego obiektu kontekstu bazodanowego
+                            db.Dispose();
+                            db = new MedicalCenterDBContainer();
                         }
                     }
                 }
