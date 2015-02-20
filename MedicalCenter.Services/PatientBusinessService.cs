@@ -125,6 +125,26 @@ namespace MedicalCenter.Services
             return patients;
         }
 
+        /// <summary>
+        /// Pobiera z bazy danych informacje o pacjencie posiadającym wskazany nr PESEL.
+        /// </summary>
+        /// <param name="pesel">Nr PESEL szukanego pacjenta.</param>
+        /// <returns>Obiekt z danymi pacjenta lub null jeśli nie znaleziono w tabeli podanego numeru PESEL.</returns>
+        public Patient GetPatient(long pesel)
+        {
+            Patient patient = null;
+            
+            // pobranie z bazy rekordu dot. pacjenta o podanym nr PESEL
+            M_Patient e = patientService.SelectPatient(x => x.Pesel == pesel);
+
+            // jeśli znaleziono w tabeli podany PESEL, zwracany jest obiekt z danymi pacjenta
+            if (e != null)
+                patient = new Patient(e.Id, e.LastName, e.FirstName, e.SecondName, e.BirthDate, e.Gender, e.Pesel,
+                                      e.Street, e.BuildingNumber, e.Apartment, e.PostalCode, e.City, e.Post, e.IsInsured);
+
+            return patient;
+        }
+
         #endregion // Public methods
     }
 }
