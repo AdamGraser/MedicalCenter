@@ -158,7 +158,7 @@ namespace MedicalCenter.GUI.Registrar
             view.VisitData.PatientId = 0;
             view.PatientName.Content = " ";
             view.VisitData.DoctorId = 0;
-            view.DoctorName = string.Empty;
+            view.DoctorName.Text = string.Empty;
 
             // przywracanie domyślnej daty (co spowoduje wyczyszczenie listy wizyt i zniknięcie godzin pracy lekarza)
             view.TheDate.SelectedDate = DateTime.Today;

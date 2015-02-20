@@ -43,11 +43,6 @@ namespace MedicalCenter.GUI.Registrar
         public List<DailyVisitsListItem> DailyVisits { get; set; }
 
         /// <summary>
-        /// Przechowuje nazwisko i imię (jeden string, oddzielone spacją) lekarza, do którego ma zostać zarejestrowana wizyta.
-        /// </summary>
-        public string DoctorName { get; set; }
-
-        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow { get; private set; }
@@ -78,7 +73,6 @@ namespace MedicalCenter.GUI.Registrar
 
             // inicjalizacja właściwości
             VisitData = new Visit();
-            DoctorName = string.Empty;
 
             // przekazanie widokowi listy pacjentów referencji do prezentera
             PatientsListView.Presenter = registerVisitDetailsPresenter;
