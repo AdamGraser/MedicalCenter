@@ -253,6 +253,9 @@ namespace MedicalCenter.GUI.Registrar
                 if (view.DailyVisits[view.DailyVisitsList.SelectedIndex].PatientName == string.Empty
                  && DateTime.Now.AddMinutes(-5.0) <= view.DailyVisits[view.DailyVisitsList.SelectedIndex].DateOfVisit)
                 {
+                    // zapisanie wybranej godziny
+                    view.VisitData.DateOfVisit = view.DailyVisits[view.DailyVisitsList.SelectedIndex].DateOfVisit;
+
                     // oraz wybrano pacjenta, to przycisk "Zarejestruj" jest aktywowany
                     if (view.VisitData.PatientId > 0)
                         view.Register.IsEnabled = true;
