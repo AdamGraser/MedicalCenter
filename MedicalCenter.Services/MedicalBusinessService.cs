@@ -147,7 +147,10 @@ namespace MedicalCenter.Services
                                 if (schedule.D1From != null && schedule.D1To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D1From.Value;       //data startowa DXFrom
+                                    
+                                    //godzina startowa DXFrom
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D1From.Value.Hour, schedule.D1From.Value.Minute, schedule.D1From.Value.Second);
                                 }
                                 break;
 
@@ -155,7 +158,8 @@ namespace MedicalCenter.Services
                                 if (schedule.D2From != null && schedule.D2To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D2From.Value;
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D2From.Value.Hour, schedule.D2From.Value.Minute, schedule.D2From.Value.Second);
                                 }
                                 break;
 
@@ -163,7 +167,8 @@ namespace MedicalCenter.Services
                                 if (schedule.D3From != null && schedule.D3To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D3From.Value;
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D3From.Value.Hour, schedule.D3From.Value.Minute, schedule.D3From.Value.Second);
                                 }
                                 break;
 
@@ -171,7 +176,8 @@ namespace MedicalCenter.Services
                                 if (schedule.D4From != null && schedule.D4To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D4From.Value;
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D4From.Value.Hour, schedule.D4From.Value.Minute, schedule.D4From.Value.Second);
                                 }
                                 break;
 
@@ -179,7 +185,8 @@ namespace MedicalCenter.Services
                                 if (schedule.D5From != null && schedule.D5To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D5From.Value;
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D5From.Value.Hour, schedule.D5From.Value.Minute, schedule.D5From.Value.Second);
                                 }
                                 break;
 
@@ -187,7 +194,8 @@ namespace MedicalCenter.Services
                                 if (schedule.D6From != null && schedule.D6To != null)
                                 {
                                     hasSchedule = true;
-                                    dateOfVisit = schedule.D6From.Value;
+                                    dateOfVisit = new DateTime(date.Year, date.Month, date.Day
+                                                             , schedule.D6From.Value.Hour, schedule.D6From.Value.Minute, schedule.D6From.Value.Second);
                                 }
                                 break;
                         }
