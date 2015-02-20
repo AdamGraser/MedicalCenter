@@ -246,12 +246,13 @@ namespace MedicalCenter.Services
         /// Zapisuje w bazie danych nową wizytę
         /// </summary>
         /// <param name="visit">Informacje do zapisania.</param>
+        /// <param name="registrarId">ID rejestratorki.</param>
         /// <returns>
         /// true jeśli zapisano pomyślnie,
         /// null jeśli podane informacje nie przeszły walidacji po stronie bazy,
         /// false jeśli wystąpił inny błąd lub podany argument to null.
         /// </returns>
-        public bool? RegisterVisit(Visit visit)
+        public bool? RegisterVisit(Visit visit, int registrarId)
         {
             bool? retval = false;
 
@@ -263,6 +264,8 @@ namespace MedicalCenter.Services
                 entity.DoctorId = visit.DoctorId;
                 entity.IsEmergency = visit.IsEmergency;
                 entity.PatientId = visit.PatientId;
+                entity.RegistrarId = registrarId;
+                entity.Registered = DateTime.Now;
 
                 // próba wstawienia nowego rekordu do tabeli
                 retval = medicalService.InsertVisit(entity);

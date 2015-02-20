@@ -477,7 +477,7 @@ namespace MedicalCenter.GUI.Registrar
         public void RegisterVisit()
         {
             // zapis informacji o wizycie do bazy danych
-            bool? saved = medicalBusinessService.RegisterVisit(view.VisitData);
+            bool? saved = medicalBusinessService.RegisterVisit(view.VisitData, view.ParentWindow.Id);
 
             // wystąpił błąd
             if (saved != true)
