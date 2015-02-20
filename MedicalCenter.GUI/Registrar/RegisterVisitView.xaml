@@ -77,7 +77,8 @@
                             <StackPanel Margin="15,0,9,0" ToolTip="Kliknij, aby posortować/zmienić kolejność">
                                 <Label Content="Poradnia" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
                                 <ComboBox Name="FilterClinicName" ItemsSource="{Binding Values}" Style="{DynamicResource MedicalCenterComboBox}" Width="auto" Height="21"
-                                          TabIndex="1" BorderThickness="0" Foreground="DimGray" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded" />
+                                          TabIndex="1" BorderThickness="0" Foreground="DimGray" SelectionChanged="FilterClinicName_SelectionChanged" Loaded="FilterClinicName_Loaded"
+                                          ToolTip="Wybierz poradnię, wg. której chcesz filtrować lekarzy." />
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
@@ -95,7 +96,18 @@
                             <StackPanel Margin="9,0,12,0" ToolTip="Kliknij, aby posortować/zmienić kolejność">
                                 <Label Content="Lekarz" FontFamily="Segoe UI Light" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" />
                                 <TextBox Name="FilterDoctorName" Foreground="DimGray" CaretBrush="DimGray" VerticalContentAlignment="Center" FontSize="14"
-                                         BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" Loaded="FilterDoctorName_Loaded" />
+                                         BorderThickness="0" Height="21" Width="auto" TabIndex="2" TextChanged="FilterDoctorName_TextChanged" Loaded="FilterDoctorName_Loaded"
+                                         ToolTip="Wpisz co najmniej 3 znaki, aby filtrować lekarzy wg. nazwisk.">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter Property="Background" Value="#FFDCECFC" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
                             </StackPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>

@@ -177,14 +177,15 @@
                                                                 <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
                                                                 <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Background" TargetName="templateRoot">
+                                                            <Setter Property="Background" TargetName="templateRoot" Value="#FFDCECFC" />
+                                                            <!--<Setter Property="Background" TargetName="templateRoot">
                                                                 <Setter.Value>
                                                                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                                                         <GradientStop Color="#FFECF4FC" Offset="0"/>
                                                                         <GradientStop Color="#FFDCECFC" Offset="1"/>
                                                                     </LinearGradientBrush>
                                                                 </Setter.Value>
-                                                            </Setter>
+                                                            </Setter>-->
                                                             <!--<Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF7EB4EA"/>-->
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
@@ -207,7 +208,7 @@
                                                         <Trigger Property="IsPressed" Value="True">
                                                             <Setter Property="Fill" TargetName="Arrow" Value="CornflowerBlue"/>
                                                         </Trigger>
-                                                        <MultiDataTrigger>
+                                                        <!--<MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
                                                                 <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
@@ -221,7 +222,7 @@
                                                                 </Setter.Value>
                                                             </Setter>
                                                             <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF569DE5"/>
-                                                        </MultiDataTrigger>
+                                                        </MultiDataTrigger>-->
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
