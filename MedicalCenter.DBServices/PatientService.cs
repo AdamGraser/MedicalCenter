@@ -113,11 +113,14 @@ namespace MedicalCenter.DBServices
                         }
                     }
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+                catch (System.Data.Entity.Infrastructure.DbUpdateException updateException)
                 {
-                    System.Console.WriteLine(validationException.Message);
+                    System.Console.WriteLine(updateException.Message);
 
-                    // podana encja nie przeszła walidacji
+                    if (updateException.InnerException != null)
+                        System.Console.WriteLine(updateException.InnerException.Message);
+
+                    // podana encja nie może zostać dodana (np. z powodu złamania ograniczenia unikatowości)
                     retval = null;
                 }
                 catch (Exception ex)
