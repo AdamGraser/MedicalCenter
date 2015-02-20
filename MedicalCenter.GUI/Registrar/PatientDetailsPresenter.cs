@@ -27,9 +27,14 @@ namespace MedicalCenter.GUI.Registrar
         PatientDetailsView view;
 
         /// <summary>
-        /// Określa czy podczas walidacji pól formularza znalezione zostały błędy.
+        /// Określa czy podczas walidacji numeru PESEL znalezione zostały błędy.
         /// </summary>
-        bool validationErrors;
+        bool peselValidationError;
+
+        /// <summary>
+        /// Określa czy podczas walidacji numeru PESEL znalezione zostały błędy.
+        /// </summary>
+        bool postalCodeValidationError;
 
         /// <summary>
         /// Określa, czy formularz jest w trybie edycji (true) czy w trybie podglądu (false).
@@ -67,7 +72,8 @@ namespace MedicalCenter.GUI.Registrar
         {
             get
             {
-                if (!validationErrors &&
+                if (!peselValidationError &&
+                    !postalCodeValidationError &&
                     view.LastName.Text.Length > 0 &&
                     view.FirstName.Text.Length > 0 &&
                     view.BirthDate.SelectedDate != null &&
@@ -95,7 +101,7 @@ namespace MedicalCenter.GUI.Registrar
         {
             this.view = view;
             this.patientBusinessService = new PatientBusinessService();
-            this.validationErrors = false;
+            this.peselValidationError = false;
             this.editMode = true;
             this.thickness1 = new System.Windows.Thickness(1.0);
             this.thickness2 = new System.Windows.Thickness(2.0);
@@ -552,7 +558,7 @@ namespace MedicalCenter.GUI.Registrar
                 if (incorrectPesel > 0)
                 {
                     // ustawienie flagi błędów w formularzu
-                    validationErrors = true;
+                    peselValidationError = true;
 
                     // ustawienie czerwonych obramowań odpowiednim polom
                     view.Pesel.BorderBrush = System.Windows.Media.Brushes.Red;
@@ -625,8 +631,11 @@ namespace MedicalCenter.GUI.Registrar
                     view.Pesel.BorderBrush = view.BirthDate.BorderBrush = view.Gender.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
                     view.BirthDate.ToolTip = view.Gender.ToolTip = view.Pesel.ToolTip = null;
 
-                    validationErrors = false;
+                    peselValidationError = false;
                 }
+
+                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                view.Save.IsEnabled = IsFormCompleted;
             }
         }
 
@@ -738,7 +747,7 @@ namespace MedicalCenter.GUI.Registrar
                 view.PostalCode.BorderThickness = thickness2;
                 view.PostalCode.ToolTip = "Nieprawidłowy kod pocztowy!";
 
-                validationErrors = true;
+                postalCodeValidationError = true;
             }
             else
             {
@@ -746,8 +755,11 @@ namespace MedicalCenter.GUI.Registrar
                 view.PostalCode.BorderThickness = thickness1;
                 view.PostalCode.ToolTip = null;
 
-                validationErrors = false;
+                postalCodeValidationError = false;
             }
+
+            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+            view.Save.IsEnabled = IsFormCompleted;
         }
 
         #endregion // Public methods
