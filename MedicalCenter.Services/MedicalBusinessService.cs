@@ -207,8 +207,8 @@ namespace MedicalCenter.Services
                                 // jeśli są jeszcze jakieś zarejestrowane wizyty
                                 if (temp.Count > 0)
                                 {
-                                    // jeśli następna wizyta jest za później niż 20 minut, wstawiamy do listy "puste miejsce"
-                                    if (temp[0].DateOfVisit > dateOfVisit)
+                                    // jeśli następna wizyta jest za więcej niż 20 minut lub została anulowana, wstawiamy do listy "puste miejsce"
+                                    if (temp[0].DateOfVisit > dateOfVisit || temp[0].State > 2)
                                     {
                                         todaysVisits.Add(new DailyVisitsListItem(dateOfVisit));
                                     }
