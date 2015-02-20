@@ -151,6 +151,9 @@ namespace MedicalCenter.GUI.Registrar
                 // jeśli wybrano poradnię w filtrze
                 if (view.FilterClinicName.SelectedIndex > 0)
                 {
+                    // aktywacja przycisku "Najbl. termin"
+                    view.ClosestFreeDate.IsEnabled = true;
+
                     // jeśli wpisano również co najmniej 3 znaki w filtrze nazwiska
                     if (view.FilterDoctorName.Text.Length > 2)
                     {
@@ -164,16 +167,22 @@ namespace MedicalCenter.GUI.Registrar
                         filteredList = view.SourceDoctorsList.Where(x => x.ClinicId == view.ClinicsList.Keys.ElementAt(view.FilterClinicName.SelectedIndex));
                     }
                 }
-                // filtrowanie tylko po nazwiskach
-                else if (view.FilterDoctorName.Text.Length > 2)
-                {
-                    filteredList = view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
-                                                                  || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()));
-                }
-                // brak filtrowania
                 else
                 {
-                    filteredList = view.SourceDoctorsList;
+                    // dezaktywacja przycisku "Najbl. termin"
+                    view.ClosestFreeDate.IsEnabled = false;
+
+                    // filtrowanie tylko po nazwiskach
+                    if (view.FilterDoctorName.Text.Length > 2)
+                    {
+                        filteredList = view.SourceDoctorsList.Where(x => x.DoctorName.ToLower().StartsWith(view.FilterDoctorName.Text.ToLower())
+                                                                      || view.FilterDoctorName.Text.ToLower().StartsWith(x.DoctorLastName.ToLower()));
+                    }
+                    // brak filtrowania
+                    else
+                    {
+                        filteredList = view.SourceDoctorsList;
+                    }
                 }
 
                 // wyczyszczenie źródłowej kolekcji
@@ -416,52 +425,88 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void ClosestFreeDate()
         {
-            // referencja do zaznaczonego na liście lekarza
-            DoctorsListItem selectedDoctor = view.DoctorsList[view.DoctorsListTable.SelectedIndex];
+            // lista lekarzy
+            List<DoctorsListItem> doctors = new List<DoctorsListItem>();
+
+            // jeśli wybrano lekarza z listy, to szukany jest najbliższy wolny termin tylko dla niego
+            if (view.DoctorsListTable.SelectedIndex > -1)
+            {
+                doctors.Add(view.DoctorsList[view.DoctorsListTable.SelectedIndex]);
+            }
+            // w przeciwnym razie szukany jest najbliższy wolny termin dla któregokolwiek lekarza z listy
+            // (z założenia w ramach jednej poradni)
+            else if (view.FilterClinicName.SelectedIndex > 0)
+            {
+                doctors.AddRange(view.DoctorsList);
+            }
+            // (dlatego jeśli nie wybrano również żadnej poradni w filtrze, metoda nie podejmuje żadnych działań)
+            else
+            {
+                return;
+            }
+
             // wybrana data
             DateTime date = view.TheDate.SelectedDate.Value;
 
-            int visitsCount = 0;
+            // planowa maksymalna liczba wizyt
             int maxVisitsCount = 0;
 
+            // true = znaleziono, false = nie znaleziono, null = w tej iteracji nie znaleziono jeszcze lekarza z grafikiem obejmującym wskazany dzień
+            bool? found = null;
+
+            // szukanie dnia niebędącego świętem, w którym wybrany(i) lekarz(e) przyjmuje(ą) pacjentów
+            // wyszukiwanie trwa dopóki nie zostanie znaleziony dzień, w którym nie osiągnięto maksymalnej liczby zarejestrowanych do wybranego(ych) lekarza(y) wizyt
             do
             {
-                // szukanie dnia niebędącego świętem, w którym wybrany lekarz przyjmuje pacjentów
-                do
+                // "niebędącego świętem"
+                do { date = date.AddDays(1.0); } while (userBusinessService.IsHoliday(date));
+
+                // wartość początkowa dla każdej iteracji
+                found = null;
+
+                foreach (DoctorsListItem selectedDoctor in doctors)
                 {
-                    date = date.AddDays(1.0);
+                    // pobranie planowej maksymalnej liczby wizyt, możliwej do zarejestrowania na dany dzień u danego lekarza
+                    maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date);
+
+                    if (maxVisitsCount < 0)
+                        continue;
+                    else
+                    {
+                        // sprawdzenie liczby wizyt zarejestrowanych na ten dzień i innych warunków stopu
+                        // jeśli wszystkie spełnione -> koniec poszukiwań
+                        if (maxVisitsCount > 0
+                        && medicalBusinessService.TodaysVisitsCount(selectedDoctor.DoctorId, date) < maxVisitsCount
+                        && !userBusinessService.IsWorkerAbsent(selectedDoctor.DoctorId, date))
+                        {
+                            found = true;
+                            break;
+                        }
+                        else
+                            found = false;
+                    }
                 }
-                while (userBusinessService.IsHoliday(date)
-                    || userBusinessService.IsWorkerAbsent(selectedDoctor.DoctorId, date)
-                    || (maxVisitsCount = userBusinessService.GetVisitsPerDay(selectedDoctor.DoctorId, date)) == 0);
-
-                // wartość -1 oznacza brak grafika danego lekarza, obejmującego wskazany dzień,
-                // co oznacza, że lekarz ma komplet pacjentów aż do końca obowiązywania jego grafika (a nawet umowy o pracę z przychodnią)
-                if (maxVisitsCount < 0)
-                    break;
-
-                // pobranie liczby wizyt zarejestrowanych na ten dzień
-                visitsCount = medicalBusinessService.TodaysVisitsCount(selectedDoctor.DoctorId, date);
             }
-            // wyszukiwanie trwa dopóki nie zostanie znaleziony dzień, w którym nie osiągnięto maksymalnej liczby zarejestrowanych do wybranego lekarza wizyt
-            while (visitsCount >= maxVisitsCount);
+            while (found == false);
 
-            if (maxVisitsCount > 0)
+            // jeśli znaleziono wolny termin
+            if (found == true)
             {
-                // zapisanie ID lekarza
-                visitsCount = selectedDoctor.DoctorId;
+                // jeśli operacja dotyczyła jednego wybranego lekarza, następuje zapisanie jego ID
+                int doctorId = (view.DoctorsListTable.SelectedIndex > -1) ? doctors[0].DoctorId : 0;
 
                 // zmiana daty na "najbliższy wolny termin"
                 view.TheDate.SelectedDate = date;
 
-                // zaznaczenie na odświeżonej liście lekarza, którego dotyczyła ta operacja
-                selectedDoctor = view.DoctorsList.FirstOrDefault(x => x.DoctorId == visitsCount);
-
-                if (selectedDoctor != null)
-                    view.DoctorsListTable.SelectedIndex = view.DoctorsList.IndexOf(selectedDoctor);
+                // zaznaczenie na odświeżonej liście lekarza, którego dotyczyła ta operacja (jeśli dotyczyła jednego lekarza)
+                DoctorsListItem selectedDoctor = view.DoctorsList.FirstOrDefault(x => x.DoctorId == doctorId);
+                view.DoctorsListTable.SelectedIndex = (selectedDoctor != null) ? view.DoctorsList.IndexOf(selectedDoctor) : -1;
             }
             else
-                System.Windows.Forms.MessageBox.Show("Brak wolnych terminów u wybranego lekarza w okresie obowiązywania jego grafika."
+                System.Windows.Forms.MessageBox.Show("Brak wolnych terminów u "
+                                                   + ((view.DoctorsListTable.SelectedIndex > -1)
+                                                       ? "wybranego lekarza w okresie obowiązywania jego grafika."
+                                                       : "wybranych lekarzy w okresach obowiązywania ich grafików.")
                                                    , "Brak wolnych terminów"
                                                    , System.Windows.Forms.MessageBoxButtons.OK
                                                    , System.Windows.Forms.MessageBoxIcon.Exclamation);
