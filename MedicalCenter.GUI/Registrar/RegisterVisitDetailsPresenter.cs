@@ -66,7 +66,12 @@ namespace MedicalCenter.GUI.Registrar
             if (view.DailyVisits == null)
                 view.DailyVisits = new List<DailyVisitsListItem>();
             else
+            {
+                // jeśli dotychczas to pole było zaznaczone, to musi zostać odznaczone
+                // odznaczenie tego pola powoduje usunięcie ostatniego elementu z listy, więc musi to zostać zrobione przed pobraniem nowej listy
+                view.IsEmergency.IsChecked = false;
                 view.DailyVisits.Clear();
+            }
 
             // pobranie listy wizyt
             List<DailyVisitsListItem> temp = medicalBusinessService.GetTodaysVisits(view.VisitData.DoctorId, view.VisitData.DateOfVisit);
@@ -266,20 +271,31 @@ namespace MedicalCenter.GUI.Registrar
         }
 
         /// <summary>
-        /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
+        /// Pobranie z bazy danych kolekcji wszystkich pacjentów i wypełnienie nimi listy pacjentów.
         /// </summary>
-        public void ChoosePatient()
+        public void ChoosePatientFill()
         {
-            // stworzenie w razie potrzeby listy źródłowej pacjentów
+            // wyczyszczenie lub stworzenie w razie potrzeby listy źródłowej pacjentów
             if (view.PatientsListView.Patients == null)
-                view.PatientsListView.Patients =new List<Patient>();
-            
+                view.PatientsListView.Patients = new List<Patient>();
+            else
+                view.PatientsListView.Patients.Clear();
+
             // pobranie listy pacjentów
             view.PatientsListView.SourcePatients = patientBusinessService.GetPatients();
             view.PatientsListView.Patients.AddRange(view.PatientsListView.SourcePatients);
 
             // odświeżenie listy
             view.PatientsListView.PatientsListBox.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Wyświetlenie listy pacjentów i ew. zaznaczenie wybranego już pacjenta (obsługa kliknięcia przycisku "Wybierz pacjenta" pod listą wizyt).
+        /// </summary>
+        public void ChoosePatient()
+        {
+            // wypełnienie listy pacjentów
+            ChoosePatientFill();
 
             // zaznaczenie na liście pacjentów wybranego dotychczas pacjenta
             if (view.VisitData.PatientId > 0)
@@ -380,9 +396,6 @@ namespace MedicalCenter.GUI.Registrar
 
             // wyczyszczenie filtra
             view.PatientsListView.FilterPatientName.Clear();
-
-            // wyczyszczenie zaznaczenia na liście pacjentów
-            view.PatientsListView.PatientsListBox.SelectedIndex = -1;
         }
 
         /// <summary>

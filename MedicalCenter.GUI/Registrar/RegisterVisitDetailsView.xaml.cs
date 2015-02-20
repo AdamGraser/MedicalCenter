@@ -207,10 +207,20 @@ namespace MedicalCenter.GUI.Registrar
 
         #region Public methods
 
+        /// <summary>
+        /// Czyści i ponownie wypełnia danymi listę wizyt.
+        /// </summary>
         public void RefreshVisitsList()
         {
-            // odświeżenie listy wizyt
             registerVisitDetailsPresenter.GetVisitsList();
+        }
+
+        /// <summary>
+        /// Czyści i ponownie wypełnia danymi listę pacjentów.
+        /// </summary>
+        public void RefreshPatientsList()
+        {
+            registerVisitDetailsPresenter.ChoosePatientFill();
         }
 
         #endregion // Public methods
