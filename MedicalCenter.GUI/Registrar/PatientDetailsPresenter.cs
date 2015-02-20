@@ -362,6 +362,9 @@ namespace MedicalCenter.GUI.Registrar
                                                          System.Windows.Forms.MessageBoxButtons.OK,
                                                          System.Windows.Forms.MessageBoxIcon.Information);
 
+                    // pobranie z bazy danych ID nowo dodanego pacjenta
+                    view.PatientData.Id = patientBusinessService.GetPatient(view.PatientData.Pesel).Id;
+
                     Back(false);
                 }
             }
