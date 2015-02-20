@@ -338,7 +338,7 @@ namespace MedicalCenter.GUI.Registrar
 
             // jeśli wybrano pacjenta, do następnego widoku przekazywane jest także jego imię i nazwisko
             if (view.PatientId > 0)
-                view.ParentWindow.RegistrarRegisterVisitDetailsView.PatientName = patientBusinessService.GetPatientName(view.PatientId);
+                view.ParentWindow.RegistrarRegisterVisitDetailsView.PatientName.Content = patientBusinessService.GetPatientName(view.PatientId);
 
             // jeśli data wizyty jest dzisiejsza, lista wizyt nie została automatycznie wypełniona,
             // więc musi to zostać wykonane ręcznie

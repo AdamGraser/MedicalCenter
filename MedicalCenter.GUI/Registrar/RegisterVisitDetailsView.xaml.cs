@@ -48,11 +48,6 @@ namespace MedicalCenter.GUI.Registrar
         public string DoctorName { get; set; }
 
         /// <summary>
-        /// Przechowuje nazwisko i imię (jeden string, oddzielone spacją) pacjenta, dla którego ma zostać zarejestrowana wizyta.
-        /// </summary>
-        public string PatientName { get; set; }
-
-        /// <summary>
         /// Okno główne, którego treść stanowi ten widok.
         /// </summary>
         public MainWindow ParentWindow { get; private set; }

@@ -156,7 +156,7 @@ namespace MedicalCenter.GUI.Registrar
 
             // wyczyszczenie ID, nazwiska i imienia pacjenta oraz ID, nazwiska i imienia lekarza
             view.VisitData.PatientId = 0;
-            view.PatientName = string.Empty;
+            view.PatientName.Content = " ";
             view.VisitData.DoctorId = 0;
             view.DoctorName = string.Empty;
 
@@ -455,8 +455,8 @@ namespace MedicalCenter.GUI.Registrar
         {
             // przekazanie ID oraz nazwiska i imienia wybranego pacjenta
             view.VisitData.PatientId = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].Id;
-            view.PatientName = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].LastName + " "
-                             + view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].FirstName;
+            view.PatientName.Content = view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].LastName + " "
+                                     + view.PatientsListView.Patients[view.PatientsListView.PatientsListBox.SelectedIndex].FirstName;
             
             // schowanie listy pacjentów
             ChoosePatientBack();
