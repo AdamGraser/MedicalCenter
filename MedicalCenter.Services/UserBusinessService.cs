@@ -458,7 +458,11 @@ namespace MedicalCenter.Services
         /// <returns>Lista pracowników o tym samym stanowisku.</returns>
         public List<A_Worker> GetSameWorkers(int jobTitleId)
         {
-            return new List<A_Worker>(userService.SelectWorkers(x => x.JobTitle == jobTitleId));
+            List<A_Worker> workers = new List<A_Worker>(userService.SelectWorkers(x => x.JobTitle == jobTitleId));
+            
+            userService.Dispose();
+
+            return workers;
         }
 
         #endregion // Public methods

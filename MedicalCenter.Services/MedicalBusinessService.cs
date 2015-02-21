@@ -69,7 +69,10 @@ namespace MedicalCenter.Services
 
             // przepisanie ID i nazw poradni do wskazanej kolekcji Dictionary
             foreach (M_DictionaryClinic entity in list)
-                clinicsList.Add(entity.Id, entity.Name);
+                clinicsList.Add(entity.Id, entity.Name.ToString());
+
+            // wymuszenie na obiekcie usług bazodanowych usunięcie jego obiektu kontekstu bazodanowego
+            medicalService.Dispose();
 
             return clinicsList;
         }
@@ -108,10 +111,16 @@ namespace MedicalCenter.Services
         /// </returns>
         public int TodaysVisitsCount(int doctorId, DateTime date)
         {
+            int count = -1;
+
             if (date != null && userBusinessService.GetWorkerName(doctorId) != null)
-                return medicalService.SelectVisits(x => x.DoctorId == doctorId && x.DateOfVisit.Date == date.Date).Count();
-            else
-                return -1;
+            {
+                count = medicalService.SelectVisits(x => x.DoctorId == doctorId && x.DateOfVisit.Date == date.Date).Count();
+
+                medicalService.Dispose();
+            }
+
+            return count;
         }
 
         /// <summary>
@@ -234,6 +243,8 @@ namespace MedicalCenter.Services
 
                                 dateOfVisit = dateOfVisit.AddMinutes(20.0);
                             }
+
+                            medicalService.Dispose();
                         }
                     }
                 }

@@ -122,6 +122,8 @@ namespace MedicalCenter.Services
                                          e.Street, e.BuildingNumber, e.Apartment, e.PostalCode, e.City, e.Post, e.IsInsured));
             }
 
+            patientService.Dispose();
+
             return patients;
         }
 
