@@ -99,7 +99,6 @@ namespace MedicalCenter.DBServices
             {
                 db = new MedicalCenterDBContainer();
                 entities = db.A_Workers.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
-                db.Dispose();
             }
 
             return entities;
@@ -163,12 +162,12 @@ namespace MedicalCenter.DBServices
                             room = null;
                     }
 
+                    db.Dispose();
+
                     return room;
                 }
                 else
                     return null;
-
-                db.Dispose();
             }
             else
                 return null;
@@ -241,6 +240,14 @@ namespace MedicalCenter.DBServices
         }
 
         #endregion // Select
+
+        /// <summary>
+        /// Usuwa obiekt kontekstu bazodanowego.
+        /// </summary>
+        public void Dispose()
+        {
+            db.Dispose();
+        }
 
         #endregion // Public methods
     }

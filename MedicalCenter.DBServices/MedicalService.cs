@@ -121,8 +121,6 @@ namespace MedicalCenter.DBServices
             // sortowanie listy wg. nazw poradni
             list = list.OrderBy(x => x.Name).ToList();
 
-            db.Dispose();
-
             return list;
         }
 
@@ -142,7 +140,6 @@ namespace MedicalCenter.DBServices
             {
                 db = new MedicalCenterDBContainer();
                 entities = db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
-                db.Dispose();
             }
 
             return entities;
@@ -342,6 +339,14 @@ namespace MedicalCenter.DBServices
         }
 
         #endregion // Update
+
+        /// <summary>
+        /// Usuwa obiekt kontekstu bazodanowego.
+        /// </summary>
+        public void Dispose()
+        {
+            db.Dispose();
+        }
 
         #endregion // Public methods
     }

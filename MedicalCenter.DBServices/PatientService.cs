@@ -75,8 +75,6 @@ namespace MedicalCenter.DBServices
 
             IEnumerable<M_Patient> entities = db.M_Patients.AsEnumerable().OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
 
-            db.Dispose();
-
             return entities;
         }
 
@@ -298,6 +296,14 @@ namespace MedicalCenter.DBServices
         }
 
         #endregion // Update
+
+        /// <summary>
+        /// Usuwa obiekt kontekstu bazodanowego.
+        /// </summary>
+        public void Dispose()
+        {
+            db.Dispose();
+        }
 
         #endregion // Public methods
     }
