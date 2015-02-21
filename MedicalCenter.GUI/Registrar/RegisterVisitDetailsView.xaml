@@ -54,7 +54,8 @@
             </Grid>
         </StackPanel>
 
-        <ListBox Grid.Row="2" x:Name="DailyVisitsList" Margin="10,0,10,0" ScrollViewer.CanContentScroll="True" TabIndex="4" ItemsSource="{Binding DailyVisits}" SelectionChanged="DailyVisitsList_SelectionChanged">
+        <ListBox Grid.Row="2" x:Name="DailyVisitsList" Margin="10,0,10,0" BorderBrush="CornflowerBlue"
+                 ScrollViewer.CanContentScroll="True" TabIndex="4" ItemsSource="{Binding DailyVisits}" SelectionChanged="DailyVisitsList_SelectionChanged">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ScrollBar}">
                     <Style.Triggers>
@@ -64,18 +65,26 @@
                     </Style.Triggers>
                 </Style>
             </ListBox.Resources>
-            
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Padding" Value="0,0,0,0" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="4*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding HourOfVisit}" FontSize="20" FontFamily="Segoe UI" TextAlignment="Center" />
+                        <TextBlock Grid.Column="0" Text="{Binding HourOfVisit}" FontSize="22" FontFamily="Segoe UI" TextAlignment="Right" Padding="0,10,48,10" Margin="0,0,10,0" Background="#78E7EBEB" />
 
-                        <TextBlock Grid.Column="1" Text="{Binding PatientName}" HorizontalAlignment="Center" FontSize="20" FontFamily="Segoe UI" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="1" Text="{Binding PatientName}" FontSize="22" FontFamily="Segoe UI" TextTrimming="CharacterEllipsis" TextAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
