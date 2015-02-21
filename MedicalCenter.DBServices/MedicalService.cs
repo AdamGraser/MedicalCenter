@@ -24,11 +24,11 @@ namespace MedicalCenter.DBServices
         #region Ctors
 
         /// <summary>
-        /// Bezargumentowy konstruktor inicjalizujący obiekt kontekstu bazodanowego.
+        /// Bezargumentowy, pusty konstruktor.
         /// </summary>
         public MedicalService()
         {
-            db = new MedicalCenterDBContainer();
+            
         }
 
         #endregion // Ctors
@@ -49,6 +49,8 @@ namespace MedicalCenter.DBServices
         {
             if (predicate != null)
             {
+                db = new MedicalCenterDBContainer();
+
                 // pobranie encji spełniającej podane kryteria
                 M_DictionaryClinic entity = db.M_DictionaryClinics.FirstOrDefault(predicate);
 
@@ -64,6 +66,8 @@ namespace MedicalCenter.DBServices
                         entity = null;
                 }
 
+                db.Dispose();
+
                 return entity;
             }
             else
@@ -76,6 +80,8 @@ namespace MedicalCenter.DBServices
         /// <returns>Zbiór rekordów z tabeli M_DictionaryClinics.</returns>
         public List<M_DictionaryClinic> SelectClinics()
         {
+            db = new MedicalCenterDBContainer();
+
             // wrzucenie całej zawartości tabeli do listy
             List<M_DictionaryClinic> list = db.M_DictionaryClinics.ToList();
 
@@ -115,6 +121,8 @@ namespace MedicalCenter.DBServices
             // sortowanie listy wg. nazw poradni
             list = list.OrderBy(x => x.Name).ToList();
 
+            db.Dispose();
+
             return list;
         }
 
@@ -128,10 +136,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public IEnumerable<M_Visit> SelectVisits(Func<M_Visit, bool> predicate)
         {
+            IEnumerable<M_Visit> entities = null;
+
             if (predicate != null)
-                return db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entities = db.M_Visits.Where(predicate).OrderBy(x => x.DateOfVisit);
+                db.Dispose();
+            }
+
+            return entities;
         }
 
         #endregion // Select
@@ -153,6 +167,8 @@ namespace MedicalCenter.DBServices
 
             if (newVisit != null)
             {
+                db = new MedicalCenterDBContainer();
+
                 // dodanie nowej encji do lokalnego zbioru
                 db.M_Visits.Add(newVisit);
 
@@ -171,6 +187,9 @@ namespace MedicalCenter.DBServices
                     // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
                     if (rowsAffected == 0)
                     {
+                        db.Dispose();
+                        db = new MedicalCenterDBContainer();
+
                         try
                         {
                             rowsAffected = db.SaveChanges();
@@ -181,10 +200,6 @@ namespace MedicalCenter.DBServices
 
                             // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
                             retval = false;
-
-                            // utworzenie nowego obiektu kontekstu bazodanowego
-                            db.Dispose();
-                            db = new MedicalCenterDBContainer();
                         }
                     }
                 }
@@ -194,10 +209,6 @@ namespace MedicalCenter.DBServices
 
                     // podana encja nie przeszła walidacji
                     retval = null;
-
-                    // utworzenie nowego obiektu kontekstu bazodanowego
-                    db.Dispose();
-                    db = new MedicalCenterDBContainer();
                 }
                 catch (Exception ex)
                 {
@@ -205,11 +216,9 @@ namespace MedicalCenter.DBServices
 
                     // inny błąd
                     retval = false;
-
-                    // utworzenie nowego obiektu kontekstu bazodanowego
-                    db.Dispose();
-                    db = new MedicalCenterDBContainer();
                 }
+
+                db.Dispose();
             }
             else
                 retval = false;
@@ -237,6 +246,8 @@ namespace MedicalCenter.DBServices
 
             if (visit != null)
             {
+                db = new MedicalCenterDBContainer();
+
                 // przechowuje liczbę wierszy, jaka została dodana/zmieiona podczas wskazanej operacji
                 int rowsAffected = 0;
 
@@ -286,6 +297,9 @@ namespace MedicalCenter.DBServices
                             // jeśli wystąpił ten błąd i nowy rekord nie został zapisany w tabeli, podejmowana jest jeszcze jedna próba zapisu
                             if (rowsAffected == 0)
                             {
+                                db.Dispose();
+                                db = new MedicalCenterDBContainer();
+
                                 try
                                 {
                                     rowsAffected = db.SaveChanges();
@@ -296,10 +310,6 @@ namespace MedicalCenter.DBServices
 
                                     // jeśli druga próba również zakończyła się niepowodzeniem, zwracana jest informacja o błędzie
                                     retval = false;
-
-                                    // utworzenie nowego obiektu kontekstu bazodanowego
-                                    db.Dispose();
-                                    db = new MedicalCenterDBContainer();
                                 }
                             }
                         }
@@ -309,10 +319,6 @@ namespace MedicalCenter.DBServices
 
                             // podana encja nie przeszła walidacji
                             retval = null;
-
-                            // utworzenie nowego obiektu kontekstu bazodanowego
-                            db.Dispose();
-                            db = new MedicalCenterDBContainer();
                         }
                         catch (Exception ex)
                         {
@@ -320,16 +326,14 @@ namespace MedicalCenter.DBServices
 
                             // inny błąd
                             retval = false;
-
-                            // utworzenie nowego obiektu kontekstu bazodanowego
-                            db.Dispose();
-                            db = new MedicalCenterDBContainer();
                         }
                     }
                 }
                 // jeśli nie znaleziono encji o podanym ID, zgłaszane jest to jako błąd
                 else
                     retval = false;
+
+                db.Dispose();
             }
             else
                 retval = false;

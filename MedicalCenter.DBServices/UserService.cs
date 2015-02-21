@@ -25,11 +25,11 @@ namespace MedicalCenter.DBServices
         #region Ctors
 
         /// <summary>
-        /// Bezargumentowy konstruktor inicjalizujący obiekt kontekstu bazodanowego.
+        /// Bezargumentowy, pusty konstruktor.
         /// </summary>
         public UserService()
         {
-            db = new MedicalCenterDBContainer();
+            
         }
 
         #endregion // Ctors
@@ -48,10 +48,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_User SelectUser(System.Linq.Expressions.Expression<Func<A_User, bool>> predicate)
         {
+            A_User entity = null;
+            
             if (predicate != null)
-                return db.A_Users.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_Users.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
         /// <summary>
@@ -64,10 +70,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_Worker SelectWorker(System.Linq.Expressions.Expression<Func<A_Worker, bool>> predicate)
         {
+            A_Worker entity = null;
+            
             if (predicate != null)
-                return db.A_Workers.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_Workers.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
 
@@ -81,10 +93,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public IEnumerable<A_Worker> SelectWorkers(Func<A_Worker, bool> predicate)
         {
+            IEnumerable<A_Worker> entities = null;
+
             if (predicate != null)
-                return db.A_Workers.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entities = db.A_Workers.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.SecondName);
+                db.Dispose();
+            }
+
+            return entities;
         }
 
         /// <summary>
@@ -97,10 +115,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_DictionaryJobTitle SelectJobTitle(System.Linq.Expressions.Expression<Func<A_DictionaryJobTitle, bool>> predicate)
         {
+            A_DictionaryJobTitle entity = null;
+
             if (predicate != null)
-                return db.A_DictionaryJobTitles.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_DictionaryJobTitles.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
         /// <summary>
@@ -117,6 +141,8 @@ namespace MedicalCenter.DBServices
 
             if (predicate != null)
             {
+                db = new MedicalCenterDBContainer();
+
                 // znalezienie rekordu wiążącego A_Workers.Id z A_DictionaryRoom.Id
                 A_WorkersRoom temp = db.A_WorkersRooms.FirstOrDefault(predicate);
 
@@ -141,6 +167,8 @@ namespace MedicalCenter.DBServices
                 }
                 else
                     return null;
+
+                db.Dispose();
             }
             else
                 return null;
@@ -156,10 +184,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_Schedule SelectSchedule(System.Linq.Expressions.Expression<Func<A_Schedule, bool>> predicate)
         {
+            A_Schedule entity = null;
+
             if (predicate != null)
-                return db.A_Schedules.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_Schedules.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
         /// <summary>
@@ -172,10 +206,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_Absence SelectAbsence(System.Linq.Expressions.Expression<Func<A_Absence, bool>> predicate)
         {
+            A_Absence entity = null;
+
             if (predicate != null)
-                return db.A_Absences.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_Absences.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
         /// <summary>
@@ -188,10 +228,16 @@ namespace MedicalCenter.DBServices
         /// </returns>
         public A_Holiday SelectHoliday(System.Linq.Expressions.Expression<Func<A_Holiday, bool>> predicate)
         {
+            A_Holiday entity = null;
+
             if (predicate != null)
-                return db.A_Holidays.FirstOrDefault(predicate);
-            else
-                return null;
+            {
+                db = new MedicalCenterDBContainer();
+                entity = db.A_Holidays.FirstOrDefault(predicate);
+                db.Dispose();
+            }
+
+            return entity;
         }
 
         #endregion // Select
