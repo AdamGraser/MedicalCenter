@@ -271,6 +271,8 @@ namespace MedicalCenter.GUI.Registrar
                     view.DailyVisitsList.SelectedIndex = -1;
                 }
             }
+            else
+                view.Register.IsEnabled = false;
         }
 
         /// <summary>
