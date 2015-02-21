@@ -395,40 +395,36 @@ namespace MedicalCenter.GUI.Registrar
         /// <param name="editMode">Określa czy formularz ma być w trybie edycji (true) czy podglądu (false).</param>
         public void EnableEditing(bool editMode)
         {
-            // jeśli rzeczywiście nastąpić ma zmiana
-            if (editMode != this.editMode)
-            {
-                // zapisanie nowego stanu formularza
-                this.editMode = editMode;
+            // zapisanie nowego stanu formularza
+            this.editMode = editMode;
                 
-                // zmiana stanu elementów formularza do domyślnego dla trybu edycji
-                if (editMode)
-                {
-                    view.Save.Content = "Zapisz";
-                    view.Save.IsEnabled = IsFormCompleted;
-                    view.ViewTitle.Text = "Edycja pacjenta";
-                }
-                else
-                {
-                    view.Save.Content = "Edytuj";
-                    view.Save.IsEnabled = true;
-                    view.ViewTitle.Text = "Podgląd pacjenta";
-                }
-
-                view.LastName.IsEnabled =
-                view.FirstName.IsEnabled =
-                view.SecondName.IsEnabled =
-                view.BirthDate.IsEnabled =
-                view.Gender.IsEnabled =
-                view.Pesel.IsEnabled =
-                view.Street.IsEnabled =
-                view.BuildingNumber.IsEnabled =
-                view.Apartment.IsEnabled =
-                view.PostalCode.IsEnabled =
-                view.City.IsEnabled =
-                view.Post.IsEnabled =
-                view.IsInsured.IsEnabled = editMode;
+            // zmiana stanu elementów formularza do domyślnego dla trybu edycji
+            if (editMode)
+            {
+                view.Save.Content = "Zapisz";
+                view.Save.IsEnabled = IsFormCompleted;
+                view.ViewTitle.Text = "Edycja pacjenta";
             }
+            else
+            {
+                view.Save.Content = "Edytuj";
+                view.Save.IsEnabled = true;
+                view.ViewTitle.Text = "Podgląd pacjenta";
+            }
+
+            view.LastName.IsEnabled =
+            view.FirstName.IsEnabled =
+            view.SecondName.IsEnabled =
+            view.BirthDate.IsEnabled =
+            view.Gender.IsEnabled =
+            view.Pesel.IsEnabled =
+            view.Street.IsEnabled =
+            view.BuildingNumber.IsEnabled =
+            view.Apartment.IsEnabled =
+            view.PostalCode.IsEnabled =
+            view.City.IsEnabled =
+            view.Post.IsEnabled =
+            view.IsInsured.IsEnabled = editMode;
         }
 
         /// <summary>
@@ -436,19 +432,22 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void PeselChanged()
         {
-            // jeśli pole nie jest edytowane, to wprowadzona wartość pochodzi ze zbindowanego obiektu "Patient PatientData"
-            if (!view.Pesel.IsKeyboardFocused)
+            if (editMode)
             {
-                // pesel to liczba - jeśli jest zerem, to pole na pesel ma być puste
-                if (view.Pesel.Text == "0")
-                    view.Pesel.Clear();
-                // pesel to liczba - brak zer z lewej strony
-                else if (view.Pesel.Text.Length == 10)
-                    view.Pesel.Text = "0" + view.Pesel.Text;
-            }
+                // jeśli pole nie jest edytowane, to wprowadzona wartość pochodzi ze zbindowanego obiektu "Patient PatientData"
+                if (!view.Pesel.IsKeyboardFocused)
+                {
+                    // pesel to liczba - jeśli jest zerem, to pole na pesel ma być puste
+                    if (view.Pesel.Text == "0")
+                        view.Pesel.Clear();
+                    // pesel to liczba - brak zer z lewej strony
+                    else if (view.Pesel.Text.Length == 10)
+                        view.Pesel.Text = "0" + view.Pesel.Text;
+                }
 
-            // usunięcie z pola nieprawidłowych znaków
-            TextBoxChanged(view.Pesel, GroupsOfCharacters.Digits);
+                // usunięcie z pola nieprawidłowych znaków
+                TextBoxChanged(view.Pesel, GroupsOfCharacters.Digits);
+            }
         }
 
         /// <summary>
@@ -647,19 +646,22 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void BirthDateChanged()
         {
-            // jeśli wybrana jest jakaś data (selectedDate != null)
-            if (view.BirthDate.SelectedDate.HasValue)
+            if (editMode)
             {
-                // jeśli wybrana data jest wcześniejsza niż minimalna możliwa do zweryfikowania z numerem pesel,
-                // należy zmienić ją na ową minimalną dla pesel'u datę
-                if (view.BirthDate.SelectedDate.Value < minDate)
-                    view.BirthDate.SelectedDate = minDate;
-                // analogicznie dla daty maksymalnej
-                else if (view.BirthDate.SelectedDate.Value > maxDate)
-                    view.BirthDate.SelectedDate = maxDate;
+                // jeśli wybrana jest jakaś data (selectedDate != null)
+                if (view.BirthDate.SelectedDate.HasValue)
+                {
+                    // jeśli wybrana data jest wcześniejsza niż minimalna możliwa do zweryfikowania z numerem pesel,
+                    // należy zmienić ją na ową minimalną dla pesel'u datę
+                    if (view.BirthDate.SelectedDate.Value < minDate)
+                        view.BirthDate.SelectedDate = minDate;
+                    // analogicznie dla daty maksymalnej
+                    else if (view.BirthDate.SelectedDate.Value > maxDate)
+                        view.BirthDate.SelectedDate = maxDate;
 
-                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-                view.Save.IsEnabled = IsFormCompleted;
+                    // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                    view.Save.IsEnabled = IsFormCompleted;
+                }
             }
         }
 
@@ -668,25 +670,28 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void CityChanged()
         {
-            bool change = false;
-            
-            // usuń z pola wszystkie znaki niebędące cyframi, literami, spacjami ani myślnikami
-            foreach (char c in view.City.Text)
+            if (editMode)
             {
-                if (!char.IsDigit(c) && !char.IsLetter(c) && c != ' ' && c != '-')
+                bool change = false;
+
+                // usuń z pola wszystkie znaki niebędące cyframi, literami, spacjami ani myślnikami
+                foreach (char c in view.City.Text)
                 {
-                    // znajdź i zamień
-                    view.City.Text = view.City.Text.Replace(c.ToString(), "");
+                    if (!char.IsDigit(c) && !char.IsLetter(c) && c != ' ' && c != '-')
+                    {
+                        // znajdź i zamień
+                        view.City.Text = view.City.Text.Replace(c.ToString(), "");
 
-                    change = true;
+                        change = true;
+                    }
                 }
+
+                if (change)
+                    view.City.CaretIndex = view.City.Text.Length;
+
+                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                view.Save.IsEnabled = IsFormCompleted;
             }
-
-            if (change)
-                view.City.CaretIndex = view.City.Text.Length;
-
-            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-            view.Save.IsEnabled = IsFormCompleted;
         }
 
         /// <summary>
@@ -715,25 +720,28 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void PostalCodeChanged()
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{1,3}$"))
+            if (editMode)
             {
-                TextBoxChanged(view.PostalCode, GroupsOfCharacters.Digits);
-
-                // cyfr w polu może być maksymalnie 5
-                if (view.PostalCode.Text.Length == 6)
-                    view.PostalCode.Text = view.PostalCode.Text.Substring(0, 5);
-
-                // jeśli w polu wpisanych jest więcej niż 2 cyfry, należy zadbać o obecność myślnika
-                if (view.PostalCode.Text.Length > 2)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{1,3}$"))
                 {
-                    // sprawdzenie obecności myślnika na trzeciej pozycji
-                    if (view.PostalCode.Text[2] != '-')
+                    TextBoxChanged(view.PostalCode, GroupsOfCharacters.Digits);
+
+                    // cyfr w polu może być maksymalnie 5
+                    if (view.PostalCode.Text.Length == 6)
+                        view.PostalCode.Text = view.PostalCode.Text.Substring(0, 5);
+
+                    // jeśli w polu wpisanych jest więcej niż 2 cyfry, należy zadbać o obecność myślnika
+                    if (view.PostalCode.Text.Length > 2)
                     {
-                        // zmiana tekstu wg. szablonu ^\d{2}-\d{1,3}$
-                        view.PostalCode.Text = view.PostalCode.Text.Substring(0, 2) + "-" + view.PostalCode.Text.Substring(2, view.PostalCode.Text.Length - 2);
-                        
-                        // ustawienie karetki w polu na końcu tekstu
-                        view.PostalCode.CaretIndex = view.PostalCode.Text.Length;
+                        // sprawdzenie obecności myślnika na trzeciej pozycji
+                        if (view.PostalCode.Text[2] != '-')
+                        {
+                            // zmiana tekstu wg. szablonu ^\d{2}-\d{1,3}$
+                            view.PostalCode.Text = view.PostalCode.Text.Substring(0, 2) + "-" + view.PostalCode.Text.Substring(2, view.PostalCode.Text.Length - 2);
+
+                            // ustawienie karetki w polu na końcu tekstu
+                            view.PostalCode.CaretIndex = view.PostalCode.Text.Length;
+                        }
                     }
                 }
             }
