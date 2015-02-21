@@ -225,12 +225,13 @@ namespace MedicalCenter.DBServices
         /// Aktualizuje w bazie danych rekord o wskazanej wizycie.
         /// </summary>
         /// <param name="visit">Zaktualizowane informacje o wizycie. Wartość null powoduje, że ta metoda zwraca false.</param>
+        /// <param name="visitId">ID wizyty, która ma zostać zaktualizowana.</param>
         /// <returns>
         /// true jeśli zaktualizowano pomyślnie,
         /// null jeśli podana encja nie przeszła walidacji po stronie bazy,
         /// false jeśli wystąpił inny błąd lub podany argument to null.
         /// </returns>
-        public bool? UpdateVisit(M_Visit visit)
+        public bool? UpdateVisit(M_Visit visit, int visitId)
         {
             bool? retval = true;
 
@@ -245,7 +246,7 @@ namespace MedicalCenter.DBServices
                 try
                 {
                     // szukanie encji o podanym ID
-                    record = db.M_Visits.Find(new int[] { visit.Id });
+                    record = db.M_Visits.Find(visitId);
                 }
                 catch (InvalidOperationException ioe)
                 {

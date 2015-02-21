@@ -186,7 +186,7 @@ namespace MedicalCenter.DBServices
                 try
                 {
                     // szukanie encji o podanym ID
-                    record = db.M_Patients.Find(new int[] { patient.Id });
+                    record = db.M_Patients.FirstOrDefault(x => x.Pesel == patient.Pesel);
                 }
                 catch (InvalidOperationException ioe)
                 {
