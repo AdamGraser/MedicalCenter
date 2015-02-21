@@ -73,7 +73,7 @@ namespace MedicalCenter.DBServices
         /// <param name="newPatient">Informacje o nowym pacjencie. Wartość null powoduje, że ta metoda zwraca false.</param>
         /// <returns>
         /// true jeśli wstawiono pomyślnie,
-        /// null jeśli podana encja nie przeszła walidacji po stronie bazy,
+        /// null jeśli wystąpił błąd aktualizacji,
         /// false jeśli wystąpił inny błąd lub podany argument to null.
         /// </returns>
         public bool? InsertPatient(M_Patient newPatient)
@@ -121,8 +121,17 @@ namespace MedicalCenter.DBServices
                 {
                     System.Console.WriteLine(updateException.Message);
 
-                    if (updateException.InnerException != null)
-                        System.Console.WriteLine(updateException.InnerException.Message);
+                    Exception ex = updateException;
+
+                    // szukanie właściwego wyjątku
+                    if (ex.InnerException != null)
+                    {
+                        while (ex.InnerException != null)
+                            ex = ex.InnerException;
+
+                        // jeśli istniał jakiś wewnętrzy wyjątek, wyświetlona zostanie jego wiadomość
+                        System.Console.WriteLine(ex.Message);
+                    }
 
                     // podana encja nie może zostać dodana (np. z powodu złamania ograniczenia unikatowości)
                     retval = null;
@@ -159,7 +168,7 @@ namespace MedicalCenter.DBServices
         /// <param name="patient">Zaktualizowane informacje o pacjencie. Wartość null powoduje, że ta metoda zwraca false.</param>
         /// <returns>
         /// true jeśli zaktualizowano pomyślnie,
-        /// null jeśli podana encja nie przeszła walidacji po stronie bazy,
+        /// null jeśli wystąpił błąd aktualizacji,
         /// false jeśli wystąpił inny błąd lub podany argument to null.
         /// </returns>
         public bool? UpdatePatient(M_Patient patient)
@@ -238,9 +247,21 @@ namespace MedicalCenter.DBServices
                                 }
                             }
                         }
-                        catch (System.Data.Entity.Validation.DbEntityValidationException validationException)
+                        catch (System.Data.Entity.Infrastructure.DbUpdateException updateException)
                         {
-                            System.Console.WriteLine(validationException.Message);
+                            System.Console.WriteLine(updateException.Message);
+
+                            Exception ex = updateException;
+
+                            // szukanie właściwego wyjątku
+                            if (ex.InnerException != null)
+                            {
+                                while (ex.InnerException != null)
+                                    ex = ex.InnerException;
+
+                                // jeśli istniał jakiś wewnętrzy wyjątek, wyświetlona zostanie jego wiadomość
+                                System.Console.WriteLine(ex.Message);
+                            }
 
                             // podana encja nie przeszła walidacji
                             retval = null;
