@@ -69,7 +69,7 @@ namespace MedicalCenter.Services
                 entity.Street = patient.Street;
 
                 // ID > 0 -> zmiana danych istniejącego w bazie pacjenta
-                if (entity.Id > 0)
+                if (patient.Id > 0)
                     retval = patientService.UpdatePatient(entity);
                 else
                     retval = patientService.InsertPatient(entity);
