@@ -66,6 +66,30 @@ namespace MedicalCenter.DBServices
         }
 
         /// <summary>
+        /// Pobiera z bazy danych informacje o wskazanym pacjencie.
+        /// </summary>
+        /// <param name="patientId">ID szukanego pacjenta.</param>
+        /// <returns>
+        /// Obiekt reprezentujący rekord z tabeli M_Patients,
+        /// null jeżeli nie znaleziono pacjenta o podanym ID.
+        /// </returns>
+        public M_Patient SelectPatient(int patientId)
+        {
+            M_Patient entity = null;
+
+            // utworzenie obiektu kontekstu bazodanowego
+            db = new MedicalCenterDBContainer();
+
+            // pobranie encji
+            entity = db.M_Patients.Find(patientId);
+
+            // usunięcie obiektu kontekstu bazodanowego
+            db.Dispose();
+
+            return entity;
+        }
+
+        /// <summary>
         /// Pobiera z bazy zbiór wszystkich pacjentów.
         /// </summary>
         /// <returns>Wszystkie rekordy z tabeli M_Patients, przedstawione jako kolekcja obiektów M_Patient.</returns>

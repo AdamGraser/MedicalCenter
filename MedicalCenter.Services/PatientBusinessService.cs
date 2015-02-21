@@ -90,7 +90,7 @@ namespace MedicalCenter.Services
         {
             if (patientId > 0)
             {
-                M_Patient patient = patientService.SelectPatient(x => x.Id == patientId);
+                M_Patient patient = patientService.SelectPatient(patientId);
 
                 if (patient != null)
                     return patient.LastName + " " + patient.FirstName;

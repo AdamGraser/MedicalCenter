@@ -232,7 +232,7 @@ namespace MedicalCenter.Services
                                     else
                                     {
                                         // w przeciwnym razie wstawiamy do listy informacje o zarejestrowanej wizycie
-                                        patient = patientService.SelectPatient(x => x.Id == temp[0].PatientId);
+                                        patient = patientService.SelectPatient(temp[0].PatientId);
                                         todaysVisits.Add(new DailyVisitsListItem(temp[0].DateOfVisit, patient.LastName, patient.FirstName, temp[0].State, temp[0].IsEmergency));
                                         temp.RemoveAt(0);
                                     }
