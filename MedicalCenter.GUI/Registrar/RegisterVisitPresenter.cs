@@ -169,8 +169,9 @@ namespace MedicalCenter.GUI.Registrar
                 }
                 else
                 {
-                    // dezaktywacja przycisku "Najbl. termin"
-                    view.ClosestFreeDate.IsEnabled = false;
+                    // brak zaznaczenia na liście lekarzy -> dezaktywacja przycisku "Najbl. termin"
+                    if (view.DoctorsListTable.SelectedIndex < 0)
+                        view.ClosestFreeDate.IsEnabled = false;
 
                     // filtrowanie tylko po nazwiskach
                     if (view.FilterDoctorName.Text.Length > 2)
@@ -396,8 +397,11 @@ namespace MedicalCenter.GUI.Registrar
             }
             else
             {
-                view.ClosestFreeDate.IsEnabled = false;
                 view.Next.IsEnabled = false;
+
+                // brak poradni wybranej w filtrze -> dezaktywacja przycisku "Najbl. termin"
+                if(view.FilterClinicName.SelectedIndex < 1)
+                    view.ClosestFreeDate.IsEnabled = false;
             }
         }
 
