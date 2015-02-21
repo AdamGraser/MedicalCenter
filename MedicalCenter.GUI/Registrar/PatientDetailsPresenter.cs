@@ -269,8 +269,13 @@ namespace MedicalCenter.GUI.Registrar
                         {
                             // jeśli dodano nowego pacjenta do bazy danych
                             if (view.ViewTitle.Text.StartsWith("Dodaj"))
+                            {
                                 // przekazanie ID pacjenta do widoku rejestrowania wizyty
                                 registerVisitDetails.VisitData.PatientId = view.PatientData.Id;
+
+                                // przekazanie nazwiska i imienia pacjenta do widoku rejestrowania wizyty
+                                registerVisitDetails.PatientName.Content = patientBusinessService.GetPatientName(view.PatientData.Id);
+                            }
                             // jeśli zmieniono dane istniejącego w bazie pacjenta
                             else
                                 // odświeżenie listy pacjentów po zmianie danych
@@ -752,25 +757,30 @@ namespace MedicalCenter.GUI.Registrar
         /// </summary>
         public void ValidatePostalCode()
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{3}$"))
+            // jeśli wpisano cokolwiek do pola na kod pocztowy, następuje jego walidacja
+            if (view.PostalCode.Text.Length > 0)
             {
-                view.PostalCode.BorderBrush = System.Windows.Media.Brushes.Red;
-                view.PostalCode.BorderThickness = thickness2;
-                view.PostalCode.ToolTip = "Nieprawidłowy kod pocztowy!";
+                // jeśli podany kod pocztowy nie jest zgodny z szablonem, zgłaszany jest błąd walidacji
+                if (!System.Text.RegularExpressions.Regex.IsMatch(view.PostalCode.Text, @"^\d{2}-\d{3}$"))
+                {
+                    view.PostalCode.BorderBrush = System.Windows.Media.Brushes.Red;
+                    view.PostalCode.BorderThickness = thickness2;
+                    view.PostalCode.ToolTip = "Nieprawidłowy kod pocztowy!";
 
-                postalCodeValidationError = true;
+                    postalCodeValidationError = true;
+                }
+                else
+                {
+                    view.PostalCode.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
+                    view.PostalCode.BorderThickness = thickness1;
+                    view.PostalCode.ToolTip = null;
+
+                    postalCodeValidationError = false;
+                }
+
+                // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
+                view.Save.IsEnabled = IsFormCompleted;
             }
-            else
-            {
-                view.PostalCode.BorderBrush = System.Windows.Media.Brushes.CornflowerBlue;
-                view.PostalCode.BorderThickness = thickness1;
-                view.PostalCode.ToolTip = null;
-
-                postalCodeValidationError = false;
-            }
-
-            // jeśli formularz został poprawnie wypełniony, należy aktywować przycisk "Zapisz"
-            view.Save.IsEnabled = IsFormCompleted;
         }
 
         #endregion // Public methods
