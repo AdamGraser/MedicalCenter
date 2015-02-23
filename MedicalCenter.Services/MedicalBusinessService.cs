@@ -124,6 +124,31 @@ namespace MedicalCenter.Services
         }
 
         /// <summary>
+        /// Pobiera liczbę wizyt zarejestrowanych jako nagłe przypadki do wskazanego lekarza na dany dzień.
+        /// </summary>
+        /// <param name="doctorId">ID lekarza, dla którego wizyty mają zostać zliczone.</param>
+        /// <returns>
+        /// Liczba wizyt zarejestrowanych jako nagłe przypadki do wskazanego lekarza na dany dzień,
+        /// -1 jeśli nie znaleziono lekarza o podanym ID.
+        /// </returns>
+        public int EmergencyCount(int doctorId)
+        {
+            int retval = -1;
+
+            if (userBusinessService.GetWorkerName(doctorId) != null)
+            {
+                retval = medicalService.SelectVisits(x => x.DoctorId == doctorId
+                                                  && x.DateOfVisit > DateTime.Today.AddDays(-1.0)
+                                                  && x.DateOfVisit < DateTime.Today.AddDays(1.0)
+                                                  && x.IsEmergency).Count();
+
+                medicalService.Dispose();
+            }
+
+            return retval;
+        }
+
+        /// <summary>
         /// Tworzy listę planowych godzin rozpoczęcia wizyt, zawierającą także informacje o zarejestrowanych wizytach.
         /// </summary>
         /// <param name="doctorId">ID lekarza, którego tworzona lista dotyczy.</param>
@@ -218,8 +243,15 @@ namespace MedicalCenter.Services
                             todaysVisits = new List<DailyVisitsListItem>();
                             M_Patient patient;
 
+                            // podstawowym warunkiem stopu jest maksymalna liczba wizyt możliwych do zarejstrowania w dany dzień u danego lekarza
+                            int stop = userBusinessService.GetVisitsPerDay(doctorId, date);
+
+                            // jeśli rozważanym dniem jest dzień dzisiejszy, uwzględniane są także nagłe przypadki
+                            if (date.Date == DateTime.Today)
+                                stop += EmergencyCount(doctorId);
+
                             // stworzenie listy planowych godzin rozpoczęcia wizyt
-                            for (int i = 0; i < userBusinessService.GetVisitsPerDay(doctorId, date); ++i)
+                            for (int i = 0; i < stop; ++i)
                             {
                                 // jeśli są jeszcze jakieś zarejestrowane wizyty
                                 if (temp.Count > 0)
