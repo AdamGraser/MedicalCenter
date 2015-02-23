@@ -168,6 +168,10 @@ namespace MedicalCenter.GUI.Registrar
 
             // odświeżenie listy lekarzy
             view.ParentWindow.RegistrarRegisterVisitView.RefreshDoctorsList();
+
+            // wyczyszczenie filtrów
+            view.ParentWindow.RegistrarRegisterVisitView.FilterClinicName.SelectedIndex = -1;
+            view.ParentWindow.RegistrarRegisterVisitView.FilterDoctorName.Clear();
         }
 
         /// <summary>
