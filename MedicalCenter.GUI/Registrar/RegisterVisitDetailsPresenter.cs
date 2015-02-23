@@ -143,7 +143,7 @@ namespace MedicalCenter.GUI.Registrar
 
         /// <summary>
         /// Obsługa zdarzenia kliknięcia przycisku "Powrót" w widoku listy wizyt na dany dzień przy rejestracji wizyty.
-        /// Czyści zaznaczenie i zmienia zawartość okna głównego aplikacji na menu główne.
+        /// Czyści zaznaczenie i zmienia zawartość okna głównego aplikacji na listę lekarzy.
         /// </summary>
         public void Back()
         {
@@ -165,6 +165,9 @@ namespace MedicalCenter.GUI.Registrar
 
             // przywrócenie widoku listy lekarzy
             view.ParentWindow.ContentArea.Content = view.ParentWindow.History.Pop();
+
+            // odświeżenie listy lekarzy
+            view.ParentWindow.RegistrarRegisterVisitView.RefreshDoctorsList();
         }
 
         /// <summary>

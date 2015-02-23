@@ -88,6 +88,9 @@ namespace MedicalCenter.GUI.Registrar
             // jeśli widok listy lekarzy przy rejestracji wizyty nie był dotychczas używany, należy go utworzyć
             if (view.ParentWindow.RegistrarRegisterVisitView == null)
                 view.ParentWindow.RegistrarRegisterVisitView = new RegisterVisitView(view.ParentWindow);
+            // jeśli nie, należy ręcznie wywołać odświeżenie listy lekarzy
+            else
+                view.ParentWindow.RegistrarRegisterVisitView.RefreshDoctorsList();
 
             // zmiana zawartości okna głównego z menu na listę lekarzy (rejestracja wizyty)
             view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarRegisterVisitView;

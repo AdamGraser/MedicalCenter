@@ -123,6 +123,15 @@ namespace MedicalCenter.GUI.Registrar
             registerVisitPresenter.Back();
         }
 
+        /// <summary>
+        /// Czyści listę lekarzy i wczytuje jej zawartość na nowo.
+        /// </summary>
+        public void RefreshDoctorsList()
+        {
+            // wyczyszczenie listy lekarzy i załadowanie jej zawartości na nowo
+            registerVisitPresenter.GetDoctorsList();
+        }
+
         #endregion // Public methods
 
         #region Events handlers

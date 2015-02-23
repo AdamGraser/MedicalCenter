@@ -68,10 +68,15 @@ namespace MedicalCenter.GUI.Registrar
             int clinicId = 0;
             int visitsCount = 0;
             int maxVisitsCount = 0;
+            int selectedDoctorId = 0;
             bool? state = null;
 
             // wartość określająca czy rozpatrywany dzień jest wolny od pracy
             bool holiday = userBusinessService.IsHoliday(view.TheDate.SelectedDate.Value);
+
+            // jeśli jakiś lekarz był zaznaczony na liście, zapisywane jest jego ID, aby mógł być ponownie zaznaczony po odświeżeniu zawartości
+            if (view.DoctorsListTable.SelectedIndex > -1)
+                selectedDoctorId = view.DoctorsList[view.DoctorsListTable.SelectedIndex].DoctorId;
 
             // wyczyszczenie lub utworzenie nowej podstawowej listy lekarzy
             if (view.SourceDoctorsList == null)
@@ -124,6 +129,9 @@ namespace MedicalCenter.GUI.Registrar
 
             // odświeżenie tabeli
             view.DoctorsListTable.Items.Refresh();
+
+            // zaznaczenie wcześniej wybranego lekarza
+            view.DoctorsListTable.SelectedIndex = view.DoctorsList.IndexOf(view.DoctorsList.FirstOrDefault(x => x.DoctorId == selectedDoctorId));
         }
 
         /// <summary>
