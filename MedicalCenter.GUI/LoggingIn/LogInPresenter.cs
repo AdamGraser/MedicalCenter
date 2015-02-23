@@ -104,27 +104,37 @@ namespace MedicalCenter.GUI.LoggingIn
             // jeśli były poprawne
             if (view.UserData.Id > 0)
             {
-                // wyczyszczenie pól z loginem, hasłem i hashem hasła oraz etykiety z komunikatem
-                view.Login.Clear();
-                view.UserData.Password = string.Empty;
-                view.Password.Clear();
-                view.Message.Content = string.Empty;
-
-                // zmiana tytułu okna głównego
-                view.ParentWindow.Title = view.UserData.Title;
-
-                // zapisanie ID aktualnie zalogowanej osoby
-                view.ParentWindow.Id = view.UserData.Id;
-
-                // zmiana ekranu logowania na menu główne
                 if (view.UserData.JobTitleCode.StartsWith("REJ"))
                 {
+                    // wyczyszczenie pól z loginem, hasłem i hashem hasła oraz etykiety z komunikatem
+                    view.Login.Clear();
+                    view.UserData.Password = string.Empty;
+                    view.Password.Clear();
+                    view.Message.Content = string.Empty;
+
+                    // zmiana tytułu okna głównego
+                    view.ParentWindow.Title = view.UserData.Title;
+
+                    // zapisanie ID aktualnie zalogowanej osoby
+                    view.ParentWindow.Id = view.UserData.Id;
+
+                    // zmiana ekranu logowania na menu główne
+                    //if (view.UserData.JobTitleCode.StartsWith("REJ"))
+                    //{
                     // jeśli widok menu głównego nie był dotychczas wyświetlany, należy go najpierw utworzyć
                     if (view.ParentWindow.RegistrarMainMenuView == null)
                         view.ParentWindow.RegistrarMainMenuView = new Registrar.MainMenuView(view.ParentWindow);
 
                     // zmiana ekranu logowania na menu główne
                     view.ParentWindow.ContentArea.Content = view.ParentWindow.RegistrarMainMenuView;
+                }
+                else
+                {
+                    // zaślepka
+                    view.Message.Content = "Brak implementacji modułu dla tego stanowiska";
+                    view.Login.Focus();
+                    view.Login.SelectAll();
+                    view.UserData.Id = 0;
                 }
             }
             else
