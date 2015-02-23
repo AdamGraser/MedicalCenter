@@ -23,11 +23,6 @@ namespace MedicalCenter.GUI.LoggingIn
         #region Public properties
 
         /// <summary>
-        /// Przechowuje wpisany w odpowiednim polu adres serwera bazy danych.
-        /// </summary>
-        public string ServerAddress { get; set; }
-
-        /// <summary>
         /// Prezenter obsługujący m.in. zdarzenia użytkownika.
         /// </summary>
         public LogInPresenter Presenter { get; set; }
@@ -42,9 +37,6 @@ namespace MedicalCenter.GUI.LoggingIn
         public ConfigureConnection()
         {
             InitializeComponent();
-
-            // inicjalizacja pola na adres serwera bazy danych pustym stringiem
-            ServerAddress = string.Empty;
 
             // ukrycie tego widoku (stan domyślny)
             Visibility = System.Windows.Visibility.Collapsed;

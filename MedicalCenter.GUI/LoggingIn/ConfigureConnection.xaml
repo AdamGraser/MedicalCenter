@@ -17,10 +17,10 @@
         <TextBlock Grid.Row="0" Width="520" Padding="20,0,20,20" Text="Konfiguracja połączenia z bazą danych" FontFamily="Segoe UI Light" FontSize="48" Foreground="CornflowerBlue" TextWrapping="Wrap" />
 
         <TextBlock Grid.Row="1" Width="520" Padding="20,0,20,40"
-                   Text="Wpisz w poniższym polu adres serwera bazy danych, np. 192.168.100.1\SQLSERVER lub SERWER\SQLEXPRESS (w grupie roboczej). Następnie kliknij przycisk &quot;Zapisz&quot;. Aby anulować, kliknij przycisk &quot;Powrót&quot;."
+                   Text="Wpisz w poniższym polu adres serwera bazy danych, np. 192.168.100.1\SQLSERVER lub SERWER\SQLEXPRESS (w grupie roboczej). Następnie kliknij przycisk &quot;Zapisz&quot;. Aby anulować, kliknij przycisk &quot;Powrót&quot;. Aby zmiana adresu serwera odniosła skutek, aplikacja musi zostać uruchomiona ponownie."
                    FontFamily="Segoe UI" FontSize="14" TextWrapping="Wrap" TextAlignment="Justify" />
 
-        <TextBox Grid.Row="2" Name="Address" HorizontalAlignment="Stretch" Height="36" Margin="20,0,20,30" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" TabIndex="1" Text="{Binding ServerAddress, Mode=TwoWay}" TextChanged="Address_TextChanged" />
+        <TextBox Grid.Row="2" Name="Address" HorizontalAlignment="Stretch" Height="36" Margin="20,0,20,30" BorderBrush="CornflowerBlue" BorderThickness="1" VerticalContentAlignment="Center" FontSize="20" Foreground="CornflowerBlue" CaretBrush="CornflowerBlue" TabIndex="1" TextChanged="Address_TextChanged" />
         
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
             <Button Name="Back" Content="Powrót" Padding="26,0,27,0" Margin="0,0,50,0" Width="auto" Height="40" HorizontalAlignment="Center" Background="CornflowerBlue" BorderThickness="0" FontFamily="Tahoma" FontSize="16" Foreground="White" Style="{Binding Source={StaticResource MedicalCenterButton}}" TabIndex="3" IsCancel="True" Click="Back_Click" />

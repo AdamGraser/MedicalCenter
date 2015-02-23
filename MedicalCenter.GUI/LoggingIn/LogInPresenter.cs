@@ -97,7 +97,7 @@ namespace MedicalCenter.GUI.LoggingIn
                                 + "\n--------------------\n"
                                 , ex.Message, ex.Source, ex.TargetSite, ex.HelpLink, ex.Data, ex.StackTrace);
 
-                view.Message.Content = "Wystąpił błąd podczas próby sprawdzenia poprawności danych logowania";
+                view.Message.Content = "Wystąpił błąd przy sprawdzaniu poprawności danych";
                 view.UserData.Id = -0x0F;
             }
 
@@ -231,24 +231,18 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         public void ConfigureSave()
         {
-            // utworzenie obiektów klasy XmlSerializer, parsującej pliki XML
-            XmlSerializer dataConfigSerializer = new XmlSerializer(typeof(DataConfig));
+            // utworzenie obiektu klasy XmlSerializer, parsującej pliki XML
             XmlSerializer guiConfigSerializer = new XmlSerializer(typeof(GuiConfig));
-            // utworzenie referencji do obiektów klas definiujących struktury plików konfiguracyjnych
-            DataConfig dataConfig;
+            // utworzenie obiektu klasy XmlSerializerNamespaces, by usunąć domyślne przestrzeni nazw
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            // utworzenie referencji do obiektu klasy definiującej strukturę pliku konfiguracyjnego
             GuiConfig guiConfig;
 
             bool write = false;
 
             try
             {
-                // wczytanie i sparsowanie zawartości pliku konfiguracyjnego biblioteki Data
-                using (StreamReader reader = new StreamReader("MedicalCenter.Data.dll.config"))
-                {
-                    dataConfig = dataConfigSerializer.Deserialize(reader) as DataConfig;
-                }
-
-                // wczytanie i sparsowanie zawartości pliku konfiguracyjnego exe'ka
+                // wczytanie i sparsowanie zawartości pliku konfiguracyjnego
                 using (StreamReader reader = new StreamReader("MedicalCenter.exe.config"))
                 {
                     guiConfig = guiConfigSerializer.Deserialize(reader) as GuiConfig;
@@ -256,34 +250,27 @@ namespace MedicalCenter.GUI.LoggingIn
 
                 // utworzenie nowego obiektu ustawień połączenia z nowym adresem serwera:
 
-                if (dataConfig.ConnectionStrings == null)
-                    dataConfig.ConnectionStrings = new ConnectionStringsStructure();
-                if (dataConfig.ConnectionStrings.Add == null)
-                    dataConfig.ConnectionStrings.Add = new AddStructure();
                 if (guiConfig.ConnectionStrings == null)
                     guiConfig.ConnectionStrings = new ConnectionStringsStructure();
                 if (guiConfig.ConnectionStrings.Add == null)
                     guiConfig.ConnectionStrings.Add = new AddStructure();
 
-                dataConfig.ConnectionStrings.Add.Name = guiConfig.ConnectionStrings.Add.Name = "MedicalCenterDBContainer";
-                dataConfig.ConnectionStrings.Add.ProviderName = guiConfig.ConnectionStrings.Add.ProviderName = "System.Data.EntityClient";
-                dataConfig.ConnectionStrings.Add.ConnectionString = guiConfig.ConnectionStrings.Add.ConnectionString
-                    = "metadata=res://*/MedicalCenterDB.csdl|res://*/MedicalCenterDB.ssdl|res://*/MedicalCenterDB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source="
-                    + view.ConfigureConnectionView.ServerAddress
-                    + ";initial catalog=MedicalCenter;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
+                guiConfig.ConnectionStrings.Add.Name = "MedicalCenterDBContainer";
+                guiConfig.ConnectionStrings.Add.ProviderName = "System.Data.EntityClient";
+                guiConfig.ConnectionStrings.Add.ConnectionString
+                    = "metadata=res://*/MedicalCenterDB.csdl|res://*/MedicalCenterDB.ssdl|res://*/MedicalCenterDB.msl;provider=System.Data.SqlClient;provider connection string=\"data source="
+                    + view.ConfigureConnectionView.Address.Text
+                    + ";initial catalog=MedicalCenter;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework\"";
 
                 write = true;
 
-                // zapisanie nowej zawartości pliku konfiguracyjnego biblioteki Data
-                using (StreamWriter writer = new StreamWriter("MedicalCenter.Data.dll.config", false))
-                {
-                    dataConfigSerializer.Serialize(writer, dataConfig);
-                }
+                // dodanie pustej przetrzeni, by XmlSerializer nie dodał domyślnych przestrzeni jako atrybuty głównego elementu (powoduje crash)
+                ns.Add("", "");
 
-                // zapisanie nowej zawartości pliku konfiguracyjnego exe'ka
+                // zapisanie nowej zawartości pliku konfiguracyjnego
                 using (StreamWriter writer = new StreamWriter("MedicalCenter.exe.config", false))
                 {
-                    guiConfigSerializer.Serialize(writer, guiConfig);
+                    guiConfigSerializer.Serialize(writer, guiConfig, ns);
                 }
             }
             catch (InvalidOperationException opEx)
@@ -352,7 +339,7 @@ namespace MedicalCenter.GUI.LoggingIn
         #endregion // Public methods
     }
 
-    #region Configuration files structures
+    #region Configuration file structures
 
     #region Root elements
 
@@ -367,31 +354,6 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         [XmlElement("startup")]
         public StartupStructure Startup;
-
-        /// <summary>
-        /// Element "connectionStrings".
-        /// </summary>
-        [XmlElement("connectionStrings")]
-        public ConnectionStringsStructure ConnectionStrings;
-    }
-
-    /// <summary>
-    /// Reprezentuje strukturę pliku konfiguracyjnego biblioteki MedicalCenter.Data.dll.
-    /// </summary>
-    [XmlRoot("configuration")]
-    public class DataConfig
-    {
-        /// <summary>
-        /// Element "configSections".
-        /// </summary>
-        [XmlElement("configSections")]
-        public ConfigSectionsStructure ConfigSections;
-
-        /// <summary>
-        /// Element "entityFramework".
-        /// </summary>
-        [XmlElement("entityFramework")]
-        public EntityFrameworkStructure EntityFramework;
 
         /// <summary>
         /// Element "connectionStrings".
@@ -428,30 +390,6 @@ namespace MedicalCenter.GUI.LoggingIn
         /// </summary>
         [XmlElement("add")]
         public AddStructure Add;
-    }
-
-    /// <summary>
-    /// Reprezentuje strukturę elementu "configSections" pliku konfiguracyjnego.
-    /// </summary>
-    public class ConfigSectionsStructure
-    {
-        /// <summary>
-        /// Element "section".
-        /// </summary>
-        [XmlElement("section")]
-        public SectionStructure Section;
-    }
-
-    /// <summary>
-    /// Reprezentuje strukturę elementu "entityFramework" pliku konfiguracyjnego.
-    /// </summary>
-    public class EntityFrameworkStructure
-    {
-        /// <summary>
-        /// Element "defaultConnectionFactory".
-        /// </summary>
-        [XmlElement("defaultConnectionFactory")]
-        public DefaultConnectionFactoryStructure DefaultConnectionFactory;
     }
 
     #endregion // Level 1
@@ -500,45 +438,9 @@ namespace MedicalCenter.GUI.LoggingIn
         public string ProviderName { get; set; }
     }
 
-    /// <summary>
-    /// Reprezentuje strukturę elementu "section", z elementu "configSections", pliku konfiguracyjnego.
-    /// </summary>
-    public class SectionStructure
-    {
-        /// <summary>
-        /// Atrybut "name" elementu "section".
-        /// </summary>
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Atrybut "type" elementu "section".
-        /// </summary>
-        [XmlAttribute("type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Atrybut "requirePermission" elementu "section".
-        /// </summary>
-        [XmlAttribute("requirePermission")]
-        public string RequirePermission { get; set; }
-    }
-
-    /// <summary>
-    /// Reprezentuje strukturę elementu "defaultConnectionFactory", z elementu "entityFramework", pliku konfiguracyjnego.
-    /// </summary>
-    public class DefaultConnectionFactoryStructure
-    {
-        /// <summary>
-        /// Atrybut "type" elementu "defaultConnectionFactory".
-        /// </summary>
-        [XmlAttribute("type")]
-        public string Type { get; set; }
-    }
-
     #endregion // Level 2
 
     #endregion // Elements
 
-    #endregion // Configuration files structures
+    #endregion // Configuration file structures
 }
