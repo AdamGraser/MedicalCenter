@@ -234,6 +234,10 @@ namespace MedicalCenter.GUI.Registrar
                         break;
                 }
 
+                // jeśli lista lekarzy jest pusta, nie ma być możliwości znalezienia terminu, bo nie ma dla kogo
+                if(view.DoctorsList.Count == 0)
+                    view.ClosestFreeDate.IsEnabled = false;
+
                 // odświeżenie tabeli
                 view.DoctorsListTable.Items.Refresh();
             }
